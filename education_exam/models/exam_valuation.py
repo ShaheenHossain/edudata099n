@@ -198,7 +198,7 @@ class EducationExamValuation(models.Model):
                     'class_id': self.class_id.id,
                     'division_id': self.division_id.id,
                     'student_id': students.student_id.id,
-                    'student_name': students.student_id.student_id.name,
+                    'student_name': students.student_id.name,
                     'letter_grade': students.letter_grade,
                     'grade_point': students.grade_point,
                 }
@@ -228,8 +228,7 @@ class EducationExamValuation(models.Model):
 class StudentsExamValuationLine(models.Model):
     _name = 'exam.valuation.line'
 
-    student_id = fields.Many2one('education.class.history', string='Students')
-    roll_no=fields.Integer('roll no',related='student_id.roll_no')
+    student_id = fields.Many2one('education.student', string='Students')
     student_name = fields.Char(string='Students')
     mark_scored = fields.Integer(string='Mark',compute='calculate_marks')
     tut_mark=fields.Integer(string='Tutorial',default=0)

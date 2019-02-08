@@ -36,7 +36,6 @@ class EducationExamResults(models.Model):
     extra_lg=fields.Float('Extra LG')
     working_days=fields.Integer('Working Days')
     attendance=fields.Integer('Attendance')
-    attendance=fields.Integer('Attendance')
     percentage_of_attendance=fields.Float("Percentage of Attendance")
     behavior=fields.Char("Behavior")
     sports=fields.Char("Sports Program")

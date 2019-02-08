@@ -172,6 +172,7 @@
                                 }
                         </style>
 <!--   ######    Variables for the report    -->
+                        <!--<t t-set="s_mark" t-value="get_student_marks(student)"/>-->
 
                         <t t-set="subject_count" t-value="count_subjects(student,docs,'non_optional')"/>
                         <t t-set="optional_subject_count" t-value="count_subjects(student,docs,'optional')"/>

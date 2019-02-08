@@ -43,6 +43,15 @@
             name="education_exam.report_exam_academic_transcript"
             file="education_exam.report_exam_academic_transcript"
         />
+<report
+            id="action_dsblsc_marksheet"
+            model="academic.transcript"
+            string="Dsblsc Marksheet"
+            report_type="qweb-html"
+            paperformat="legal_landscape"
+            name="education_exam.report_dsblsc_marksheet"
+            file="education_exam.report_dsblsc_marksheet"
+        />
         <report
             id="action_exam_evaluation"
             model="academic.transcript"

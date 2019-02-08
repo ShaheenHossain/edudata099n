@@ -9,6 +9,29 @@ import numpy
 
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_marksheet'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def get_student_marks(self,student):
         student_or_history = getattr(student_history.student_id, 'id', 'history')
         if student_or_history == 'history':

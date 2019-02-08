@@ -158,7 +158,7 @@ class EducationExamValuation(models.Model):
                     'class_id': self.class_id.id,
                     'division_id': self.division_id.id,
                     'student_id': students.student_id.id,
-                    'student_name': students.student_id.name,
+                    'student_name': students.student_name,
                 }
                 result = result_obj.create(result_data)
                 result_line_data = {
@@ -177,7 +177,7 @@ class EducationExamValuation(models.Model):
                     'class_id': self.class_id.id,
                     'division_id': self.division_id.id,
                     'student_id': students.student_id.id,
-                    'student_name': students.student_id.name,
+                    'student_name': students.student_name,
                     'letter_grade': students.letter_grade,
                     'grade_point': students.grade_point,
                 }

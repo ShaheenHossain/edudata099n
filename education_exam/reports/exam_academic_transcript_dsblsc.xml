@@ -530,7 +530,9 @@
                                                     <t t-if="subject.paper=='1st'">
                                                         <td rowspan="2">
                                                             <t t-set="lg" t-value="get_leter_grade(paper_grade_point(subject,exam,student,subjects))"/>
-                                                            <t t-set="fail_count" t-value="fail_count+1"/>
+                                                            <t t-if="lg=='f'">
+                                                                <t t-set="fail_count" t-value="fail_count+1"/>
+                                                            </t>
                                                                 <t t-esc="lg"/>
                                                         </td>
                                                     </t>

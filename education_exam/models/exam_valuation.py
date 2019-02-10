@@ -228,7 +228,7 @@ class EducationExamValuation(models.Model):
 class StudentsExamValuationLine(models.Model):
     _name = 'exam.valuation.line'
 
-    student_id = fields.Many2one('education.class.history', string='Students')
+    student_id = fields.Many2one('education.student', string='Students')
     roll_no=fields.Integer('roll no',related='student_id.roll_no')
     student_name = fields.Char(string='Students')
     mark_scored = fields.Integer(string='Mark',compute='calculate_marks')

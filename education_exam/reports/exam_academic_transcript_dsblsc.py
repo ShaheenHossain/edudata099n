@@ -330,6 +330,8 @@ class acdemicTranscripts(models.AbstractModel):
             if o_count!=0:
                 # since optional  gpa over 2 is added
                 additional_gp=(optional_gp/o_count)-2
+                if additional_gp<0:
+                    additional_gp=0
                 gp=(general_gp+additional_gp)/general_count
                 if gp>5:
                     return 5

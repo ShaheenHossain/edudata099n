@@ -93,10 +93,81 @@
     </template>
 
         <template id="report_dsblsc_marksheet">
+
             <t t-call="web.html_container">
-                <t t-call="education_exam.external_layout_dsblsc_marksheet">
-                    <t t-esc="get_exams(docs)"/>
-                </t></t>
+                <t t-call="education_exam.external_layout_transcript_dsblsc">
+                <t t-foreach="get_students(docs)" t-as="student">
+
+
+
+                        <style>
+                            table, th, td{
+                                     border: 1px solid black;
+                                    vertical-align: middle;
+                                    font-size:60px;
+                                    align:center;
+                                    font-size:16px;
+                                    padding-top:2px;
+                                    padding-right:2px;
+                                    padding-left:2px;
+                                    padding-bottom:2px;
+                                    text-align: center;
+                                    }
+                            .right_top{
+                            float:right;
+                            padding-top:65px;
+                            }
+                            .left_top{
+                            float:left;
+                            padding-top:65px;
+                            }
+                            .right{
+                            float:right;
+                            padding-top:10px;
+                            padding-left:80px;
+                            padding-right:10px;
+                            padding-bottom:10px;
+                            }
+
+                            .rotated {
+                            writing-mode: tb-rl;
+                            transform: rotate(-90deg);
+                             -webkit-transform: rotate(-90deg);
+                             -moz-transform: rotate(-90deg);
+                             -o-transform: rotate(-90deg);
+                             -ms-transform: rotate(-90deg);
+
+
+                            }
+                            .dont_split{
+                               page-break-inside: avoid;
+                                }
+                        </style>
+
+                        <div class="page" page-breake-inside="avoid">
+                            <div class="oe_structure">
+                                <div class="dont_split">
+                                    <t t-set="result" t-value="get_result(docs)"/>
+                                    student no
+                                    <t t-esc="len(result)"/>
+                                    exam no
+                                    <t t-esc="len(result[student])"/>
+                                    <t t-foreach="result[student]" t-as="exam">
+                                        compulsory
+                                        <t t-esc="len(result[student][exam]['compulsory'])"/>
+                                    </t>
+
+
+
+                                </div>
+
+
+
+                            </div>
+                            </div>
+                    </t>
+                </t>
+            </t>
         </template>
 
     </data>

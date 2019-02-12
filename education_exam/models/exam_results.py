@@ -54,7 +54,7 @@ class EducationExamResults(models.Model):
     lg_net=fields.Char("LG (Net)")
     @api.model
     def calculate_result(self,exam_id):
-        results = self.env['education.exam.results'].search([('exam_id','=',exam_id.id)])
+        results = self.env['education.exam.results.new'].search([('exam_id','=',exam_id.id)])
         for result in results:
             if result.state!='done':
                 total_pass_mark = 0
@@ -110,9 +110,6 @@ class EducationExamResults(models.Model):
                     result.optional_gpa = optional_grade_point / optional_subject_count
                 if extra_subject_count !=0:
                     result.extra_gpa = extra_grade_point / extra_subject_count
-
-
-
 
 class ResultsSubjectLine(models.Model):
     _name = 'results.subject.line'

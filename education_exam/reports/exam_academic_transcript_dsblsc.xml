@@ -88,14 +88,14 @@
                                                         <t t-if="len(exams)>1">
                                                         <span> &amp; </span>
                                                         </t>
-                                                        <t t-esc="exam.exam_type.name "/>
+                                                        <t t-esc="exam.name "/>
                                                         <span> Exam - </span>
                                                         <t t-esc="exam.academic_year.name"/>
                                                     </t>
                                                     <t t-else="">
                                                         <t t-if="exam_first"></t>
                                                         <t t-else="">, </t>
-                                                        <t t-esc="exam.exam_type.name"/>
+                                                        <t t-esc="exam.name"/>
 
 
                                                     </t>
@@ -110,14 +110,14 @@
           <t t-raw="0" />
         </div>
 
-        <div class="footer o_boxed_footer">
-            <div class="text-center">
+        <!--<div class="footer o_boxed_footer">-->
+            <!--<div class="text-center">-->
 
-                <div>
-                    Page: <span class="page"/> / <span class="topage"/>
-                </div>
-            </div>
-        </div>
+                <!--<div>-->
+                    <!--Page: <span class="page"/> / <span class="topage"/>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </template>
 
         <template id="report_exam_academic_transcript_dsblsc">
@@ -132,7 +132,6 @@
                             table, th, td{
                                      border: 1px solid black;
                                     vertical-align: middle;
-                                    font-size:60px;
                                     align:center;
                                     font-size:16px;
                                     padding-top:2px;
@@ -257,13 +256,13 @@
                                     <div class="left_top">
                                         <table>
                                             <tr><td style="border-right:0px solid transparent; text-align:right;"> ID -</td><td style="border-left:0px solid transparent; text-align:left;" width="50px"><span t-field="student.student_id.student_id"/></td>
-                                                <td style="border-right:0px solid transparent; text-align:right;"> Roll -</td><td style="border-left:0px solid transparent; text-align:left;" width="50px"><span t-field="student.student_id.roll_no"/></td>
-                                                <td style="border-right:0px solid transparent; text-align:right;"> Section -</td><td style="border-left:0px solid transparent; text-align:left;" width="40px"><span t-field="student.student_id.class_id.section_id"/></td>
-                                                <td style="border-right:0px solid transparent; text-align:right;"> Category -</td><td style="border-left:0px solid transparent; text-align:left;" width="40px"><t t-if="student.student_id.student_category=='internal'">I</t>
+                                                <td colspan="2" style="width:100px;"> Roll -<span t-field="student.student_id.roll_no"/></td>
+                                                <td colspan="2" style="width:100px;">Section -<span t-field="student.student_id.class_id.section_id"/></td>
+                                                <td colspan="2" style="width:100px;">Category -<t t-if="student.student_id.student_category=='internal'">I</t>
                                                                         <t t-else="">E</t> </td>
                                             </tr>
                                             <tr>
-                                                <td>Name </td><td colspan="7"><span t-field="student.student_id.name"/></td>
+                                                <td style="border-right:0px solid transparent; "><div style=" text-align:right;font-size: 90%;">Name :</div></td><td colspan="7" style="border-left:0px solid transparent; text-align:center;"><span t-field="student.student_id.name"/></td>
 
                                             </tr>
                                              <tr>
@@ -298,7 +297,7 @@
                                     </tr>
                                     <tr>
                                         <t t-foreach="exams" t-as="exam">
-                                            <th t-att-colspan="mark_type_count">Obtained marks</th>
+                                            <th t-att-colspan="mark_type_count">Marks obtained</th>
                                             <th rowspan="2">Total marks</th>
                                             <th rowspan="2">Highest marks</th>
                                             <th rowspan="2">LG</th>
@@ -529,11 +528,15 @@
                                                      <!--TODO -->
                                                     <t t-if="subject.paper=='1st'">
                                                         <td rowspan="2">
+
+
                                                             <t t-set="lg" t-value="get_leter_grade(paper_grade_point(subject,exam,student,subjects))"/>
-                                                            <t t-if="lg=='f'">
-                                                                <t t-set="fail_count" t-value="fail_count+1"/>
-                                                            </t>
+                                                            <t t-set="fail_count" t-value="fail_count+1"/>
                                                                 <t t-esc="lg"/>
+
+
+
+
                                                         </td>
                                                     </t>
                                                     <t t-else="">
@@ -674,7 +677,7 @@
                                         <!--calculation for fourth/Optional subject-->
 
                                         <t t-if="fourth_subject&gt;0">
-                                                 <tr><td colspan="100%">4th subject (Marks above 40% and GPA above 2.0)</td> </tr>
+                                                 <tr><td colspan="100%">4th subject </td> </tr>
                                             <t t-foreach="optional_subjects" t-as="subject">
                                                <tr>
                                                    <t t-foreach="exams" t-as="exam">
@@ -939,13 +942,13 @@
                                 <div class="row"><br/></div>
                                 <div class="row">
 
-                                   <div class="col-xs-4">Position in Section:
+                                   <div class="col-xs-4" style="font-size:16px;">Position in Section:
                                        <t t-set="sl" t-value="merit_list[(merit_list['student'] ==student.student_id.id )]"/>
                                        <!--<t t-esc="sl"/>-->
                                             <t t-esc="num2serial(int(sl.iloc[0]['merit_section']))"/>
                                        </div>
 
-                                   <div class="col-xs-4"> Date of return :</div>
+                                   <div class="col-xs-4" style="font-size:16px;"> Date of return :</div>
                                     <!--<div class="col-xs-4">Percentage of marks:  -->
                                         <!--<t t-if="exam_total!=0">-->
                                             <!--<t t-esc="round(exam_obtained_total/exam_total*100,2)"/> %-->
@@ -954,7 +957,7 @@
                                     <!--</div>-->
                                 </div>
                                 <div class="row">
-                                   <div class="col-xs-4">Position in Class:
+                                   <div class="col-xs-4" style="font-size:16px;">Position in Class:
                                            <t t-esc="num2serial(int(sl.iloc[0]['merit_class']))"/>
                                    </div>
                                 </div>
@@ -967,9 +970,9 @@
 
 
                                 <div class="row">
-                                       <div class="col-xs-4">Signature of Class Teacher</div>
-                                       <div class="col-xs-4">Signature of the Principal</div>
-                                       <div class="col-xs-4">Signature of Guardian</div>
+                                       <div class="col-xs-4" style="font-size:16px;">Signature of Class Teacher</div>
+                                       <div class="col-xs-4" style="font-size:16px;">Signature of the Principal</div>
+                                       <div class="col-xs-4" style="font-size:16px;">Signature of Guardian</div>
                                 </div>
                             </div>
                             </div>

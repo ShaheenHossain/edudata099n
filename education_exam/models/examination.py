@@ -9,6 +9,7 @@ class EducationExam(models.Model):
     _name = 'education.exam'
 
     name = fields.Char(string='Name', default='New')
+    generated_name=fields.Char(string='Gen Name',default='New')
     class_id = fields.Many2one('education.class', string='Class')
     division_id = fields.Many2one('education.class.division', string='Division')
     exam_type = fields.Many2one('education.exam.type', string='Type', required=True)
@@ -78,7 +79,7 @@ class EducationExam(models.Model):
             name = name + ' (' + str(self.division_id.name) + ')'
         elif self.class_id:
             name = name + ' (' + str(self.class_id.name) + ')'
-        self.name = name
+        self.generated_name = name
         self.state = 'ongoing'
     @api.multi
     def check_student_section_subject(self,section_id,subject_id):

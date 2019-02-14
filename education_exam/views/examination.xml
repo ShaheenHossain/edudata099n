@@ -18,8 +18,11 @@
                     </header>
                     <sheet>
                         <h1>
-                            <field name="name" readonly="1"/>
+                            <field name="name" />
                         </h1>
+                        <h6>
+                            <field name="generated_name" />
+                        </h6>
                         <group>
                             <group>
                                 <field name="exam_type" attrs="{'readonly': [('state', '!=', 'draft')]}"/>

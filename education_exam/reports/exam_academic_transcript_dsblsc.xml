@@ -531,7 +531,9 @@
 
 
                                                             <t t-set="lg" t-value="get_leter_grade(paper_grade_point(subject,exam,student,subjects))"/>
-                                                            <t t-set="fail_count" t-value="fail_count+1"/>
+                                                            <t t-if="lg=='f'">
+                                                                <t t-set="fail_count" t-value="fail_count+1"/>
+                                                            </t>
                                                                 <t t-esc="lg"/>
 
 
@@ -581,25 +583,29 @@
                                                         <t t-set="exam_obtained_total" t-value="get_exam_obtained_total(exam,student,'non_optional','general')"/>
                                                         <t t-set="exam_total" t-value="get_exam_total(exam,student,'non_optional','general')"/>
                                                         <td t-att-rowspan="subject_count">
-                                                            <t t-if="fail_count &lt;1">
                                                                    <t t-if="gpa&gt;=5">
                                                                        <t t-esc="5"/>
                                                                    </t>
                                                                    <t t-else="">
                                                                        <t t-esc="gpa"/>
                                                                    </t>
-                                                            </t>
+                                                                <t t-if="fail_count>0">
+                                                                    (
+                                                                    <t t-esc="fail_count"/>F)
+                                                                </t>
                                                        </td>
                                                        <t t-if="fourth_subject&gt;0">
                                                            <td t-att-rowspan="subject_count">
-                                                               <t t-if="fail_count &lt;1">
                                                                        <t t-if="final_gpa&gt;=5">
                                                                            <t t-esc="5"/>
                                                                        </t>
                                                                        <t t-else="">
                                                                            <t t-esc="final_gpa"/>
                                                                        </t>
-                                                               </t>
+                                                               <t t-if="fail_count>0">
+                                                                    (
+                                                                    <t t-esc="fail_count"/>F)
+                                                                </t>
                                                            </td>
                                                        </t>
                                                    </t>
@@ -681,7 +687,7 @@
                                             <t t-foreach="optional_subjects" t-as="subject">
                                                <tr>
                                                    <t t-foreach="exams" t-as="exam">
-
+                                                    <t t-set="optional_fail_count" t-value="0"/>
 
                                                        <t t-if="exam_first">
                                                            <td>
@@ -776,17 +782,55 @@
                                                           <td><span t-field="mark.mark_scored"/></td>
 
                                                           <td><span t-field="highest.mark_scored"/></td>
-                                                          <td><t t-esc="get_leter_grade(paper_grade_point(subject,exam,student,optional_subjects))"/></td>
-                                                          <td><t t-esc="paper_grade_point(subject,exam,student,optional_subjects)"/></td>
+                                                          <td>
+                                                              <t t-set="optional_lg" t-value= "get_leter_grade(paper_grade_point(subject,exam,student,optional_subjects))"/>
+                                                            <t t-esc="optional_lg"/>
+                                                          </td>
+                                                          <td>
+                                                              <t t-if="optional_lg!='f'">
+                                                                    <t t-set="optional_gp" t-value="paper_grade_point(subject,exam,student,optional_subjects)"/>
+                                                              </t>
+                                                              <t t-else="">
+                                                                  <t t-set="optional_gp" t-value="0"/>
+                                                                  <t t-set="optional_fail_count" t-value="optioonal_fail_count+1"/>
+                                                              </t>
+                                                              <t t-esc="optional_gp"/>
+                                                          </td>
                                                            <t t-if="subject_first">
-                                                               <td t-att-rowspan="optional_count">GPA above 2.0 </td>
-                                                               <t t-if="fourth_subject&gt;0">
-                                                                   <td t-att-rowspan="optional_count">
-                                                                       <t t-if="optional_gpa>2">
-                                                                            <t t-esc="optional_gpa-2"/>
-                                                                       </t>
-                                                                   </td>
-                                                               </t>
+
+
+
+
+                                                               <td t-att-rowspan="optional_count" colspan="2" >
+                                                                   <table width="100%" style="border-collapse: collapse; border-style:hidden;">
+                                                                       <tr>
+                                                                           <td width="100%">
+                                                                               GPA above 2.0
+                                                                           </td>
+                                                                       </tr>
+                                                                       <tr>
+                                                                           <td>
+                                                                               <t t-if="fourth_subject&gt;0">
+
+
+                                                                                   <t t-if="optional_fail_count>0">
+                                                                                       0
+                                                                                   </t>
+                                                                                    <t t-else="">
+                                                                                       <t t-if="optional_gpa>2">
+                                                                                            <t t-esc="optional_gpa-2"/>
+                                                                                       </t>
+                                                                                        <t t-else="">
+                                                                                        0
+                                                                                        </t>
+                                                                                    </t>
+                                                                                </t>
+                                                                           </td>
+                                                                       </tr>
+                                                                   </table>
+
+                                                               </td>
+
                                                            </t>
 
 

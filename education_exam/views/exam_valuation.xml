@@ -72,9 +72,13 @@
                                         <field name="roll_no" invisible="0" readonly="1"/>
                                         <field name="student_name" readonly="1"/>
                                         <field name="tut_mark" attrs="{'column_invisible': [('parent.tut_mark', '=', 0)]}"/>
+                                        <field name="tut_pr" attrs="{'column_invisible': [('parent.tut_mark', '=', 0)]}"/>
                                         <field name="subj_mark" attrs="{'column_invisible': [('parent.subj_mark', '=', 0)]}"/>
+                                        <field name="subj_pr" attrs="{'column_invisible': [('parent.subj_mark', '=', 0)]}"/>
                                         <field name="obj_mark"  attrs="{'column_invisible': [('parent.obj_mark', '=', 0)]}"/>
+                                        <field name="obj_pr"  attrs="{'column_invisible': [('parent.obj_mark', '=', 0)]}"/>
                                         <field name="prac_mark" attrs="{'column_invisible': [('parent.prac_mark', '=', 0)]}"/>
+                                        <field name="prac_pr" attrs="{'column_invisible': [('parent.prac_mark', '=', 0)]}"/>
                                         <field name="mark_scored" />
                                         <field name="pass_or_fail" widget="boolean_toggle"/>
                                         <field name="valuation_id" invisible="1"/>

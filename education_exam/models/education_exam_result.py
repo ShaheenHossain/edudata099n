@@ -3,14 +3,16 @@ from odoo import models, fields, api
 
 
 class EducationExamResultsNew(models.Model):
-    _name = 'education.exam.results_new'
+    _name = 'education.exam.results.new'
 
-    name = fields.Char(string='Name')
+    name = fields.Char(string='Name' ,related="result_id.name" , store=True)
+    result_id=fields.Many2one("education.exam.results","result_id")
     exam_id = fields.Many2one('education.exam', string='Exam')
     class_id = fields.Many2one('education.class', string='Class')
     division_id = fields.Many2one('education.class.division', string='Division')
+    section_id = fields.Many2one('education.class.section', string='Section',related="student_history.section",store=True)
     student_id = fields.Many2one('education.student', string='Student')
-    student_history=fields.Many2one('education.class.history',"Student History",compute="get_student_history")
+    student_history=fields.Many2one('education.class.history',"Student History",compute="get_student_history",store=True)
     student_name = fields.Char(string='Student')
     subject_line = fields.One2many('results.subject.line.new', 'result_id', string='Subjects')
     academic_year = fields.Many2one('education.academic.year', string='Academic Year',
@@ -55,74 +57,60 @@ class EducationExamResultsNew(models.Model):
     lg_net=fields.Char("LG (Net)")
     @api.depends('student_id','class_id')
     def get_student_history(self):
-        history = self.env['education.class.history'].search(
-            [('student_id', '=', self.student_id.id), ('academic_year_id', '=', self.academic_year.id)])
-        self.student_history=history.id
-    @api.model
-    def calculate_result(self,exam_id):
-        results = self.env['education.exam.results.new'].search([('exam_id','=',exam_id.id)])
-        for result in results:
-            if result.state!='done':
-                total_pass_mark = 0
-                total_max_mark = 0
-                total_mark_scored = 0
-                overall_pass = True
-                subject_list=[]
-                general_total=0
-                optional_total=0
-                extra_total=0
-                general_subject_count=0
-                optional_subject_count=0
-                extra_subject_count=0
-                general_grade_point=0
-                extra_grade_point=0
-                optional_grade_point=0
-                for subject in result.subject_line:
-                    student_history = self.env['education.class.history'].search(
-                        [('student_id', '=', result.student_id.id), ('academic_year_id', '=', exam_id.academic_year.id)])
-                    if subject.subject_id in student_history.optional_subjects:
-                        optional_total = optional_total + subject.mark_scored
-                        optional_grade_point = optional_grade_point + subject.grade_point
-                        if subject.subject_id.subject_id.id not in subject_list:
-                            subject_list.append(subject.subject_id.subject_id.id)
-                            optional_subject_count=optional_subject_count+1
-                    elif subject.subject_id not in student_history.optional_subjects:
-                        if subject.subject_id.evaluation_type == 'general':
-                            general_total = general_total + subject.mark_scored
-                            general_grade_point=general_grade_point+subject.grade_point
-                            if subject.subject_id.subject_id.id not in subject_list:
-                                subject_list.append(subject.subject_id.subject_id.id)
-                                general_subject_count = general_subject_count + 1
-                        elif subject.subject_id.evaluation_type == 'extra':
-                            extra_total = extra_total + subject.mark_scored
-                            extra_grade_point = extra_grade_point + subject.grade_point
-                            if subject.subject_id.subject_id.id not in subject_list:
-                                subject_list.append(subject.subject_id.subject_id.id)
-                                extra_subject_count = extra_subject_count + 1
-                result.state = 'done'
-                result.general_obtained=general_total
-                result.optional_obtained=optional_total
-                result.extra_obtained=extra_total
-                result.general_gp=general_grade_point
-                result.optional_gp=optional_grade_point
-                result.extra_gp=extra_grade_point
-                result.no_of_general_subject = general_subject_count
-                result.general_count=general_subject_count
-                result.optional_count=optional_subject_count
-                result.extra_count=extra_subject_count
-                if general_subject_count !=0:
-                    result.general_gpa = general_grade_point / general_subject_count
-                if optional_subject_count !=0:
-                    result.optional_gpa = optional_grade_point / optional_subject_count
-                if extra_subject_count !=0:
-                    result.extra_gpa = extra_grade_point / extra_subject_count
+        for rec in self:
+            history = self.env['education.class.history'].search(
+                [('student_id', '=', rec.student_id.id), ('academic_year_id', '=', rec.academic_year.id)])
+            rec.student_history=history.id
+
+    @api.multi
+    def calculate_result(self,exams):
+        for exam in exams:
+            self.env['education.exam.results.new'].search([('exam_id','=',exam.id)]).unlink()
+
+            results = self.env['education.exam.results'].search([('exam_id','=',exam.id)])
+            for result in results:
+                result_data={
+                    "name": exam.name,
+                    "exam_id": exam.id,
+                    "student_id": result.student_id.id,
+                    "result_id": result.id,
+                    "academic_year": exam.academic_year.id,
+                    "student_name": result.student_name,
+                }
+                newResult=self.create(result_data)
+                subject_list = {}
+                for paper in result.subject_line_ids:
+                    if paper.subject_id.subject_id.id not in subject_list:
+                        subject_list[paper.subject_id.subject_id.id]=[newResult.id]
+                        subject_data={
+                            "subject_id":paper.subject_id.subject_id.id,
+                            "result_id":newResult.id,
+
+                        }
+                        newSubject=self.env["results.subject.line.new"].create(subject_data)
+                    paper_data={
+                        "subject_line": subject_list[paper.subject_id.subject_id.id][0],
+                        "tut_mark": paper.tut_mark,
+                        "subj_mark": paper.subj_mark,
+                        "obj_mark": paper.obj_mark,
+                        "prac_mark": paper.prac_mark,
+                        # "tut_ob": paper.tut_ob,
+                        # "subj_ob": paper.subj_ob,
+                        # "obj_ob": paper.obj_ob,
+                        # "prac_ob": paper.prac_ob,
+                        "tut_pr": paper.tut_pr,  #pr for present/Absent data
+                        "subj_pr": paper.subj_pr,
+                        "obj_pr": paper.obj_pr,
+                        "prac_pr": paper.prac_pr,
+                    }
+                    new_paper=self.env["results.paper.line"].create(paper_data)
 
 
 
 class ResultsSubjectLineNew(models.Model):
     _name = 'results.subject.line.new'
     name = fields.Char(string='Name')
-    paper_ids=fields.One2many('result_paper_line','subject_line','Papers')
+    paper_ids=fields.One2many('results.paper.line','subject_line','Papers')
     tut_mark = fields.Integer(string='Tutorial')
     subj_mark = fields.Integer(string='Subjective')
     obj_mark = fields.Integer(string='Objective')
@@ -150,9 +138,13 @@ class ResultsSubjectLineNew(models.Model):
                                  default=lambda self: self.env['res.company']._company_default_get())
 
 class result_paper_line(models.Model):
-    _name = 'result_paper_line'
+    _name = 'results.paper.line'
     subject_line=fields.Many2one('result.subject.line.new','Subject_id')
     tut_mark = fields.Integer(string='Tutorial')
     subj_mark = fields.Integer(string='Subjective')
     obj_mark = fields.Integer(string='Objective')
     prac_mark = fields.Integer(string='Practical')
+    prac_pr = fields.Boolean(string='P',default=False)
+    subj_pr = fields.Boolean(string='P',default=False)
+    obj_pr = fields.Boolean(string='P',default=False)
+    tut_pr = fields.Boolean(string='P',default=False)

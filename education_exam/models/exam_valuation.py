@@ -164,9 +164,13 @@ class EducationExamValuation(models.Model):
                 result_line_data = {
                     'name': self.name,
                     'tut_mark': students.tut_mark,
+                    'tut_pr': students.tut_pr,
                     'obj_mark': students.obj_mark,
+                    'obj_pr': students.obj_pr,
                     'subj_mark': students.subj_mark,
+                    'subj_pr': students.subj_pr,
                     'prac_mark': students.prac_mark,
+                    'prac_pr': students.prac_pr,
                     'subject_id': self.subject_id.id,
                     'max_mark': self.mark,
                     'pass_mark': self.pass_mark,
@@ -188,9 +192,13 @@ class EducationExamValuation(models.Model):
                     'max_mark': self.mark,
                     'pass_mark': self.pass_mark,
                     'tut_mark': students.tut_mark,
+                    'tut_pr': students.tut_pr,
                     'obj_mark': students.obj_mark,
+                    'obj_pr': students.obj_pr,
                     'subj_mark': students.subj_mark,
+                    'subj_pr': students.subj_pr,
                     'prac_mark': students.prac_mark,
+                    'prac_pr': students.prac_pr,
                     'mark_scored': students.mark_scored,
                     'pass_or_fail': students.pass_or_fail,
                     'result_id': search_result.id,
@@ -236,6 +244,10 @@ class StudentsExamValuationLine(models.Model):
     subj_mark=fields.Integer(string='Subjective' ,default=0)
     obj_mark=fields.Integer(string='Objective',default=0)
     prac_mark=fields.Integer(string='Practical',default=0)
+    prac_pr = fields.Boolean(string='P',default=False)
+    subj_pr = fields.Boolean(string='P',default=False)
+    obj_pr = fields.Boolean(string='P',default=False)
+    tut_pr = fields.Boolean(string='P',default=False)
     pass_or_fail = fields.Boolean(string='Pass/Fail')
     valuation_id = fields.Many2one('education.exam.valuation', string='Valuation Id')
     letter_grade=fields.Char('Letter Grade')

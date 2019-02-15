@@ -49,7 +49,7 @@ class academicTranscript(models.Model):
     def generate_results(self):
         for rec in self:
             for exam in self.exams:
-                results=self.env['education.exam.results'].search([('exam_id','=',exam.id)])
-                for result in results:
-                    self.env['education.exam.results'].calculate_result(exam)
+                # results=self.env['education.exam.results'].search([('exam_id','=',exam.id)])
+                # for result in results:
+                self.env['education.exam.results.new'].calculate_result(exam)
 

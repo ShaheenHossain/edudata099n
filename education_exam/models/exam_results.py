@@ -118,6 +118,10 @@ class EducationExamResults(models.Model):
 class ResultsSubjectLine(models.Model):
     _name = 'results.subject.line'
 
+    tut_full = fields.Integer(string='Tutorial Full')
+    subj_full = fields.Integer(string='Subjective Full')
+    obj_full = fields.Integer(string='Objective Full')
+    prac_full = fields.Integer(string='Practical Full')
     tut_mark = fields.Integer(string='Tutorial')
     subj_mark = fields.Integer(string='Subjective')
     obj_mark = fields.Integer(string='Objective')

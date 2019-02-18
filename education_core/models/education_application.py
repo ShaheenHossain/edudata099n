@@ -33,7 +33,7 @@ class StudentApplication(models.Model):
     group=fields.Char('Group')
     roll_no=fields.Integer('Roll No')
     Batch=fields.Char('Batch')
-    import_id=fields.Many2one('import.previous.student')
+    import_id=fields.Many2one('education.import.previous.student')
 
     ###########
     student_category=fields.Selection([('I',"Internal"),

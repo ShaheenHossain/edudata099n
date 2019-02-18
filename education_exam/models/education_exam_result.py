@@ -32,21 +32,21 @@ class EducationExamResultsNew(models.Model):
     extra_obtained=fields.Integer("extra total")
     extra_count=fields.Integer("extra Count")
     extra_fail_count=fields.Integer("Extra Fail")
-    extra_lg=fields.Float('Extra LG')
-    extra_gp=fields.Char("Extra GP")
+    extra_gp=fields.Float('Extra LG')
+    extra_lg=fields.Char("Extra GP")
     extra_gpa = fields.Char("Extra GPA")
 
     optional_obtained=fields.Integer("Optional total")
     optional_count=fields.Integer("optional Count")
     optional_fail_count=fields.Integer("optional Fail Count")
-    optional_lg=fields.Float('Optional LG')
-    optional_gp=fields.Char("Optional GP")
+    optional_gp=fields.Float('Optional LG')
+    optional_lg=fields.Char("Optional GP")
     optional_gpa = fields.Char("Optional GPA")
 
     net_total_mark = fields.Integer(string='Total Marks Scored')
     net_pass = fields.Boolean(string='Overall Pass/Fail')
     net_lg=fields.Char("Letter Grade")
-    net_gp = fields.Char("Net GP")
+    net_gp = fields.Float("Net GP")
     net_gpa=fields.Float("GPA")
 
     working_days=fields.Integer('Working Days')
@@ -119,12 +119,12 @@ class EducationExamResultsNew(models.Model):
                         if new_paper.paper_id.prac_mark>0:
                             if new_paper.prac_pr==True:  #check Present
                                 Passed = False
-                            if new_paper.paper_id.prac_pass>new_paper.prac_mark:
+                            if new_paper.paper_id.prac_pass>new_paper.prac_obt:
                                 Passed=False
-                            obtained=obtained+new_paper.prac_mark
+                            obtained=obtained+new_paper.prac_obt
                             ful_mark=ful_mark+new_paper.paper_id.prac_mark
                             newSubject.prac_mark=newSubject.prac_mark+new_paper.paper_id.prac_mark
-                            newSubject.prac_ob=newSubject.prac_ob+new_paper.prac_mark
+                            newSubject.prac_ob=newSubject.prac_ob+new_paper.prac_obt
 
 
                         if new_paper.paper_id.subj_mark>0:
@@ -196,7 +196,7 @@ class EducationExamResultsNew(models.Model):
                 obtained=0
                 for paper in subject.paper_ids:
                     fullmark = fullmark + paper.paper_id.total_mark
-                    obtained=obtained+paper.paper_id.paper_obtained
+                    obtained=obtained+paper.paper_obt
                     if paper.paper_id in student.student_history.optional_subjects:
                         optional_=True
                     elif paper.paper_id.evaluation_type=='extra':
@@ -241,17 +241,15 @@ class EducationExamResultsNew(models.Model):
                 if extra==True:
                     student.extra_count=student.extra_count+1
                     student.extra_obtained=student.extra_obtained+subject.mark_scored
-                    student.extra_lg=student.extra_lg+fullmark
+                    student.extra_gp=student.extra_gp+subject.grade_point
                     if passed==False:
                         student.extra_fail_count=student.extra_fail_count +1
-                    student.extra_gp=student.extra_gp+subject.grade_point
                 elif optional==True:
                     student.optional_count = student.optional_count + 1
                     student.optional_obtained = student.optional_obtained + subject.mark_scored
-                    student.optional_lg = student.optional_lg + fullmark
+                    student.optional_gp = student.optional_gp + subject.grade_point
                     if passed==False:
                         student.optional_fail_count = student.optional_fail_count + 1
-                    student.optional_gp = student.optional_gp + subject.grade_point
                 else:
                     student.general_count = student.general_count + 1
                     student.general_obtained = student.general_obtained + subject.mark_scored

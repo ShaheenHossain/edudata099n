@@ -67,6 +67,7 @@ class EducationExamResultsNew(models.Model):
     show_subj=fields.Boolean('Show Subj')
     show_obj=fields.Boolean('Show Obj')
     show_prac=fields.Boolean('Show Prac')
+    show_paper=fields.Boolean('Show Papers')
 
     @api.depends('general_gp','general_count')
     def get_general_gpa(self):
@@ -85,7 +86,8 @@ class EducationExamResultsNew(models.Model):
                         optional_40_perc=rec.optional_Full*100/40
                         rec.optional_obtained_above_40_perc=rec.optional_obtained-optional_40_perc
             rec.net_obtained=rec.general_obtained+rec.optional_obtained_above_40_perc
-            rec.net_gpa=rec.general_gpa+(rec.optional_gpa_above_2/rec.general_count)
+            if rec.general_count>0:
+                rec.net_gpa=rec.general_gpa+(rec.optional_gpa_above_2/rec.general_count)
             if rec.extra_count>0:
                 if rec.extra_fail_count<1:
                     rec.extra_gpa=rec.extra_gp/rec.extra_count
@@ -295,6 +297,8 @@ class EducationExamResultsNew(models.Model):
                     student.general_gp = student.general_gp + subject.grade_point
                     if passed==False:
                         student.general_fail_count = student.general_fail_count + 1
+                if paper_count>1:
+                    student.show_paper=True
 
 class ResultsSubjectLineNew(models.Model):
     _name = 'results.subject.line.new'

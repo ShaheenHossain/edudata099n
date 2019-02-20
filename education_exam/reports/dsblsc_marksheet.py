@@ -9,7 +9,140 @@ import numpy
 
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_marksheet'
-    def get_student_marks(self,student):
+    def get_students(self,objects):
+
+        student=[]
+        if objects.specific_student==True :
+            student_list = self.env['education.class.history'].search([('student_id.id', '=', objects.student.id),('academic_year_id.id', '=', objects.academic_year.id)])
+            for stu in student_list:
+                student.extend(stu)
+        elif objects.section:
+            student_list=self.env['education.class.history'].search([('class_id.id', '=', objects.section.id)])
+            for stu in student_list:
+                student.extend(stu)
+        elif objects.level:
+            student_list = self.env['education.class.history'].search([('level.id', '=', objects.level.id),
+                                                                       ('academic_year_id.id', '=', objects.academic_year.id)])
+            for stu in student_list:
+                student.extend(stu)
+
+        return student
+    # def get_subjects(self,student,objects):
+    #     subjects={}
+    #     subjects['general']=[]
+    #     subjects['optional']=[]
+    #     subjects['extra']=[]
+    #     for exam in objects.exams:
+    #         student_line=self.env['education.exam.results.new'].search([('exam_id','=',exam.id),('student_history.id','=',student.id)])
+    #         for subject in student_line.general_subject_line:
+    #             if subject not in subjects['general']:
+    #                 subjects['general'].append(subject)
+    #         for subject in student_line.optional_subject_line:
+    #             if subject not in subjects['optional']:
+    #                 subjects['optional'].append(subject)
+    #         for subject in student_line.extra_subject_line:
+    #             if subject not in subjects['extra']:
+    #                 subjects['extra'].append(subject)
+    #     return subjects
+    def get_subjects(self,student):
+        subjs = {}
+        subjs['general']=[]
+        subjs['optional']=[]
+        subjs['extra']=[]
+        for subj in student.compulsory_subjects:
+            if subj.evaluation_type=='general' :
+                if subj.subject_id not in subjs['general']:
+                    subjs['general'].extend(subj.subject_id)
+                elif subj.evaluation_type=='extra' :
+                    if subj.subject_id not in subjs['extra']:
+                        subjs['extra'].extend(subj.subject_id)
+        for subj in student.optional_subjects:
+            if subj.subject_id not in subjs['optional']:
+                subjs['optional'].extend(subj.subject_id)
+        for subj in student.selective_subjects:
+            if subj.subject_id not in subjs['optional']:
+                if subj.evaluation_type=='general':
+                    if subj.subject_id not in subjs['general']:
+                        subjs['general'].extend(subj.subject_id)
+                if subj.evaluation_type=='extra':
+                    if subj.subject_id not in subjs['extra']:
+                        subjs['extra'].extend(subj.subject_id)
+        return subjs
+
+    def get_student_result(self,student,exam):
+        student_result = self.env['education.exam.results.new'].search(
+                    [('student_history.id', '=', student.id), ('exam_id', '=', exam.id)])
+        return student_result
+
+    def get_exams(self, objects):
+        return objects.exams
+    def get_exam_result(self,objects,student):
+        exam_list={}
+        for exam in objects.exams:
+            result_type_count=0
+            exam_list[exam.id]={}
+            exam_list[exam.id]['result']=self.get_student_result(student,exam)
+            if exam_list[exam.id]['result'].show_obj:
+                result_type_count=result_type_count+1
+            if exam_list[exam.id]['result'].show_tut:
+                result_type_count=result_type_count+1
+            if exam_list[exam.id]['result'].show_subj:
+                result_type_count=result_type_count+1
+            if exam_list[exam.id]['result'].show_prac:
+                result_type_count=result_type_count+1
+            exam_list[exam.id]['row_count'] = result_type_count
+
+        return exam_list
+
+
+
+        ## Ends New version
+        #######################
+
+    def get_result(self,objects):
+        result = {}
+        exams=self.get_exams(objects)
+        for stu in self.get_students(objects):
+            subjects={}
+            optional = {}
+            compulsory={}
+            selective={}
+            for syllabus in stu.optional_subjects:
+                if syllabus.subject_id not in optional:
+                    optional[syllabus.subject_id]={}
+                if syllabus.subject_id not in subjects:
+                    subjects[syllabus.subject_id]={}
+                    subjects[syllabus.subject_id]['type'] = 'optional'
+                optional[syllabus.subject_id][syllabus]={}
+                subjects[syllabus.subject_id][syllabus]={}
+            for syllabus in stu.compulsory_subjects:
+                if syllabus.subject_id not in compulsory:
+                    compulsory[syllabus.subject_id]={}
+                if syllabus.subject_id not in subjects:
+                    subjects[syllabus.subject_id]={}
+                    subjects[syllabus.subject_id]['type'] = 'compulsory'
+                compulsory[syllabus.subject_id][syllabus]={}
+                subjects[syllabus.subject_id][syllabus]={}
+            for syllabus in stu.selective_subjects:
+                if syllabus.subject_id not in selective:
+                    selective[syllabus.subject_id]={}
+                if syllabus.subject_id not in subjects:
+                    subjects[syllabus.subject_id]={}
+                    subjects[syllabus.subject_id]['type']='selective'
+                selective[syllabus.subject_id][syllabus]={}
+                subjects[syllabus.subject_id][syllabus]={}
+            result[stu]={}
+            for exam in exams:
+                result[stu][exam]={}
+                result[stu][exam]['optional']=optional
+                result[stu][exam]['compulsory']=compulsory
+                result[stu][exam]['selective']=selective
+                result[stu][exam]['subjects']=subjects
+
+
+        return result
+
+    def get_student_marks(self,object,student):
         student_or_history = getattr(student_history.student_id, 'id', 'history')
         if student_or_history == 'history':
             student = student_history
@@ -26,11 +159,7 @@ class acdemicTranscripts(models.AbstractModel):
         for result in results:
             return result
 
-    def get_exams(self, objects):
-        obj = []
-        for object in objects.exams:
-           obj.extend(object)
-        return obj
+
 
     def get_students(self,objects):
 
@@ -51,21 +180,21 @@ class acdemicTranscripts(models.AbstractModel):
 
         return student
 
-    def get_subjects(self,student,object,selection_type,evaluation_type):
-        student_history=self.env['education.class.history'].search([('id', '=', student.id),('academic_year_id',"=",object.academic_year.id)])
-        subjs = []
-        if selection_type=='non_optional':
-            for subj in student_history.compulsory_subjects:
-                if subj.evaluation_type==evaluation_type :
-                    subjs.extend(subj)
-            for subj in student_history.selective_subjects:
-                if subj.evaluation_type==evaluation_type:
-                    subjs.extend(subj)
-        else:
-            for subj in student_history.optional_subjects:
-                subjs.extend(subj)
-
-        return subjs
+    # def get_subjects(self,student,object,selection_type,evaluation_type):
+    #     student_history=self.env['education.class.history'].search([('id', '=', student.id),('academic_year_id',"=",object.academic_year.id)])
+    #     subjs = []
+    #     if selection_type=='non_optional':
+    #         for subj in student_history.compulsory_subjects:
+    #             if subj.evaluation_type==evaluation_type :
+    #                 subjs.extend(subj)
+    #         for subj in student_history.selective_subjects:
+    #             if subj.evaluation_type==evaluation_type:
+    #                 subjs.extend(subj)
+    #     else:
+    #         for subj in student_history.optional_subjects:
+    #             subjs.extend(subj)
+    #
+    #     return subjs
 
     def get_subject_group(self,syllabuses):
         groups={}
@@ -85,9 +214,8 @@ class acdemicTranscripts(models.AbstractModel):
             if subj.subject_id==subject.subject_id:
                 papers.append(subj)
         for paper in papers:
-            marks=self.get_marks( exam, paper, student_history)
-            for mark in marks:
-                total=total+mark.mark_scored
+            mark=self.get_marks( exam, paper, student_history)
+            total=total+mark.mark_scored
         return total
 
     def paper_highest(self,subject,exam,subjects):
@@ -238,6 +366,7 @@ class acdemicTranscripts(models.AbstractModel):
             return general_total
         elif evaluation == 'extra':
             return extra_total
+
     def check_pass_fail(self,exam,subject,student):
         fail=0
         if isinstance(subject, list):
@@ -258,8 +387,6 @@ class acdemicTranscripts(models.AbstractModel):
             return "fail"
         else:
             return"pass"
-
-
 
     def get_exam_total(self,exam,student_history,optional,evaluation):
         student = student_history.student_id
@@ -330,8 +457,6 @@ class acdemicTranscripts(models.AbstractModel):
             if o_count!=0:
                 # since optional  gpa over 2 is added
                 additional_gp=(optional_gp/o_count)-2
-                if additional_gp<0:
-                    additional_gp=0
                 gp=(general_gp+additional_gp)/general_count
                 if gp>5:
                     return 5
@@ -511,6 +636,7 @@ class acdemicTranscripts(models.AbstractModel):
         for rec in records:
             count=count+1
         return count
+
     def get_date(self, date):
         date1 = datetime.strptime(date, "%Y-%m-%d")
         return str(date1.month) + ' / ' + str(date1.year)
@@ -544,4 +670,8 @@ class acdemicTranscripts(models.AbstractModel):
             'get_leter_grade': self.get_leter_grade,
             'paper_grade_point': self.paper_grade_point,
             'check_pass_fail': self.check_pass_fail,
+            'get_result': self.get_result,
+            'get_student_result': self.get_student_result,
+            'get_exam_result': self.get_exam_result,
+            'get_subjects': self.get_subjects,
         }

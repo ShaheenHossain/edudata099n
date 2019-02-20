@@ -30,7 +30,6 @@ class acdemicTranscripts(models.AbstractModel):
         obj = []
         for object in objects.exams:
            obj.extend(object)
-
         return obj
 
     def get_students(self,objects):

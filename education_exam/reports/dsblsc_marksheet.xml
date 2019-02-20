@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <template id="external_layout_transcript_dsblsc">
+        <template id="external_layout_marksheet_dsblsc">
 <style>
 
                             .right_top{
@@ -120,9 +120,10 @@
         <!--</div>-->
     </template>
 
-        <template id="report_exam_academic_transcript_dsblsc">
+        <template id="report_dsblsc_marksheet">
             <t t-call="web.html_container">
-                <t t-call="education_exam.external_layout_transcript_dsblsc">
+                <t t-call="education_exam.external_layout_marksheet_dsblsc">
+                <t t-set="merit_list" t-value="get_merit_list(docs)"/>
                 <t t-foreach="get_students(docs)" t-as="student">
 
 
@@ -169,6 +170,75 @@
                                page-break-inside: avoid;
                                 }
                         </style>
+<!--   ######    Variables for the report    -->
+                        <!--<t t-set="s_mark" t-value="get_student_marks(student)"/>-->
+
+                        <t t-set="subject_count" t-value="count_subjects(student,docs,'non_optional')"/>
+                        <t t-set="optional_subject_count" t-value="count_subjects(student,docs,'optional')"/>
+                        <t t-set="gpa" t-value="0"/>
+                        <t t-set="optional_gpa" t-value="0"/>
+                        <t t-set="total_gpa" t-value="0"/>
+                        <t t-set="optional_obtained_total" t-value="0"/>
+                        <t t-set="optional_total" t-value="0"/>
+                        <t t-set="exam_obtained_total" t-value="0"/>
+                        <t t-set="exam_total" t-value="0"/>
+                        <t t-set="marksFromAdditional" t-value="0"/>
+                        <t t-set="tut_field" t-value="0"/>
+                        <t t-set="subj_field" t-value="0"/>
+                        <t t-set="obj_field" t-value="0"/>
+                        <t t-set="prac_field" t-value="0"/>
+                        <t t-set="paper_field" t-value="0"/>
+                        <t t-set="mark_type_count" t-value="0"/>
+                        <t t-set="exams" t-value="get_exams(docs)"/>
+                        <t t-set="fourth_subject" t-value="0"/>
+
+                        <t t-set="subjects" t-value="get_subjects(student,docs,'non_optional','general')"/>
+                        <t t-set="extra_subjects" t-value="get_subjects(student,docs,'non_optional','extra')"/>
+                        <t t-set="extra_count" t-value="len(extra_subjects)"/>
+                        <t t-set="optional_subjects" t-value="get_subjects(student,docs,'optional','general')"/>
+                        <t t-set="subject_count" t-value="len(subjects)"/>
+                        <t t-set="subject_group_count" t-value="len(subjects)"/>
+                        <t t-set="optional_count" t-value="len(optional_subjects)"/>
+                        <t t-set="exam_total" t-value="get_exam_obtained_total"/>
+                        <t t-set="fail_count" t-value="0"/>
+
+                        <t t-if="optional_count&gt;0">
+                            <t t-set="fourth_subject" t-value="1"/>
+                        </t>
+
+
+                        <t t-foreach="subjects" t-as="subject">
+                            <t t-if="subject.paper">
+                                <t t-set="paper_field" t-value="1"/>
+                            </t>
+                            <t t-if="subject.tut_mark&gt;0">
+                               <t t-set="tut_field" t-value="1"/>
+                            </t>
+                             <t t-if="subject.subj_mark&gt;0">
+                               <t t-set="subj_field" t-value="1"/>
+                            </t>
+                            <t t-if="subject.obj_mark&gt;0">
+                               <t t-set="obj_field" t-value="1"/>
+                            </t>
+                            <t t-if="subject.prac_mark&gt;0">
+                               <t t-set="prac_field" t-value="1"/>
+                            </t>
+                        </t>
+                        <t t-if="tut_field==1">
+                            <t t-set="mark_type_count" t-value="mark_type_count+1"/>
+                        </t>
+                        <t t-if="subj_field==1">
+                            <t t-set="mark_type_count" t-value="mark_type_count+1"/>
+                        </t>
+                        <t t-if="obj_field==1">
+                            <t t-set="mark_type_count" t-value="mark_type_count+1"/>
+                        </t>
+                        <t t-if="prac_field==1">
+                            <t t-set="mark_type_count" t-value="mark_type_count+1"/>
+                        </t>
+
+<!--   ######    Variables for the report    -->
+
                         <div class="page" page-breake-inside="avoid">
                             <div class="oe_structure">
                                 <div class="dont_split">

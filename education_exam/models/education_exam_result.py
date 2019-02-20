@@ -15,6 +15,9 @@ class EducationExamResultsNew(models.Model):
     student_history=fields.Many2one('education.class.history',"Student History",compute="get_student_history",store=True)
     student_name = fields.Char(string='Student')
     subject_line = fields.One2many('results.subject.line.new', 'result_id', string='Subjects')
+    general_subject_line = fields.One2many('results.subject.line.new', 'general_for', string='General Subjects')
+    optional_subject_line = fields.One2many('results.subject.line.new', 'optional_for', string='optional Subjects')
+    extra_subject_line = fields.One2many('results.subject.line.new', 'extra_for', string='extra Subjects')
     academic_year = fields.Many2one('education.academic.year', string='Academic Year',
                                     related='division_id.academic_year_id', store=True)
     company_id = fields.Many2one('res.company', string='Company',
@@ -22,28 +25,30 @@ class EducationExamResultsNew(models.Model):
     total_pass_mark = fields.Integer(string='Total Pass Mark')
     total_max_mark = fields.Integer(string='Total Max Mark')
 
+    general_full_mark=fields.Integer("Full Mark")
     general_obtained=fields.Integer("General_total")
     general_count=fields.Integer("General Count")
     general_fail_count = fields.Integer("Genera Fail")
     general_gp=fields.Float('general LG')
-    general_lg=fields.Char("general GP")
-    general_gpa = fields.Char("general GPA")
+    general_gpa = fields.Float("general GPA",compute="get_general_gpa",store=True)
 
+    extra_Full=fields.Integer("extra Full mark")
     extra_obtained=fields.Integer("extra total")
     extra_count=fields.Integer("extra Count")
     extra_fail_count=fields.Integer("Extra Fail")
     extra_gp=fields.Float('Extra LG')
-    extra_lg=fields.Char("Extra GP")
-    extra_gpa = fields.Char("Extra GPA")
+    extra_gpa = fields.Float("Extra GPA")
 
-    optional_obtained=fields.Integer("Optional total")
+    optional_Full=fields.Integer("Optional full")
+    optional_obtained=fields.Integer("Optional obtained")
     optional_count=fields.Integer("optional Count")
     optional_fail_count=fields.Integer("optional Fail Count")
     optional_gp=fields.Float('Optional LG')
-    optional_lg=fields.Char("Optional GP")
     optional_gpa = fields.Char("Optional GPA")
+    optional_gpa_above_2 = fields.Float("Optional GPA Above 2")
+    optional_obtained_above_40_perc=fields.Integer("Aditional marks from optionals")
 
-    net_total_mark = fields.Integer(string='Total Marks Scored')
+    net_obtained = fields.Integer(string='Total Marks Scored')
     net_pass = fields.Boolean(string='Overall Pass/Fail')
     net_lg=fields.Char("Letter Grade")
     net_gp = fields.Float("Net GP")
@@ -57,6 +62,34 @@ class EducationExamResultsNew(models.Model):
     uniform=fields.Char("Uniform")
     cultural=fields.Char("Caltural Activities")
     state=fields.Selection([('draft',"Draft"),('done',"Done")],"State",default='draft')
+
+    show_tut=fields.Boolean('Show Tutorial')
+    show_subj=fields.Boolean('Show Subj')
+    show_obj=fields.Boolean('Show Obj')
+    show_prac=fields.Boolean('Show Prac')
+
+    @api.depends('general_gp','general_count')
+    def get_general_gpa(self):
+        for rec in self:
+            if rec.general_count>0:
+                if rec.general_fail_count<1:
+                    if rec.extra_fail_count < 1:
+                        rec.general_gpa=rec.general_gp/rec.general_count
+            if rec.optional_count>0:
+                if rec.optional_fail_count<1:
+                    rec.optional_gpa=rec.optional_gp/rec.optional_count
+                    if rec.optional_gpa>2:
+                        rec.optional_gpa_above_2=rec.optional_gpa-2
+
+                    if rec.optional_gpa>0:
+                        optional_40_perc=rec.optional_Full*100/40
+                        rec.optional_obtained_above_40_perc=rec.optional_obtained-optional_40_perc
+            rec.net_obtained=rec.general_obtained+rec.optional_obtained_above_40_perc
+            rec.net_gpa=rec.general_gpa+(rec.optional_gpa_above_2/rec.general_count)
+            if rec.extra_count>0:
+                if rec.extra_fail_count<1:
+                    rec.extra_gpa=rec.extra_gp/rec.extra_count
+
 
     @api.depends('student_id','class_id')
     def get_student_history(self):
@@ -117,7 +150,7 @@ class EducationExamResultsNew(models.Model):
 
                     if newResult.class_id.id==11: # here 11 is for class SSC
                         if new_paper.paper_id.prac_mark>0:
-                            if new_paper.prac_pr==True:  #check Present
+                            if new_paper.prac_pr==False:  #check Present
                                 Passed = False
                             if new_paper.paper_id.prac_pass>new_paper.prac_obt:
                                 Passed=False
@@ -128,7 +161,7 @@ class EducationExamResultsNew(models.Model):
 
 
                         if new_paper.paper_id.subj_mark>0:
-                            if new_paper.subj_pr==True:  #check Present
+                            if new_paper.subj_pr==False:  #check Present
                                 Passed = False
                             if new_paper.paper_id.subj_pass>new_paper.subj_obt:
                                 Passed=False
@@ -137,7 +170,7 @@ class EducationExamResultsNew(models.Model):
                             newSubject.subj_mark = newSubject.subj_mark + new_paper.paper_id.subj_mark
                             newSubject.subj_ob = newSubject.subj_ob + new_paper.subj_obt
                         if new_paper.paper_id.obj_mark>0:
-                            if new_paper.obj_pr==True:  #check Present
+                            if new_paper.obj_pr==False:  #check Present
                                 Passed = False
                             if new_paper.paper_id.obj_pass>new_paper.obj_obt:
                                 Passed=False
@@ -146,7 +179,7 @@ class EducationExamResultsNew(models.Model):
                             newSubject.obj_mark = newSubject.obj_mark + new_paper.paper_id.obj_mark
                             newSubject.obj_ob = newSubject.obj_ob + new_paper.obj_obt
                         if new_paper.paper_id.tut_mark>0:
-                            if new_paper.tut_pr==True:  #check Present
+                            if new_paper.tut_pr==False:  #check Present
                                 Passed = False
                             if new_paper.paper_id.tut_pass>new_paper.tut_obt:
                                 Passed=False
@@ -205,6 +238,14 @@ class EducationExamResultsNew(models.Model):
                     paper_count=paper_count+1
                     if paper.passed==False:
                         passed=False
+                    if paper.paper_id.tut_mark>0:
+                        student.show_tut=True
+                    if paper.paper_id.subj_mark>0:
+                        student.show_subj=True
+                    if paper.paper_id.obj_mark>0:
+                        student.show_obj=True
+                    if paper.paper_id.prac_mark>0:
+                        student.show_prac=True
                 subject.max_mark=fullmark
                 subject.mark_scored=obtained
                ########################################################
@@ -225,11 +266,6 @@ class EducationExamResultsNew(models.Model):
 
                 #end of pass fail rules
                 ###############################################################
-
-
-
-
-
                 if passed==True:
                     subject.grade_point=self.env['education.result.grading'].get_grade_point(fullmark,subject.mark_scored)
                     grades = self.env['education.result.grading'].search([('score', '<=', subject.grade_point)],
@@ -239,28 +275,34 @@ class EducationExamResultsNew(models.Model):
                     subject.grade_point=0
                     subject.letter_grade="F"
                 if extra==True:
+                    subject.extra_for=student.id
                     student.extra_count=student.extra_count+1
                     student.extra_obtained=student.extra_obtained+subject.mark_scored
                     student.extra_gp=student.extra_gp+subject.grade_point
                     if passed==False:
                         student.extra_fail_count=student.extra_fail_count +1
                 elif optional==True:
+                    subject.optional_for=student.id
                     student.optional_count = student.optional_count + 1
                     student.optional_obtained = student.optional_obtained + subject.mark_scored
                     student.optional_gp = student.optional_gp + subject.grade_point
                     if passed==False:
                         student.optional_fail_count = student.optional_fail_count + 1
                 else:
+                    subject.general_for=student.id
                     student.general_count = student.general_count + 1
                     student.general_obtained = student.general_obtained + subject.mark_scored
+                    student.general_gp = student.general_gp + subject.grade_point
                     if passed==False:
                         student.general_fail_count = student.general_fail_count + 1
-                    student.general_gp = student.general_gp + subject.grade_point
 
 class ResultsSubjectLineNew(models.Model):
     _name = 'results.subject.line.new'
     name = fields.Char(string='Name')
     result_id = fields.Many2one('education.exam.results.new', string='Result Id', ondelete="cascade")
+    general_for = fields.Many2one('education.exam.results.new', string='General', ondelete="cascade")
+    optional_for = fields.Many2one('education.exam.results.new', string='optional', ondelete="cascade")
+    extra_for = fields.Many2one('education.exam.results.new', string='Extra', ondelete="cascade")
     subject_id = fields.Many2one('education.subject', string='Subject')
     paper_ids=fields.One2many('results.paper.line','subject_line','Papers')
     tut_mark = fields.Integer(string='Tutorial')

@@ -9,90 +9,7 @@ import numpy
 
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_marksheet'
-
-    def get_result(self,objects):
-        result = {}
-        exams=self.get_exams(objects)
-        for stu in self.get_students(objects):
-            subjects={}
-            optional = {}
-            compulsory={}
-            selective={}
-            for syllabus in stu.optional_subjects:
-                if syllabus.subject_id not in optional:
-                    optional[syllabus.subject_id]={}
-                if syllabus.subject_id not in subjects:
-                    subjects[syllabus.subject_id]={}
-                    subjects[syllabus.subject_id]['type'] = 'optional'
-                optional[syllabus.subject_id][syllabus]={}
-                subjects[syllabus.subject_id][syllabus]={}
-            for syllabus in stu.compulsory_subjects:
-                if syllabus.subject_id not in compulsory:
-                    compulsory[syllabus.subject_id]={}
-                if syllabus.subject_id not in subjects:
-                    subjects[syllabus.subject_id]={}
-                    subjects[syllabus.subject_id]['type'] = 'compulsory'
-                compulsory[syllabus.subject_id][syllabus]={}
-                subjects[syllabus.subject_id][syllabus]={}
-            for syllabus in stu.selective_subjects:
-                if syllabus.subject_id not in selective:
-                    selective[syllabus.subject_id]={}
-                if syllabus.subject_id not in subjects:
-                    subjects[syllabus.subject_id]={}
-                    subjects[syllabus.subject_id]['type']='selective'
-                selective[syllabus.subject_id][syllabus]={}
-                subjects[syllabus.subject_id][syllabus]={}
-            result[stu]={}
-            for exam in exams:
-                result[stu][exam]={}
-                result[stu][exam]['optional']=optional
-                result[stu][exam]['compulsory']=compulsory
-                result[stu][exam]['selective']=selective
-                result[stu][exam]['subjects']=subjects
-
-
-        return result
-    def get_students(self,objects):
-
-        student=[]
-        if objects.specific_student==True :
-            student_list = self.env['education.class.history'].search([('student_id.id', '=', objects.student.id),('academic_year_id.id', '=', objects.academic_year.id)])
-            for stu in student_list:
-                student.extend(stu)
-        elif objects.section:
-            student_list=self.env['education.class.history'].search([('class_id.id', '=', objects.section.id)])
-            for stu in student_list:
-                student.extend(stu)
-        elif objects.level:
-            student_list = self.env['education.class.history'].search([('level.id', '=', objects.level.id),
-                                                                       ('academic_year_id.id', '=', objects.academic_year.id)])
-            for stu in student_list:
-                student.extend(stu)
-
-        return student
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    def get_student_marks(self,object,student):
+    def get_student_marks(self,student):
         student_or_history = getattr(student_history.student_id, 'id', 'history')
         if student_or_history == 'history':
             student = student_history
@@ -113,7 +30,6 @@ class acdemicTranscripts(models.AbstractModel):
         obj = []
         for object in objects.exams:
            obj.extend(object)
-
         return obj
 
     def get_students(self,objects):
@@ -169,8 +85,9 @@ class acdemicTranscripts(models.AbstractModel):
             if subj.subject_id==subject.subject_id:
                 papers.append(subj)
         for paper in papers:
-            mark=self.get_marks( exam, paper, student_history)
-            total=total+mark.mark_scored
+            marks=self.get_marks( exam, paper, student_history)
+            for mark in marks:
+                total=total+mark.mark_scored
         return total
 
     def paper_highest(self,subject,exam,subjects):
@@ -321,7 +238,6 @@ class acdemicTranscripts(models.AbstractModel):
             return general_total
         elif evaluation == 'extra':
             return extra_total
-
     def check_pass_fail(self,exam,subject,student):
         fail=0
         if isinstance(subject, list):
@@ -342,6 +258,8 @@ class acdemicTranscripts(models.AbstractModel):
             return "fail"
         else:
             return"pass"
+
+
 
     def get_exam_total(self,exam,student_history,optional,evaluation):
         student = student_history.student_id
@@ -412,6 +330,8 @@ class acdemicTranscripts(models.AbstractModel):
             if o_count!=0:
                 # since optional  gpa over 2 is added
                 additional_gp=(optional_gp/o_count)-2
+                if additional_gp<0:
+                    additional_gp=0
                 gp=(general_gp+additional_gp)/general_count
                 if gp>5:
                     return 5
@@ -591,7 +511,6 @@ class acdemicTranscripts(models.AbstractModel):
         for rec in records:
             count=count+1
         return count
-
     def get_date(self, date):
         date1 = datetime.strptime(date, "%Y-%m-%d")
         return str(date1.month) + ' / ' + str(date1.year)
@@ -625,5 +544,4 @@ class acdemicTranscripts(models.AbstractModel):
             'get_leter_grade': self.get_leter_grade,
             'paper_grade_point': self.paper_grade_point,
             'check_pass_fail': self.check_pass_fail,
-            'get_result': self.get_result,
         }

@@ -20,6 +20,7 @@
         'views/examination.xml',
         'views/exam_valuation.xml',
         'views/exam_results.xml',
+        'views/education_exam_results.xml',
         'views/student_view.xml',
         'reports/exam_academic_transcript.xml',
         'reports/exam_academic_transcript1.xml',

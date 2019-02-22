@@ -27,46 +27,40 @@ class acdemicTranscripts(models.AbstractModel):
                 student.extend(stu)
 
         return student
-    # def get_subjects(self,student,objects):
-    #     subjects={}
-    #     subjects['general']=[]
-    #     subjects['optional']=[]
-    #     subjects['extra']=[]
-    #     for exam in objects.exams:
-    #         student_line=self.env['education.exam.results.new'].search([('exam_id','=',exam.id),('student_history.id','=',student.id)])
-    #         for subject in student_line.general_subject_line:
-    #             if subject not in subjects['general']:
-    #                 subjects['general'].append(subject)
-    #         for subject in student_line.optional_subject_line:
-    #             if subject not in subjects['optional']:
-    #                 subjects['optional'].append(subject)
-    #         for subject in student_line.extra_subject_line:
-    #             if subject not in subjects['extra']:
-    #                 subjects['extra'].append(subject)
-    #     return subjects
     def get_subjects(self,student):
         subjs = {}
         subjs['general']=[]
         subjs['optional']=[]
         subjs['extra']=[]
+        gen_row_count=0
+        op_row_count=0
+        ex_row_count=0
         for subj in student.compulsory_subjects:
             if subj.evaluation_type=='general' :
+                gen_row_count=gen_row_count+1
                 if subj.subject_id not in subjs['general']:
-                    subjs['general'].extend(subj.subject_id)
-                elif subj.evaluation_type=='extra' :
-                    if subj.subject_id not in subjs['extra']:
-                        subjs['extra'].extend(subj.subject_id)
+                    subjs['general'].append(subj.subject_id)
+            elif subj.evaluation_type=='extra' :
+                ex_row_count=ex_row_count+1
+                if subj.subject_id not in subjs['extra']:
+                    subjs['extra'].append(subj.subject_id)
         for subj in student.optional_subjects:
+            op_row_count=op_row_count+1
             if subj.subject_id not in subjs['optional']:
-                subjs['optional'].extend(subj.subject_id)
+                subjs['optional'].append(subj.subject_id)
         for subj in student.selective_subjects:
             if subj.subject_id not in subjs['optional']:
                 if subj.evaluation_type=='general':
+                    gen_row_count = gen_row_count + 1
                     if subj.subject_id not in subjs['general']:
-                        subjs['general'].extend(subj.subject_id)
+                        subjs['general'].append(subj.subject_id)
                 if subj.evaluation_type=='extra':
+                    ex_row_count = ex_row_count + 1
                     if subj.subject_id not in subjs['extra']:
-                        subjs['extra'].extend(subj.subject_id)
+                        subjs['extra'].append(subj.subject_id)
+        subjs['gen_row_count']=gen_row_count
+        subjs['op_row_count']=op_row_count
+        subjs['ex_row_count']=ex_row_count
         return subjs
 
     def get_student_result(self,student,exam):
@@ -93,6 +87,21 @@ class acdemicTranscripts(models.AbstractModel):
             exam_list[exam.id]['row_count'] = result_type_count
 
         return exam_list
+    def get_results(self,objects):
+        results={}
+        students = self.get_students(objects)
+        for exam in objects.exams:
+            results[exam.id]={}
+            for student in students:
+                results[exam.id][student.id]={}
+                student_result = self.env['education.exam.results.new'].search(
+                    [('student_history.id', '=', student.id), ('exam_id', '=', exam.id)])
+                results[exam.id][student.id]['result']=student_result
+                for subject in student_result.subject_line:
+                    results[exam.id][student.id][subject.subject_id.id]=subject
+
+        return results
+
 
 
 
@@ -154,10 +163,10 @@ class acdemicTranscripts(models.AbstractModel):
 
 
 
-    def get_results(self,student,exam):
-        results=self.env['education.exam.results'].search([('exam_id','=',exam.id),('student_id','=',student.id)])
-        for result in results:
-            return result
+    # def get_results(self,student,exam):
+    #     results=self.env['education.exam.results'].search([('exam_id','=',exam.id),('student_id','=',student.id)])
+    #     for result in results:
+    #         return result
 
 
 

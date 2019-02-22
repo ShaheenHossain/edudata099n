@@ -125,7 +125,7 @@
                 <t t-call="education_exam.external_layout_mark_sheet_dsblsc">
                     <t t-set="exams" t-value="get_exams(docs)"/>
                     <t t-foreach="get_students(docs)" t-as="student">
-                        <t t-set="exam_result" t-value="get_exam_result(docs,student)"/>
+                        <t t-set="results" t-value="get_results(docs)"/>
                         <t t-set="subjects" t-value="get_subjects(student)"/>
 
 
@@ -217,21 +217,20 @@
                                           <t t-foreach="exams" t-as="exam">
 
                                               <t t-set="fourth_subject" t-value="0"/>
-                                              <!--here we decide which fields to show
-                                              ie tut, subj, obj, prac -->
 
                             <!-- if there is 4th subjects -->
-                                              <t t-if="exam_result[exam.id]['result'].optional_count>0">
+                                              <t t-if="results[exam.id][student.id]['result'].optional_count>0">
                                                   <t t-set="fourth_subject" t-value="1"/>
                                               </t>
                           <!--print headings for marksheet-->
                                               <t t-if="exam_first">
                                                   <th rowspan="3">Subjects</th>
-                                                  <t t-if="exam_result[exam.id]['result'].show_paper">
+                                                  show paper=<t t-esc="results[exam.id][student.id]['result'].show_paper"/>
+                                                  <t t-if="results[exam.id][student.id]['result'].show_paper">
                                                       <th rowspan="3">Papers</th>
                                                   </t>
-                                                  <th t-att-colspan="exam_result[exam.id]['row_count']*2+1" rowspan="2">Full marks</th>
-                                                  <th t-att-colspan="exam_result[exam.id]['row_count']+fourth_subject+5">
+                                                  <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count*2+1" rowspan="2">Full marks</th>
+                                                  <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count+fourth_subject+5">
                                                       <t t-esc="exam.name"/>
                                                   </th>
                                               </t>
@@ -239,49 +238,52 @@
                                     </tr>
                                     <tr>
                                         <t t-foreach="exams" t-as="exam">
-                                            <th t-att-colspan="exam_result[exam.id]['row_count']">Marks obtained</th>
+                                            <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count">Marks obtained</th>
                                             <th rowspan="2">Total marks</th>
                                             <th rowspan="2">Highest marks</th>
                                             <th rowspan="2">LG</th>
                                             <th rowspan="2">GP</th>
                                             <t t-if="fourth_subject==1">
                                                 <th rowspan="2">GPA <br>(without 4th Sub)</br></th>
+                                                <th rowspan="2">GPA <br>(with 4th sub)</br></th>
                                             </t>
-                                            <th rowspan="2">GPA <br>(with 4th sub)</br></th>
+                                            <t t-else="">
+                                                <th rowspan="2">GPA </th>
+                                            </t>
                                         </t>
                                     </tr>
                                     <t t-foreach="exams" t-as="exam">
                                         <t t-if="exam_first">
                                               <!--here I input <tr>-->
                                             <p>&lt;tr&gt;</p>
-                                            <t t-if="exam_result[exam.id]['result'].show_tut">
+                                            <t t-if="results[exam.id][student.id]['result'].show_tut">
                                                 <td>Tut</td>
                                                 <td>Pass Mark</td>
                                             </t>
-                                            <t t-if="exam_result[exam.id]['result'].show_subj">
+                                            <t t-if="results[exam.id][student.id]['result'].show_subj">
                                                 <td>Sub</td>
                                                 <td>pass</td>
                                             </t>
-                                            <t t-if="exam_result[exam.id]['result'].show_subj">
+                                            <t t-if="results[exam.id][student.id]['result'].show_subj">
                                                 <td>Obj</td>
                                                 <td>Pass</td>
                                             </t>
-                                            <t t-if="exam_result[exam.id]['result'].show_prac">
+                                            <t t-if="results[exam.id][student.id]['result'].show_prac">
                                                 <td>Prac</td>
                                                 <td>pass</td>
                                             </t>
                                             <td>Total</td>
                                         </t>
-                                        <t t-if="exam_result[exam.id]['result'].show_tut">
+                                        <t t-if="results[exam.id][student.id]['result'].show_tut">
                                             <td>Tut</td>
                                         </t>
-                                        <t t-if="exam_result[exam.id]['result'].show_subj">
+                                        <t t-if="results[exam.id][student.id]['result'].show_subj">
                                             <td>Sub</td>
                                         </t>
-                                        <t t-if="exam_result[exam.id]['result'].show_obj">
+                                        <t t-if="results[exam.id][student.id]['result'].show_obj">
                                             <td>Obj</td>
                                         </t>
-                                        <t t-if="exam_result[exam.id]['result'].show_prac">
+                                        <t t-if="results[exam.id][student.id]['result'].show_prac">
                                             <td>Prac</td>
                                         </t>
                                         <t t-if="exam_last">
@@ -289,14 +291,22 @@
                                             <p>&lt;/tr&gt;</p>
                                         </t>
                                     </t>
-<!---->
-<!---->
                                     <t t-foreach="subjects['general']" t-as="subject">
-
                                         <tr>
                                             <t t-foreach="exams" t-as="exam">
+                                                <t t-set="result_line" t-value="results[exam.id][student.id][subject.id]"/>
+
                                                 <t t-if="exam_first">
-                                                    <t tesc="subject"/>
+                                                    <td>
+                                                        <t t-esc="result_line.subject_id.name"/>
+                                                    </td>
+                                                </t>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                    </table>
+
+                                </div>
                                                     <!--<t t-if="subject.paper=='1st'">-->
                                                         <!--<td rowspan="2">-->
                                                             <!--<span t-field="subject.subject_id"/>-->
@@ -310,7 +320,7 @@
                                                             <!--</td>-->
                                                         <!--</t>-->
                                                     <!--</t>-->
-
+<!---->
 
                                                     <!--<t t-if="paper_field==1">-->
                                                        <!--<td>-->
@@ -554,9 +564,11 @@
                                                    <!--</t>-->
                                                 <!--</t>-->
                                             <!--</t>-->
-                                                </t></t></tr>
+                                                <!--</t>-->
+                                        <!--</t>-->
+                                    <!--</tr>-->
 
-                                    </t>
+                                    <!--</t>-->
                                     <!--<tr>-->
                                         <!--<t t-foreach="exams" t-as="exam">-->
                                                        <!--<t t-if="exam_first">-->
@@ -922,10 +934,8 @@
 
                                         <!--</t>-->
 
+                                     <!--</tr>-->
 
-                                    </table>
-
-                                </div>
 
                                 <!--<div class="row"><br/></div>-->
                                 <!--<div class="row">-->

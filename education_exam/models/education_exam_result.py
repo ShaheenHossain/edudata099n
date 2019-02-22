@@ -28,6 +28,7 @@ class EducationExamResultsNew(models.Model):
     general_full_mark=fields.Integer("Full Mark")
     general_obtained=fields.Integer("General_total")
     general_count=fields.Integer("General Count")
+    general_row_count=fields.Integer("General Count")
     general_fail_count = fields.Integer("Genera Fail")
     general_gp=fields.Float('general LG')
     general_gpa = fields.Float("general GPA",compute="get_general_gpa",store=True)
@@ -35,6 +36,7 @@ class EducationExamResultsNew(models.Model):
     extra_Full=fields.Integer("extra Full mark")
     extra_obtained=fields.Integer("extra total")
     extra_count=fields.Integer("extra Count")
+    extra_row_count=fields.Integer("extra Row Count")
     extra_fail_count=fields.Integer("Extra Fail")
     extra_gp=fields.Float('Extra LG')
     extra_gpa = fields.Float("Extra GPA")
@@ -42,6 +44,7 @@ class EducationExamResultsNew(models.Model):
     optional_Full=fields.Integer("Optional full")
     optional_obtained=fields.Integer("Optional obtained")
     optional_count=fields.Integer("optional Count")
+    optional_row_count=fields.Integer("optional Row Count")
     optional_fail_count=fields.Integer("optional Fail Count")
     optional_gp=fields.Float('Optional LG')
     optional_gpa = fields.Char("Optional GPA")
@@ -68,6 +71,20 @@ class EducationExamResultsNew(models.Model):
     show_obj=fields.Boolean('Show Obj')
     show_prac=fields.Boolean('Show Prac')
     show_paper=fields.Boolean('Show Papers')
+    result_type_count=fields.Integer("result type Count",compute="get_result_type_count")
+    @api.depends('show_tut','show_subj','show_obj','show_prac')
+    def get_result_type_count(self):
+        for rec in self:
+            res_type_count=0
+            if rec.show_tut==True:
+                res_type_count=res_type_count+1
+            if rec.show_subj==True:
+                res_type_count=res_type_count+1
+            if rec.show_obj==True:
+                res_type_count=res_type_count+1
+            if rec.show_prac==True:
+                res_type_count=res_type_count+1
+            rec.result_type_count=res_type_count
 
     @api.depends('general_gp','general_count')
     def get_general_gpa(self):
@@ -123,7 +140,7 @@ class EducationExamResultsNew(models.Model):
                 subject_list = {}
                 for paper in result.subject_line_ids:
                     subjectId=paper.subject_id.subject_id
-                    if subjectId.id not in subject_list:
+                    if subjectId not in subject_list:
                         subject_list[subjectId]=newResult
                         subject_data={
                             "subject_id":subjectId.id,
@@ -278,6 +295,7 @@ class EducationExamResultsNew(models.Model):
                     subject.letter_grade="F"
                 if extra==True:
                     subject.extra_for=student.id
+                    student.extra_row_count=student.extra_row_count+paper_count
                     student.extra_count=student.extra_count+1
                     student.extra_obtained=student.extra_obtained+subject.mark_scored
                     student.extra_gp=student.extra_gp+subject.grade_point
@@ -286,6 +304,7 @@ class EducationExamResultsNew(models.Model):
                 elif optional==True:
                     subject.optional_for=student.id
                     student.optional_count = student.optional_count + 1
+                    student.optional_row_count = student.optional_row_count + paper_count
                     student.optional_obtained = student.optional_obtained + subject.mark_scored
                     student.optional_gp = student.optional_gp + subject.grade_point
                     if passed==False:
@@ -293,13 +312,14 @@ class EducationExamResultsNew(models.Model):
                 else:
                     subject.general_for=student.id
                     student.general_count = student.general_count + 1
+                    student.general_row_count = student.general_row_count + paper_count
                     student.general_obtained = student.general_obtained + subject.mark_scored
                     student.general_gp = student.general_gp + subject.grade_point
                     if passed==False:
                         student.general_fail_count = student.general_fail_count + 1
                 if paper_count>1:
                     student.show_paper=True
-
+        ddd=student.general_subject_line
 class ResultsSubjectLineNew(models.Model):
     _name = 'results.subject.line.new'
     name = fields.Char(string='Name')

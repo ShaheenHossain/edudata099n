@@ -141,13 +141,13 @@ class EducationExamResultsNew(models.Model):
                 for paper in result.subject_line_ids:
                     subjectId=paper.subject_id.subject_id
                     if subjectId not in subject_list:
-                        subject_list[subjectId]=newResult
                         subject_data={
                             "subject_id":subjectId.id,
                             "result_id":newResult.id,
 
                         }
                         newSubject=self.env["results.subject.line.new"].create(subject_data)
+                        subject_list[subjectId] = newSubject
                     else:
                         newSubject=subject_list[subjectId]
                     paper_data={
@@ -322,7 +322,7 @@ class EducationExamResultsNew(models.Model):
         ddd=student.general_subject_line
 class ResultsSubjectLineNew(models.Model):
     _name = 'results.subject.line.new'
-    name = fields.Char(string='Name')
+    name = fields.Char(string='Name',related='subject_id.name')
     result_id = fields.Many2one('education.exam.results.new', string='Result Id', ondelete="cascade")
     general_for = fields.Many2one('education.exam.results.new', string='General', ondelete="cascade")
     optional_for = fields.Many2one('education.exam.results.new', string='optional', ondelete="cascade")
@@ -348,7 +348,7 @@ class ResultsSubjectLineNew(models.Model):
 
 class result_paper_line(models.Model):
     _name = 'results.paper.line'
-    subject_line=fields.Many2one('results.subject.line.new','Subject_id',ondelete="cascade")
+    subject_line=fields.Many2one('results.subject.line.new',ondelete="cascade")
     paper_id=fields.Many2one("education.syllabus","Paper")
     tut_obt = fields.Integer(string='Tutorial')
     subj_obt = fields.Integer(string='Subjective')

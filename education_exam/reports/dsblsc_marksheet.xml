@@ -225,7 +225,7 @@
                           <!--print headings for marksheet-->
                                               <t t-if="exam_first">
                                                   <th rowspan="3">Subjects</th>
-                                                  show paper=<t t-esc="results[exam.id][student.id]['result'].show_paper"/>
+
                                                   <t t-if="results[exam.id][student.id]['result'].show_paper">
                                                       <th rowspan="3">Papers</th>
                                                   </t>
@@ -297,9 +297,33 @@
                                                 <t t-set="result_line" t-value="results[exam.id][student.id][subject.id]"/>
 
                                                 <t t-if="exam_first">
-                                                    <td>
+                                                    <td t-att-rowspan="len(result_line.paper_ids)">
                                                         <t t-esc="result_line.subject_id.name"/>
                                                     </td>
+                                                    <t t-foreach="result_line.paper_ids" t-as="paper_name">
+                                                        <t t-if="results[exam.id][student.id]['result'].show_paper">
+                                                            <td>
+                                                                <t t-esc="paper_name.paper_id.name"/>
+                                                            </td>
+                                                        </t>
+                                                        <t t-if="results[exam.id][student.id]['result'].show_tut">
+                                                            <td>
+                                                                <t t-esc="paper_name.paper_id.tut_mark"/>
+                                                            </td>
+                                                        </t>
+                                                        <t t-if="results[exam.id][student.id]['result'].show_subj">
+                                                            <td>
+                                                                <t t-esc="paper_name.paper_id.subj_mark"/>
+                                                            </td>
+                                                        </t>
+                                                        <t t-if="results[exam.id][student.id]['result'].show_obj">
+                                                            <td>Obj</td>
+                                                        </t>
+                                                        <t t-if="results[exam.id][student.id]['result'].show_prac">
+                                                            <td>Prac</td>
+                                                        </t>
+                                                        <p>&lt;/tr&gt;&lt;tr&gt;</p>
+                                                    </t>
                                                 </t>
                                             </t>
                                         </tr>

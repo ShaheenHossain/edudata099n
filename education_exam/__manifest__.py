@@ -22,6 +22,8 @@
         'views/exam_results.xml',
         'views/education_exam_results.xml',
         'views/student_view.xml',
+        'views/exam_pass_rule.xml',
+        'views/test.xml',
         'reports/exam_academic_transcript.xml',
         'reports/exam_academic_transcript1.xml',
         'reports/exam_evaluation.xml',

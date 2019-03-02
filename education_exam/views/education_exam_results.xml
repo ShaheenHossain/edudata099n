@@ -121,17 +121,29 @@
             <field name="model">results.paper.line</field>
             <field name="arch" type="xml">
                 <form  >
-                    <sheet>
+                    <group>
+                        <field name="subject_line" />
+                        <field name="paper_id" />
+                    </group>
+                    <group>
                         <group>
-                                <field name="subject_line" />
-                                <field name="paper_id" />
-                            </group>
-                    </sheet>
+                            <field name="tut_obt"/>
+                            <field name="subj_obt"/>
+                            <field name="obj_obt"/>
+                            <field name="prac_obt"/>
+                        </group>
+                        <group>
+                            <field name="paper_obt"/>
+                            <field name="passed"/>
+                            <field name="gp"/>
+                            <field name="lg"/>
+                        </group>
+                    </group>
                 </form>
             </field>
         </record>
     <record id="education_exam_paper_line_tree" model="ir.ui.view">
-            <field name="name">education_exam_paper_line_form</field>
+            <field name="name">education_exam_paper_line_tree</field>
             <field name="model">results.paper.line</field>
             <field name="arch" type="xml">
                 <tree >

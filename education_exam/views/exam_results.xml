@@ -35,10 +35,10 @@
                                 <field name="subject_line">
                                     <tree>
                                         <field name="subject_id"/>
-                                        <field name="tut_mark" sum="tutorial"/>
-                                        <field name="subj_mark" sum="tutorial"/>
-                                        <field name="obj_mark" sum="tutorial"/>
-                                        <field name="prac_mark" sum="tutorial"/>
+                                        <field name="tut_obt" sum="tutorial"/>
+                                        <field name="subj_obt" sum="tutorial"/>
+                                        <field name="obj_obt" sum="tutorial"/>
+                                        <field name="prac_obt" sum="tutorial"/>
                                         <field name="max_mark" sum="Total"/>
                                         <field name="pass_mark" sum="Total"/>
                                         <field name="mark_scored" sum="Total"/>
@@ -136,10 +136,10 @@
                     <field name="class_id"/>
                     <field name="division_id"/>
                     <field name="subject_id"/>
-                    <field name="tut_mark" />
-                    <field name="subj_mark"/>
-                    <field name="obj_mark"/>
-                    <field name="prac_mark" />
+                    <field name="tut_obt" />
+                    <field name="subj_obt"/>
+                    <field name="obj_obt"/>
+                    <field name="prac_obt" />
                     <field name="max_mark"/>
                     <field name="pass_mark"/>
                     <field name="mark_scored"/>

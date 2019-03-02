@@ -23,3 +23,13 @@ class resultGradingSystem(models.Model):
                 if gr.min_per <= per_obtained and gr.max_per >= per_obtained:
                     grade_point = gr.score
         return grade_point
+    @api.multi
+    def get_letter_grade(self,ful_mark,obtained):
+        letter_grade='F'
+        if ful_mark>0:
+            per_obtained = ((obtained * 100) / ful_mark)
+            grades = self.search([['id', '>', '0']])
+            for gr in grades:
+                if gr.min_per <= per_obtained and gr.max_per >= per_obtained:
+                    letter_grade = gr.result
+        return letter_grade

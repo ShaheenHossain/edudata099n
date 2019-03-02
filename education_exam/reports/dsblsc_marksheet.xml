@@ -301,27 +301,27 @@
                                                         <t t-esc="result_line.subject_id.name"/>
                                                     </td>
                                                     <t t-foreach="result_line.paper_ids" t-as="paper_name">
-                                                        <t t-if="results[exam.id][student.id]['result'].show_paper">
-                                                            <td>
-                                                                <t t-esc="paper_name.paper_id.name"/>
-                                                            </td>
-                                                        </t>
-                                                        <t t-if="results[exam.id][student.id]['result'].show_tut">
-                                                            <td>
-                                                                <t t-esc="paper_name.paper_id.tut_mark"/>
-                                                            </td>
-                                                        </t>
-                                                        <t t-if="results[exam.id][student.id]['result'].show_subj">
-                                                            <td>
-                                                                <t t-esc="paper_name.paper_id.subj_mark"/>
-                                                            </td>
-                                                        </t>
-                                                        <t t-if="results[exam.id][student.id]['result'].show_obj">
-                                                            <td>Obj</td>
-                                                        </t>
-                                                        <t t-if="results[exam.id][student.id]['result'].show_prac">
-                                                            <td>Prac</td>
-                                                        </t>
+                                                        <!--<t t-if="results[exam.id][student.id]['result'].show_paper">-->
+                                                            <!--<td>-->
+                                                                <!--<t t-esc="paper_name.paper_id.name"/>-->
+                                                            <!--</td>-->
+                                                        <!--</t>-->
+                                                        <!--<t t-if="results[exam.id][student.id]['result'].show_tut">-->
+                                                            <!--<td>-->
+                                                                <!--<t t-esc="paper_name.paper_id.tut_mark"/>-->
+                                                            <!--</td>-->
+                                                        <!--</t>-->
+                                                        <!--<t t-if="results[exam.id][student.id]['result'].show_subj">-->
+                                                            <!--<td>-->
+                                                                <!--<t t-esc="paper_name.paper_id.subj_mark"/>-->
+                                                            <!--</td>-->
+                                                        <!--</t>-->
+                                                        <!--<t t-if="results[exam.id][student.id]['result'].show_obj">-->
+                                                            <!--<td>Obj</td>-->
+                                                        <!--</t>-->
+                                                        <!--<t t-if="results[exam.id][student.id]['result'].show_prac">-->
+                                                            <!--<td>Prac</td>-->
+                                                        <!--</t>-->
                                                         <p>&lt;/tr&gt;&lt;tr&gt;</p>
                                                     </t>
                                                 </t>

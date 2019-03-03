@@ -7,8 +7,8 @@ class EducationExamResultsNew(models.Model):
     _description = "this table contains student Wise exam results"
 
     name = fields.Char(string='Name' ,related="result_id.name" )
-    result_id=fields.Many2one("education.exam.results","result_id")             #relation to the result table
-    exam_id = fields.Many2one('education.exam', string='Exam')
+    result_id=fields.Many2one("education.exam.results","result_id",ondelete="cascade")             #relation to the result table
+    exam_id = fields.Many2one('education.exam', string='Exam',ondelete="cascade")
     class_id = fields.Many2one('education.class.division', string='Class')
     division_id = fields.Many2one('education.class.division', string='Division')
     section_id = fields.Many2one('education.class.section', string='Section')
@@ -27,8 +27,8 @@ class EducationExamResultsNew(models.Model):
 
     general_full_mark=fields.Float("Full Mark")
     general_obtained=fields.Integer("General_total")
-    general_count=fields.Integer("General Count")
-    general_row_count=fields.Integer("General Count")
+    general_count=fields.Integer("General Subject Count")
+    general_row_count=fields.Integer("General Paper Count")
     general_fail_count = fields.Integer("Genera Fail")
     general_gp=fields.Float('general GP')
     general_gpa = fields.Float("general GPA")
@@ -186,22 +186,25 @@ class ResultsSubjectLineNew(models.Model):
     general_for = fields.Many2one('education.exam.results.new', string='General', ondelete="cascade")
     optional_for = fields.Many2one('education.exam.results.new', string='optional', ondelete="cascade")
     extra_for = fields.Many2one('education.exam.results.new', string='Extra', ondelete="cascade")
-    pass_rule_id=fields.Many2one('exam.subject.pass.rules',"Pass Rule")
+    pass_rule_id=fields.Many2one('exam.subject.pass.rules',"Pass Rule",ondelete="cascade")
     subject_id = fields.Many2one('education.subject', string='Subject')
     paper_ids=fields.One2many('results.paper.line','subject_line','Papers')
+
     tut_mark=fields.Float("Tutorial",related="pass_rule_id.tut_mark")
     subj_mark=fields.Float("Subjective",related="pass_rule_id.subj_mark")
     obj_mark=fields.Float("Objective",related="pass_rule_id.obj_mark")
     prac_mark=fields.Float("Practical",related="pass_rule_id.prac_mark")
+
     tut_obt = fields.Integer(string='Tutorial')
     subj_obt = fields.Integer(string='Subjective')
     obj_obt = fields.Integer(string='Objective')
     prac_obt = fields.Integer(string='Practical')
+    mark_scored = fields.Float(string='Mark Scored')
+    paper_count=fields.Integer('Paper Count')
     letter_grade=fields.Char('Grade')
     grade_point=fields.Float('GP')
-    subject_ = fields.Float(string='Max Mark')
+    subject_highest = fields.Float(string='Max Mark')
     pass_mark = fields.Float(string='Pass Mark')
-    mark_scored = fields.Float(string='Mark Scored')
     pass_or_fail = fields.Boolean(string='Pass/Fail')
     company_id = fields.Many2one('res.company', string='Company',
                                  default=lambda self: self.env['res.company']._company_default_get())
@@ -209,7 +212,7 @@ class ResultsSubjectLineNew(models.Model):
 class result_paper_line(models.Model):
     _name = 'results.paper.line'
     name=fields.Char("Name")
-    pass_rule_id=fields.Many2one('exam.paper.pass.rules')
+    pass_rule_id=fields.Many2one('exam.paper.pass.rules',ondelete="cascade")
     subject_line=fields.Many2one('results.subject.line.new',ondelete="cascade")
     paper_id=fields.Many2one("education.syllabus","Paper")
     tut_obt = fields.Float(string='Tutorial')
@@ -224,3 +227,7 @@ class result_paper_line(models.Model):
     passed=fields.Boolean("Passed?" )
     lg=fields.Char("letter Grade")
     gp=fields.Float("grade Point")
+
+    @api.onchange('tut_obt','subj_obt','obj_obt','prac_obt')
+    def calculate_paper_obtained(self):
+        self.paper_obt=self.tut_obt+self.prac_obt+self.subj_obt+self.obj_obt

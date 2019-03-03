@@ -116,33 +116,90 @@
                 </tree>
             </field>
         </record>
-    <record id="education_exam_paper_line_form" model="ir.ui.view">
-            <field name="name">education_exam_paper_line_form</field>
-            <field name="model">results.paper.line</field>
+        <record id="education_exam_subject_line_form" model="ir.ui.view">
+            <field name="name">education_exam_subject_line_form</field>
+            <field name="model">results.subject.line.new</field>
             <field name="arch" type="xml">
                 <form  >
                     <group>
-                        <field name="subject_line" />
-                        <field name="paper_id" />
-                    </group>
-                    <group>
                         <group>
+                            <field name="result_id" />
+                            <field name="subject_id" />
+                            <field name="pass_rule_id" />
+                        </group>
+                        <group>
+                            <field name="general_for" />
+                            <field name="optional_for" />
+                            <field name="extra_for" />
+                        </group>
+                    </group>
+                    <group col="6">
+                        <group string="Obtained Marks">
                             <field name="tut_obt"/>
                             <field name="subj_obt"/>
                             <field name="obj_obt"/>
                             <field name="prac_obt"/>
+                            <field name="mark_scored"/>
                         </group>
-                        <group>
-                            <field name="paper_obt"/>
-                            <field name="passed"/>
-                            <field name="gp"/>
-                            <field name="lg"/>
+                        <group string="Full Marks">
+                            <field name="tut_mark"/>
+                            <field name="subj_mark"/>
+                            <field name="obj_mark"/>
+                            <field name="prac_mark"/>
+                            <field name="prac_mark"/>
                         </group>
+                        <group string="Results">
+                            <field name="pass_or_fail"/>
+                            <field name="grade_point"/>
+                            <field name="letter_grade"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="paper_ids" >
+                            <tree>
+                                <field name="tut_obt"/>
+                                <field name="subj_obt"/>
+                                <field name="obj_obt"/>
+                                <field name="prac_obt"/>
+                                <field name="paper_obt"/>
+                                <field name="passed"/>
+                                <field name="gp"/>
+                                <field name="lg"/>
+                            </tree>
+                        </field>
                     </group>
                 </form>
             </field>
         </record>
-    <record id="education_exam_paper_line_tree" model="ir.ui.view">
+
+        <record id="education_exam_paper_line_form" model="ir.ui.view">
+                <field name="name">education_exam_paper_line_form</field>
+                <field name="model">results.paper.line</field>
+                <field name="arch" type="xml">
+                    <form  >
+                        <group>
+                            <field name="subject_line" />
+                            <field name="paper_id" />
+                        </group>
+                        <group>
+                            <group>
+                                <field name="tut_obt"/>
+                                <field name="subj_obt"/>
+                                <field name="obj_obt"/>
+                                <field name="prac_obt"/>
+                            </group>
+                            <group>
+                                <field name="paper_obt"/>
+                                <field name="passed"/>
+                                <field name="gp"/>
+                                <field name="lg"/>
+                            </group>
+                        </group>
+                    </form>
+                </field>
+            </record>
+
+        <record id="education_exam_paper_line_tree" model="ir.ui.view">
             <field name="name">education_exam_paper_line_tree</field>
             <field name="model">results.paper.line</field>
             <field name="arch" type="xml">

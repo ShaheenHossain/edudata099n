@@ -94,7 +94,7 @@ class acdemicTranscripts(models.AbstractModel):
             results[exam.id]={}
             for student in students:
                 results[exam.id][student.id]={}
-                student_results = self.env['education.exam.results.new'].search([('id', '=', 1012)])
+                student_results = self.env['education.exam.results.new'].search([('exam_id', '=', exam.id),('student_history','=',student.id)])
                 results[exam.id][student.id]['result']=student_results
                 for subject in student_results.subject_line:
                     results[exam.id][student.id][subject.subject_id.id]=subject

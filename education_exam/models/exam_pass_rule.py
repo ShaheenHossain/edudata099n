@@ -28,7 +28,7 @@ class ExamPaperPassRules(models.Model):
     _name = 'exam.paper.pass.rules'
     _description = 'This table contains paper wise pass and fail rules for levels'
     name = fields.Char(string='Name' )
-    subject_rule_id = fields.Many2one('exam.subject.pass.rules', string='Subject Rules')
+    subject_rule_id = fields.Many2one('exam.subject.pass.rules', string='Subject Rules',ondelete="cascade")
     paper_id = fields.Many2one("education.syllabus", "Paper")
     subject_id=fields.Many2one("education.subject",'subject',related="paper_id.subject_id")
     company_id = fields.Many2one('res.company', string='Company',

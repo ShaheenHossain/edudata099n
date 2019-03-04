@@ -215,7 +215,7 @@ class academicTranscript(models.Model):
 
                 for paper in subject.paper_ids:
                     if paper.paper_id in student.student_history.optional_subjects:
-                        optional_ = True
+                        optional = True
                     elif paper.paper_id.evaluation_type == 'extra':
                         extra = True
                     paper_count = paper_count + 1
@@ -276,7 +276,6 @@ class academicTranscript(models.Model):
                         count_optional_fail = count_optional_fail + 1
                 else:
                     subject.general_for = student.id
-                    obtained_optional = obtained_optional + subject.mark_scored
                     count_general_subjects = count_general_subjects + 1
                     obtained_general=obtained_general+ subject.mark_scored
                     count_general_paper = count_general_paper + paper_count
@@ -300,6 +299,23 @@ class academicTranscript(models.Model):
             student.optional_count = count_optional_subjects
             student.optional_obtained = obtained_optional
             student.optional_fail_count=count_optional_fail
+        #   TODO   Here to genrate Merit List
+        # result_lines=self.env['education.exam.results.new'].sorted(key=lambda r: (r.name, r.country_id.name))
+        #
+
+        # ############# TODO get subject Highest
+        subjectLines=self.env['results.subject.line.new'].search([('result_id.exam_id','=',exam.id)])
+        ##### distinct values search
+        subject=subjectLines.mapped('subject_id')
+        for value in set(subject):
+            lines=subjectLines.search([('subject_id','=',subject)],  order='subject_mark DESC')
+            highest_set=False
+            for line in lines:
+                if highest_set==False:
+                    highest=line.subject_mark
+                    highest_set=True
+                line.subject_highest=highest
+
 
 
 

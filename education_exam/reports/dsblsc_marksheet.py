@@ -9,6 +9,25 @@ import numpy
 
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_marksheet'
+    # def get_students(self,objects):
+    #
+    #     student=[]
+    #     if objects.specific_student==True :
+    #         student_list = self.env['education.class.history'].search([('student_id.id', '=', objects.student.id),('academic_year_id.id', '=', objects.academic_year.id)])
+    #         for stu in student_list:
+    #             student.extend(stu)
+    #     elif objects.section:
+    #         student_list=self.env['education.class.history'].search([('class_id.id', '=', objects.section.id)])
+    #         for stu in student_list:
+    #             student.extend(stu)
+    #     elif objects.level:
+    #         student_list = self.env['education.class.history'].search([('level.id', '=', objects.level.id),
+    #                                                                    ('academic_year_id.id', '=', objects.academic_year.id)])
+    #         for stu in student_list:
+    #             student.extend(stu)
+    #
+    #     return student
+
     def get_students(self,objects):
 
         student=[]
@@ -27,6 +46,8 @@ class acdemicTranscripts(models.AbstractModel):
                 student.extend(stu)
 
         return student
+
+
     def get_subjects(self,student):
         subjs = {}
         subjs['general']=[]
@@ -169,24 +190,7 @@ class acdemicTranscripts(models.AbstractModel):
 
 
 
-    def get_students(self,objects):
 
-        student=[]
-        if objects.specific_student==True :
-            student_list = self.env['education.class.history'].search([('student_id.id', '=', objects.student.id),('academic_year_id.id', '=', objects.academic_year.id)])
-            for stu in student_list:
-                student.extend(stu)
-        elif objects.section:
-            student_list=self.env['education.class.history'].search([('class_id.id', '=', objects.section.id)])
-            for stu in student_list:
-                student.extend(stu)
-        elif objects.level:
-            student_list = self.env['education.class.history'].search([('level.id', '=', objects.level.id),
-                                                                       ('academic_year_id.id', '=', objects.academic_year.id)])
-            for stu in student_list:
-                student.extend(stu)
-
-        return student
 
     # def get_subjects(self,student,object,selection_type,evaluation_type):
     #     student_history=self.env['education.class.history'].search([('id', '=', student.id),('academic_year_id',"=",object.academic_year.id)])

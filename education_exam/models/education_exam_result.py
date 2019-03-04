@@ -41,7 +41,7 @@ class EducationExamResultsNew(models.Model):
     extra_gp=fields.Float('Extra GP')
     extra_gpa = fields.Float("Extra GPA")
 
-    optional_Full=fields.Integer("Optional full")
+    optional_full=fields.Integer("Optional full")
     optional_obtained=fields.Integer("Optional obtained")
     optional_count=fields.Integer("optional Count")
     optional_row_count=fields.Integer("optional Row Count")
@@ -56,6 +56,9 @@ class EducationExamResultsNew(models.Model):
     net_lg=fields.Char("Letter Grade")
     net_gp = fields.Float("Net GP")
     net_gpa=fields.Float("GPA")
+
+    merit_class=fields.Integer("Position In Class")
+    merit_section=fields.Integer("Position In section")
 
     working_days=fields.Integer('Working Days')
     attendance=fields.Integer('Attendance')
@@ -87,7 +90,7 @@ class EducationExamResultsNew(models.Model):
                         rec.optional_gpa_above_2=rec.optional_gpa-2
 
                     if rec.optional_gpa>0:
-                        optional_40_perc=rec.optional_Full*100/40
+                        optional_40_perc=rec.optional_full*100/40
                         rec.optional_obtained_above_40_perc=rec.optional_obtained-optional_40_perc
             rec.net_obtained=rec.general_obtained+rec.optional_obtained_above_40_perc
             if rec.general_count>0:
@@ -194,6 +197,7 @@ class ResultsSubjectLineNew(models.Model):
     subj_mark=fields.Float("Subjective",related="pass_rule_id.subj_mark")
     obj_mark=fields.Float("Objective",related="pass_rule_id.obj_mark")
     prac_mark=fields.Float("Practical",related="pass_rule_id.prac_mark")
+    subject_mark=fields.Float("Full Mark")
 
     tut_obt = fields.Integer(string='Tutorial')
     subj_obt = fields.Integer(string='Subjective')

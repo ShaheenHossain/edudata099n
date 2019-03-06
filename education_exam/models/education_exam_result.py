@@ -212,6 +212,13 @@ class ResultsSubjectLineNew(models.Model):
     pass_or_fail = fields.Boolean(string='Pass/Fail')
     company_id = fields.Many2one('res.company', string='Company',
                                  default=lambda self: self.env['res.company']._company_default_get())
+    @api.onchange('mark_scored')
+    def get_gp(self):
+        for rec in self:
+            rec.grade_point=self.env['education.result.grading'].get_grade_point(rec.subject_mark,rec.mark_scored)
+            rec.letter_grade=self.env['education.result.grading'].get_letter_grade(
+                    rec.pass_rule_id.subject_marks,
+                    rec.mark_scored)
 
 class result_paper_line(models.Model):
     _name = 'results.paper.line'

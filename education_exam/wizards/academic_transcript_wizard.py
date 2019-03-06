@@ -71,8 +71,6 @@ class academicTranscript(models.Model):
                             "class_id": result.division_id.id,
                             "section_id": result.division_id.section_id.id
                         }
-                        student_exam_obtained = 0
-                        student_exam_passed = True
 
                         new_result = self.env['education.exam.results.new'].create(result_data)
                         results_new_list.append(new_result)
@@ -186,16 +184,19 @@ class academicTranscript(models.Model):
             count_general_subjects = 0
             count_general_paper = 0
             count_general_fail = 0
+            general_full_mark=0
             gp_general = 0
             obtained_optional = 0
             count_optional_subjects = 0
             count_optional_paper = 0
             count_optional_fail = 0
+            optional_full_mark = 0
             gp_optional = 0
             obtained_extra = 0
             count_extra_subjects = 0
             count_extra_paper = 0
             count_extra_fail = 0
+            extra_full_mark = 0
             gp_extra = 0
 
             for subject in student.subject_line:
@@ -263,6 +264,7 @@ class academicTranscript(models.Model):
                     obtained_extra = obtained_extra+subject.mark_scored
                     count_extra_subjects =count_extra_subjects+1
                     count_extra_paper = count_extra_paper+paper_count
+                    extra_full_mark = extra_full_mark+subject.pass_rule_id.subject_marks
                     gp_extra = 0
 
                     if passed == False:
@@ -272,9 +274,11 @@ class academicTranscript(models.Model):
                     obtained_optional = obtained_optional + subject.mark_scored
                     count_optional_subjects = count_optional_subjects + 1
                     count_optional_paper = count_optional_paper + paper_count
+                    optional_full_mark = optional_full_mark + subject.pass_rule_id.subject_marks
                     if passed == False:
                         count_optional_fail = count_optional_fail + 1
                 else:
+                    general_full_mark = general_full_mark + subject.pass_rule_id.subject_marks
                     subject.general_for = student.id
                     count_general_subjects = count_general_subjects + 1
                     obtained_general=obtained_general+ subject.mark_scored
@@ -289,6 +293,7 @@ class academicTranscript(models.Model):
             student.extra_count = count_extra_subjects
             student.extra_obtained = obtained_extra
             student.extra_fail_count=count_extra_fail
+            student.extra_full_mark=extra_full_mark
 
             student.general_row_count = count_general_paper
             student.general_count = count_general_subjects
@@ -308,16 +313,13 @@ class academicTranscript(models.Model):
         ##### distinct values search
         subject=subjectLines.mapped('subject_id')
         for value in set(subject):
-            lines=subjectLines.search([('subject_id','=',subject)],  order='subject_mark DESC')
+            lines=subjectLines.search([('subject_id','=',value.id)],  order='subject_mark DESC')
             highest_set=False
             for line in lines:
                 if highest_set==False:
                     highest=line.subject_mark
                     highest_set=True
                 line.subject_highest=highest
-
-
-
 
     @api.multi
     def calculate_result_paper_lines(self,result_paper_lines):

@@ -142,9 +142,19 @@ class academicTranscript(models.Model):
                                 "prac_pr": paper.prac_pr,
                             }
                             new_paper = self.env["results.paper.line"].create(paper_data)
+                        else:
+                            new_paper.tut_obt= paper.tut_obt
+                            new_paper.subj_obt= paper.subj_obt
+                            new_paper.obj_obt= paper.obj_obt
+                            new_paper.prac_obt= paper.prac_obt
+                            new_paper.tut_pr= paper.tut_pr
+                            new_paper.subj_pr= paper.subj_pr
+                            new_paper.obj_pr+ paper.obj_pr
+                            new_paper.prac_pr=paper.prac_pr
+
                         result_paper_line_list.append(new_paper)
             self.calculate_subject_rules(subject_list,exam)
-            self.calculate_result_paper_lines(result_paper_line_list)
+            # self.calculate_result_paper_lines(result_paper_line_list)
             self.calculate_result_subject_lines(result_subject_line_list)
             self.get_result_type_count(exam)
             self.calculate_subjects_results(exam)
@@ -212,27 +222,28 @@ class academicTranscript(models.Model):
                 mark_prac=0
                 mark_subj=0
                 mark_obj=0
-                subject_passed=True
+                subject_obtained=0
 
                 for paper in subject.paper_ids:
+                    paper_obtained=0
                     if paper.paper_id in student.student_history.optional_subjects:
                         optional = True
                     elif paper.paper_id.evaluation_type == 'extra':
                         extra = True
                     paper_count = paper_count + 1
-                    if paper.paper_id.tut_mark > 0:
+                    if paper.pass_rule_id.tut_mark > 0:
                         student.show_tut = True
                         obt_tut=obt_tut+paper.tut_obt
                         mark_tut=mark_tut+paper.pass_rule_id.tut_mark
-                    if paper.paper_id.subj_mark > 0:
+                    if paper.pass_rule_id.subj_mark > 0:
                         student.show_subj = True
                         obt_subj = obt_subj + paper.subj_obt
                         mark_subj = mark_subj + paper.pass_rule_id.subj_mark
-                    if paper.paper_id.obj_mark > 0:
+                    if paper.pass_rule_id.obj_mark > 0:
                         student.show_obj = True
                         obt_obj = obt_obj + paper.obj_obt
                         mark_obj = mark_obj + paper.pass_rule_id.obj_mark
-                    if paper.paper_id.prac_mark > 0:
+                    if paper.pass_rule_id.prac_mark > 0:
                         student.show_prac = True
                         obt_prac = obt_prac + paper.prac_obt
                         mark_prac = mark_prac + paper.pass_rule_id.prac_mark
@@ -245,11 +256,14 @@ class academicTranscript(models.Model):
                         passed = False
                     elif paper.pass_rule_id.prac_pass > paper.prac_obt:
                         passed = False
+                    paper.paper_obt=obt_prac+obt_tut+obt_subj+obt_obj
+                    paper.passed=passed
                 subject.mark_scored=obt_tut+obt_subj+obt_obj+obt_prac
                 subject.obj_obt=obt_obj
                 subject.tut_obt=obt_tut
                 subject.subj_obt=obt_subj
                 subject.prac_obt=obt_prac
+                subject.subject_obt=subject_obtained
                 if subject.pass_rule_id.tut_pass > subject.tut_obt:
                     passed = False
                 elif subject.pass_rule_id.subj_pass > subject.subj_obt:
@@ -258,15 +272,14 @@ class academicTranscript(models.Model):
                     passed = False
                 elif subject.pass_rule_id.prac_pass > subject.prac_obt:
                     passed = False
-
+                subject.passed=passed
                 if extra == True:
                     subject.extra_for = student.id
                     obtained_extra = obtained_extra+subject.mark_scored
                     count_extra_subjects =count_extra_subjects+1
                     count_extra_paper = count_extra_paper+paper_count
                     extra_full_mark = extra_full_mark+subject.pass_rule_id.subject_marks
-                    gp_extra = 0
-
+                    gp_extra = gp_extra + subject.grade_point
                     if passed == False:
                         count_extra_fail = count_extra_fail + 1
                 elif optional == True:
@@ -275,6 +288,7 @@ class academicTranscript(models.Model):
                     count_optional_subjects = count_optional_subjects + 1
                     count_optional_paper = count_optional_paper + paper_count
                     optional_full_mark = optional_full_mark + subject.pass_rule_id.subject_marks
+                    gp_optional = gp_optional + subject.grade_point
                     if passed == False:
                         count_optional_fail = count_optional_fail + 1
                 else:
@@ -283,7 +297,7 @@ class academicTranscript(models.Model):
                     count_general_subjects = count_general_subjects + 1
                     obtained_general=obtained_general+ subject.mark_scored
                     count_general_paper = count_general_paper + paper_count
-                    student.general_gp = student.general_gp + subject.grade_point
+                    gp_general = gp_general + subject.grade_point
                     if passed == False:
                         count_general_fail =count_general_fail + 1
                 subject.paper_count= paper_count
@@ -299,6 +313,7 @@ class academicTranscript(models.Model):
             student.general_count = count_general_subjects
             student.general_obtained = obtained_general
             student.general_fail_count=count_general_fail
+            student.general_gp=gp_general
 
             student.optional_row_count = count_optional_paper
             student.optional_count = count_optional_subjects
@@ -309,61 +324,73 @@ class academicTranscript(models.Model):
         #
 
         # ############# TODO get subject Highest
-        subjectLines=self.env['results.subject.line.new'].search([('result_id.exam_id','=',exam.id)])
-        ##### distinct values search
-        subject=subjectLines.mapped('subject_id')
-        for value in set(subject):
-            lines=subjectLines.search([('subject_id','=',value.id)],  order='subject_mark DESC')
-            highest_set=False
-            for line in lines:
-                if highest_set==False:
-                    highest=line.subject_mark
-                    highest_set=True
-                line.subject_highest=highest
 
-    @api.multi
-    def calculate_result_paper_lines(self,result_paper_lines):
-        for rec in result_paper_lines:
-            passFail = True
-            if rec.pass_rule_id.tut_pass > rec.tut_obt:
-                passFail = False
-            elif rec.pass_rule_id.subj_pass > rec.subj_obt:
-                passFail = False
-            elif rec.pass_rule_id.obj_pass > rec.obj_obt:
-                passFail = False
-            elif rec.pass_rule_id.prac_pass > rec.prac_obt:
-                passFail = False
-            elif rec.pass_rule_id.tut_mark > 0:
-                if rec.tut_pr == False:
-                    passFail = False
-            elif rec.pass_rule_id.subj_mark > 0:
-                if rec.subj_pr == False:
-                    passFail = False
-            elif rec.pass_rule_id.obj_mark > 0:
-                if rec.obj_pr == False:
-                    passFail = False
-            elif rec.pass_rule_id.prac_mark > 0:
-                if rec.prac_pr == False:
-                    passFail = False
-            paper_obtained = 0
-            if rec.pass_rule_id.tut_mark > 0:
-                paper_obtained = paper_obtained + rec.tut_obt
-            if rec.pass_rule_id.subj_mark > 0:
-                paper_obtained = paper_obtained + rec.subj_obt
-            if rec.pass_rule_id.obj_mark > 0:
-                paper_obtained = paper_obtained + rec.obj_obt
-            if rec.pass_rule_id.prac_mark > 0:
-                paper_obtained = paper_obtained + rec.prac_obt
-            rec.paper_obt = paper_obtained
-            rec.passed = passFail
-            if passFail == True:
-                rec.gp = self.env['education.result.grading'].get_grade_point(rec.pass_rule_id.paper_marks,
-                                                                              rec.paper_obt)
-                rec.lg = self.env['education.result.grading'].get_letter_grade(rec.pass_rule_id.paper_marks,
-                                                                               rec.paper_obt)
-            else:
-                rec.gp = 0
-                rec.lg = 'F'
+        subject_rule_lines=self.env['exam.subject.pass.rules'].search([('exam_id','=',exam.id)])
+        for subject_rule_line in subject_rule_lines:
+            subject_result_lines=self.env['results.subject.line.new'].search([('pass_rule_id','=',subject_rule_line.id)], limit=1, order='subject_obt DESC')
+            subject_rule_line.subject_highest=subject_result_lines.subject_obt
+            for paper_rule_line in subject_rule_line.paper_ids:
+                paper_result_line=self.env['results.paper.line'].search([('pass_rule_id','=',paper_rule_line.id)], limit=1, order='paper_obt DESC')
+                paper_rule_line.paper_highest=paper_result_line.paper_obt
+
+
+
+
+        # subjectLines=self.env['results.subject.line.new'].search([('result_id.exam_id','=',exam.id)])
+        # ##### distinct values search
+        # subject=subjectLines.mapped('subject_id')
+        # for value in set(subject):
+        #     lines=subjectLines.search([('subject_id','=',value.id)],  order='subject_mark DESC')
+        #     highest_set=False
+        #     for line in lines:
+        #         if highest_set==False:
+        #             highest=line.subject_mark
+        #             highest_set=True
+        #         line.subject_highest=highest
+
+    # @api.multi
+    # def calculate_result_paper_lines(self,result_paper_lines):
+    #     for rec in result_paper_lines:
+    #         passFail = True
+    #         if rec.pass_rule_id.tut_pass > rec.tut_obt:
+    #             passFail = False
+    #         elif rec.pass_rule_id.subj_pass > rec.subj_obt:
+    #             passFail = False
+    #         elif rec.pass_rule_id.obj_pass > rec.obj_obt:
+    #             passFail = False
+    #         elif rec.pass_rule_id.prac_pass > rec.prac_obt:
+    #             passFail = False
+    #         elif rec.pass_rule_id.tut_mark > 0:
+    #             if rec.tut_pr == False:
+    #                 passFail = False
+    #         elif rec.pass_rule_id.subj_mark > 0:
+    #             if rec.subj_pr == False:
+    #                 passFail = False
+    #         elif rec.pass_rule_id.obj_mark > 0:
+    #             if rec.obj_pr == False:
+    #                 passFail = False
+    #         elif rec.pass_rule_id.prac_mark > 0:
+    #             if rec.prac_pr == False:
+    #                 passFail = False
+    #         paper_obtained = 0
+    #         if rec.pass_rule_id.tut_mark > 0:
+    #             paper_obtained = paper_obtained + rec.tut_obt
+    #         if rec.pass_rule_id.subj_mark > 0:
+    #             paper_obtained = paper_obtained + rec.subj_obt
+    #         if rec.pass_rule_id.obj_mark > 0:
+    #             paper_obtained = paper_obtained + rec.obj_obt
+    #         if rec.pass_rule_id.prac_mark > 0:
+    #             paper_obtained = paper_obtained + rec.prac_obt
+    #         rec.paper_obt = paper_obtained
+    #         rec.passed = passFail
+    #         if passFail == True:
+    #             rec.gp = self.env['education.result.grading'].get_grade_point(rec.pass_rule_id.paper_marks,
+    #                                                                           rec.paper_obt)
+    #             rec.lg = self.env['education.result.grading'].get_letter_grade(rec.pass_rule_id.paper_marks,
+    #                                                                            rec.paper_obt)
+    #         else:
+    #             rec.gp = 0
+    #             rec.lg = 'F'
 
     @api.multi
     def calculate_result_subject_lines(self,result_subject_lines):

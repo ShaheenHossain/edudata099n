@@ -139,7 +139,7 @@
                             <field name="subj_obt"/>
                             <field name="obj_obt"/>
                             <field name="prac_obt"/>
-                            <field name="mark_scored"/>
+                            <field name="subject_obt"/>
                         </group>
                         <group string="Full Marks">
                             <field name="tut_mark"/>

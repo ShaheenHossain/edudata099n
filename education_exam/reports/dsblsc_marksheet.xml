@@ -316,27 +316,42 @@
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_tut">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.tut_mark,0)"/>
+                                                                <t t-if="paper_name.paper_id.tut_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.tut_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
         <!-- if tut_mark in subject rule is set
             then show subject unified tut_mark for all the papaers-->
                                                             <t t-if="result_line.pass_rule_id.tut_pass>0">
                                                                 <t t-if="paper_name_first">
                                                                     <td t-att-rowspan="len(result_line.paper_ids)">
-                                                                        <t t-esc="round(result_line.pass_rule_id.tut_pass,0)"/>
+                                                                        <t t-esc="round(result_line.pass_rule_id.tut_pass)"/>
                                                                     </td>
                                                                 </t>
                                                             </t>
                                                             <t t-else="">
                                                                 <td>
-                                                                    <t t-esc="round(paper_name.pass_rule_id.tut_pass)"/>
+                                                                    <t t-if="paper_name.pass_rule_id.tut_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.tut_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
                                                                 </td>
                                                             </t>
         <!--end-->
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_subj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.subj_mark)"/>
+                                                                <t t-if="paper_name.paper_id.subj_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.subj_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
         <!-- if subj_mark in subject rule is set
             then show subject unified subj_mark for all the papaers-->
@@ -349,13 +364,23 @@
                                                             </t>
                                                             <t t-else="">
                                                                 <td>
-                                                                    <t t-esc="round(paper_name.pass_rule_id.subj_pass)"/>
+                                                                    <t t-if="paper_name.pass_rule_id.subj_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.subj_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
                                                                 </td>
                                                             </t>
         <!--end-->                                                        </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_obj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.obj_mark)"/>
+                                                                <t t-if="paper_name.paper_id.obj_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.obj_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
         <!-- if obj_mark in subject rule is set
             then show subject unified obj_mark for all the papaers-->
@@ -368,14 +393,24 @@
                                                             </t>
                                                             <t t-else="">
                                                                 <td>
-                                                                    <t t-esc="round(paper_name.pass_rule_id.obj_pass)"/>
+                                                                    <t t-if="paper_name.pass_rule_id.obj_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.obj_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
                                                                 </td>
                                                             </t>
         <!--end-->
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_prac">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.prac_mark)"/>
+                                                                <t t-if="paper_name.paper_id.prac_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.prac_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
         <!-- if prac_mark in subject rule is set
             then show subject unified prac_mark for all the papaers-->
@@ -388,7 +423,12 @@
                                                             </t>
                                                             <t t-else="">
                                                                 <td>
-                                                                    <t t-esc="round(paper_name.pass_rule_id.prac_pass)"/>
+                                                                    <t t-if="paper_name.pass_rule_id.prac_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.prac_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
                                                                 </td>
                                                             </t>
         <!--end-->
@@ -398,30 +438,58 @@
                                                         </td>
                                                         <t t-if="results[exam.id][student.id]['result'].show_tut">
                                                             <td>
-                                                                <t t-esc="round(paper_name.tut_obt)"/>
+                                                                <t t-if="paper_name.pass_rule_id.tut_mark>0">
+                                                                    <t t-if="paper_name.tutj_pr==True">
+                                                                        <t t-esc="round(paper_name.tut_obt)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        A
+                                                                    </t>
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_subj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.subj_obt)"/>
+                                                                <t t-if="paper_name.pass_rule_id.subj_mark>0">
+                                                                    <t t-if="paper_name.subj_pr==True">
+                                                                        <t t-esc="round(paper_name.subj_obt)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        A
+                                                                    </t>
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_obj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.obj_obt)"/>
+                                                                <t t-if="paper_name.pass_rule_id.obj_mark>0">
+                                                                    <t t-if="paper_name.obj_pr==True">
+                                                                        <t t-esc="round(paper_name.obj_obt)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        A
+                                                                    </t>
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_prac">
                                                             <td>
-                                                                <t t-esc="round(paper_name.prac_obt)"/>
+                                                                <t t-if="paper_name.pass_rule_id.prac_mark>0">
+                                                                    <t t-if="paper_name.prac_pr==True">
+                                                                        <t t-esc="round(paper_name.prac_obt)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        A
+                                                                    </t>
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="paper_name_first">
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-esc="round(result_line.mark_scored)"/>
+                                                                <t t-esc="round(result_line.subject_obt)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-esc="round(result_line.subject_highest)"/>
+                                                                <t t-esc="round(result_line.pass_rule_id.subject_highest)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="result_line.letter_grade"/>
@@ -431,7 +499,13 @@
                                                             </td>
                                                             <t t-if="subject_first">
                                                                 <td t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
-                                                                    <t t-esc="results[exam.id][student.id]['result'].general_count"/>
+                                                                    <t t-set="gpa" t-value="results[exam.id][student.id]['result'].general_gp/results[exam.id][student.id]['result'].general_count"/>
+                                                                    <t t-if="5 > gpa">
+                                                                        <t t-esc="round(gpa,2)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        5
+                                                                    </t>
                                                                 </td>
                                                                 <t t-if="fourth_subject>0">
                                                                     <td t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
@@ -549,67 +623,172 @@
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_tut">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.tut_mark)"/>
+                                                                <t t-if="paper_name.paper_id.tut_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.tut_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
-                                                            <td>
-                                                                <t t-esc="round(paper_name.pass_rule_id.tut_pass)"/>
-                                                            </td>
+        <!-- if tut_mark in subject rule is set
+            then show subject unified tut_mark for all the papaers-->
+                                                            <t t-if="result_line.pass_rule_id.tut_pass>0">
+                                                                <t t-if="paper_name_first">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
+                                                                        <t t-esc="round(result_line.pass_rule_id.tut_pass)"/>
+                                                                    </td>
+                                                                </t>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <td>
+                                                                    <t t-if="paper_name.pass_rule_id.tut_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.tut_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
+                                                                </td>
+                                                            </t>
+        <!--end-->
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_subj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.subj_mark)"/>
-                                                            </td>
-                                                            <td>
-                                                                <t t-esc="round(paper_name.pass_rule_id.subj_pass)"/>
-                                                            </td>
-                                                        </t>
+                                                                <t t-if="paper_name.paper_id.subj_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.subj_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
 
+                                                                </t>
+                                                            </td>
+        <!-- if subj_mark in subject rule is set
+            then show subject unified subj_mark for all the papaers-->
+                                                            <t t-if="result_line.pass_rule_id.subj_pass>0">
+                                                                <t t-if="paper_name_first">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
+                                                                        <t t-esc="round(result_line.pass_rule_id.subj_pass)"/>
+                                                                    </td>
+                                                                </t>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <td>
+                                                                    <t t-if="paper_name.pass_rule_id.subj_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.subj_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
 
+                                                                    </t>
+                                                                </td>
+                                                            </t>
+        <!--end-->                                                        </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_obj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.obj_mark)"/>
+                                                                <t t-if="paper_name.paper_id.obj_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.obj_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
-                                                            <td>
-                                                                <t t-esc="round(paper_name.pass_rule_id.obj_pass)"/>
-                                                            </td>
+        <!-- if obj_mark in subject rule is set
+            then show subject unified obj_mark for all the papaers-->
+                                                            <t t-if="result_line.pass_rule_id.obj_pass>0">
+                                                                <t t-if="paper_name_first">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
+                                                                        <t t-esc="round(result_line.pass_rule_id.obj_pass)"/>
+                                                                    </td>
+                                                                </t>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <td>
+                                                                    <t t-if="paper_name.pass_rule_id.obj_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.obj_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
+                                                                </td>
+                                                            </t>
+        <!--end-->
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_prac">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.prac_mark)"/>
+                                                                <t t-if="paper_name.paper_id.prac_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.prac_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
-                                                            <td>
-                                                                <t t-esc="round(paper_name.pass_rule_id.prac_pass)"/>
-                                                            </td>
+        <!-- if prac_mark in subject rule is set
+            then show subject unified prac_mark for all the papaers-->
+                                                            <t t-if="result_line.pass_rule_id.prac_pass>0">
+                                                                <t t-if="paper_name_first">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
+                                                                        <t t-esc="round(result_line.pass_rule_id.prac_pass)"/>
+                                                                    </td>
+                                                                </t>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <td>
+                                                                    <t t-if="paper_name.pass_rule_id.prac_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.prac_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
+                                                                </td>
+                                                            </t>
+        <!--end-->
                                                         </t>
                                                         <td>
                                                             <t t-esc="round(paper_name.pass_rule_id.paper_marks)"/>
                                                         </td>
                                                         <t t-if="results[exam.id][student.id]['result'].show_tut">
                                                             <td>
-                                                                <t t-esc="round(paper_name.tut_obt)"/>
+                                                                <t t-if="paper_name.tut_pr==True">
+                                                                    <t t-esc="round(paper_name.tut_obt)"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    A
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_subj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.subj_obt)"/>
+                                                                <t t-if="paper_name.subj_pr==True">
+                                                                    <t t-esc="round(paper_name.subj_obt)"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    A
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_obj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.obj_obt)"/>
+                                                                <t t-if="paper_name.obj_pr==True">
+                                                                    <t t-esc="round(paper_name.obj_obt)"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    A
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_prac">
                                                             <td>
-                                                                <t t-esc="round(paper_name.prac_obt)"/>
+                                                                <t t-if="paper_name.prac_pr==True">
+                                                                    <t t-esc="round(paper_name.prac_obt)"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    A
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="paper_name_first">
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-esc="round(result_line.mark_scored)"/>
+                                                                <t t-esc="round(result_line.subject_obt)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                highest
+                                                                <t t-esc="round(result_line.subject_highest)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="result_line.letter_grade"/>
@@ -717,35 +896,122 @@
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_tut">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.tut_mark)"/>
+                                                                <t t-if="paper_name.paper_id.tut_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.tut_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
-                                                            <td>
-                                                                <t t-esc="round(paper_name.pass_rule_id.tut_pass)"/>
-                                                            </td>
+        <!-- if tut_mark in subject rule is set
+            then show subject unified tut_mark for all the papaers-->
+                                                            <t t-if="result_line.pass_rule_id.tut_pass>0">
+                                                                <t t-if="paper_name_first">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
+                                                                        <t t-esc="round(result_line.pass_rule_id.tut_pass)"/>
+                                                                    </td>
+                                                                </t>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <td>
+                                                                    <t t-if="paper_name.pass_rule_id.tut_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.tut_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
+                                                                </td>
+                                                            </t>
+        <!--end-->
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_subj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.subj_mark)"/>
+                                                                <t t-if="paper_name.paper_id.subj_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.subj_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
-                                                            <td>
-                                                                <t t-esc="round(paper_name.pass_rule_id.subj_pass)"/>
-                                                            </td>
-                                                        </t>
+        <!-- if subj_mark in subject rule is set
+            then show subject unified subj_mark for all the papaers-->
+                                                            <t t-if="result_line.pass_rule_id.subj_pass>0">
+                                                                <t t-if="paper_name_first">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
+                                                                        <t t-esc="round(result_line.pass_rule_id.subj_pass)"/>
+                                                                    </td>
+                                                                </t>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <td>
+                                                                    <t t-if="paper_name.pass_rule_id.subj_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.subj_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
+                                                                </td>
+                                                            </t>
+        <!--end-->                                                        </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_obj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.obj_mark)"/>
+                                                                <t t-if="paper_name.paper_id.obj_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.obj_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
-                                                            <td>
-                                                                <t t-esc="round(paper_name.pass_rule_id.obj_pass)"/>
-                                                            </td>
+        <!-- if obj_mark in subject rule is set
+            then show subject unified obj_mark for all the papaers-->
+                                                            <t t-if="result_line.pass_rule_id.obj_pass>0">
+                                                                <t t-if="paper_name_first">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
+                                                                        <t t-esc="round(result_line.pass_rule_id.obj_pass)"/>
+                                                                    </td>
+                                                                </t>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <td>
+                                                                    <t t-if="paper_name.pass_rule_id.obj_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.obj_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
+                                                                </td>
+                                                            </t>
+        <!--end-->
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_prac">
                                                             <td>
-                                                                <t t-esc="round(paper_name.paper_id.prac_mark)"/>
+                                                                <t t-if="paper_name.paper_id.prac_mark>0">
+                                                                    <t t-esc="round(paper_name.paper_id.prac_mark)"/>
+                                                                </t>
+                                                                <t t-else="">
+
+                                                                </t>
                                                             </td>
-                                                            <td>
-                                                                <t t-esc="round(paper_name.pass_rule_id.prac_pass)"/>
-                                                            </td>
+        <!-- if prac_mark in subject rule is set
+            then show subject unified prac_mark for all the papaers-->
+                                                            <t t-if="result_line.pass_rule_id.prac_pass>0">
+                                                                <t t-if="paper_name_first">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
+                                                                        <t t-esc="round(result_line.pass_rule_id.prac_pass)"/>
+                                                                    </td>
+                                                                </t>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <td>
+                                                                    <t t-if="paper_name.pass_rule_id.prac_pass>0">
+                                                                        <t t-esc="round(paper_name.pass_rule_id.prac_pass)"/>
+                                                                    </t>
+                                                                    <t t-else="">
+
+                                                                    </t>
+                                                                </td>
+                                                            </t>
+        <!--end-->
                                                         </t>
 
                                                         <td>
@@ -753,30 +1019,50 @@
                                                         </td>
                                                         <t t-if="results[exam.id][student.id]['result'].show_tut">
                                                             <td>
-                                                                <t t-esc="round(paper_name.tut_obt)"/>
+                                                                <t t-if="paper_name.tut_pr==True">
+                                                                    <t t-esc="round(paper_name.tut_obt)"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    A
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_subj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.subj_obt)"/>
+                                                                <t t-if="paper_name.subj_pr==True">
+                                                                    <t t-esc="round(paper_name.subj_obt)"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    A
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_obj">
                                                             <td>
-                                                                <t t-esc="round(paper_name.obj_obt)"/>
+                                                                <t t-if="paper_name.obj_pr==True">
+                                                                    <t t-esc="round(paper_name.obj_obt)"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    A
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="results[exam.id][student.id]['result'].show_prac">
                                                             <td>
-                                                                <t t-esc="round(paper_name.prac_obt)"/>
+                                                                <t t-if="paper_name.prac_pr==True">
+                                                                    <t t-esc="round(paper_name.prac_obt)"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    A
+                                                                </t>
                                                             </td>
                                                         </t>
                                                         <t t-if="paper_name_first">
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-esc="round(result_line.mark_scored)"/>
+                                                                <t t-esc="round(result_line.subject_obt)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                highest
+                                                                <t t-esc="round(result_line.subject_highest)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="result_line.letter_grade"/>

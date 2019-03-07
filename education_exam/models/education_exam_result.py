@@ -203,7 +203,7 @@ class ResultsSubjectLineNew(models.Model):
     subj_obt = fields.Integer(string='Subjective')
     obj_obt = fields.Integer(string='Objective')
     prac_obt = fields.Integer(string='Practical')
-    mark_scored = fields.Float(string='Mark Scored')
+    subject_obt = fields.Float(string='Mark Scored')
     paper_count=fields.Integer('Paper Count')
     letter_grade=fields.Char('Grade')
     grade_point=fields.Float('GP')
@@ -239,6 +239,9 @@ class result_paper_line(models.Model):
     lg=fields.Char("letter Grade")
     gp=fields.Float("grade Point")
 
-    @api.onchange('tut_obt','subj_obt','obj_obt','prac_obt')
-    def calculate_paper_obtained(self):
-        self.paper_obt=self.tut_obt+self.prac_obt+self.subj_obt+self.obj_obt
+    @api.onchange('paper_obt','passed')
+    def calculate_lg_gp(self):
+        for rec in self:
+            if rec.passed==True:
+                rec.gp=self.env['education.result.grading'].get_grade_point(rec.pass_rule_id.paper_marks,rec.paper_obt)
+                rec.lg=self.env['education.result.grading'].get_letter_grade(rec.pass_rule_id.paper_marks,rec.paper_obt)

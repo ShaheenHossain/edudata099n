@@ -47,7 +47,7 @@ class EducationExamResultsNew(models.Model):
     optional_row_count=fields.Integer("optional Row Count")
     optional_fail_count=fields.Integer("optional Fail Count")
     optional_gp=fields.Float('Optional LG')
-    optional_gpa = fields.Char("Optional GPA")
+    optional_gpa = fields.Float("Optional GPA")
     optional_gpa_above_2 = fields.Float("Optional GPA Above 2")
     optional_obtained_above_40_perc=fields.Integer("Aditional marks from optionals")
 
@@ -76,24 +76,29 @@ class EducationExamResultsNew(models.Model):
     show_paper=fields.Boolean('Show Papers')
     result_type_count=fields.Integer("result type Count")
 
-    @api.depends('general_gp','general_count')
+    @api.onchange('general_gp','general_count','optional_gp','optional_count')
     def get_general_gpa(self):
         for rec in self:
             if rec.general_count>0:
-                if rec.general_fail_count<1:
-                    if rec.extra_fail_count < 1:
-                        rec.general_gpa=rec.general_gp/rec.general_count
+                rec.general_gpa=rec.general_gp/rec.general_count
+            else:
+                rec.general_gpa=0
+
             if rec.optional_count>0:
                 if rec.optional_fail_count<1:
                     rec.optional_gpa=rec.optional_gp/rec.optional_count
                     if rec.optional_gpa>2:
                         rec.optional_gpa_above_2=rec.optional_gpa-2
+                    else:
+                        rec.optional_gpa = 0
 
                     if rec.optional_gpa>0:
                         optional_40_perc=rec.optional_full*100/40
                         rec.optional_obtained_above_40_perc=rec.optional_obtained-optional_40_perc
             rec.net_obtained=rec.general_obtained+rec.optional_obtained_above_40_perc
             if rec.general_count>0:
+                if rec.optional_gpa_above_2>0:
+                    rec.optional_gpa_above_2=0
                 rec.net_gpa=rec.general_gpa+(rec.optional_gpa_above_2/rec.general_count)
             if rec.extra_count>0:
                 if rec.extra_fail_count<1:

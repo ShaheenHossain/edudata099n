@@ -47,8 +47,8 @@
             id="action_dsblsc_marksheet"
             model="academic.transcript"
             string="Dsblsc Marksheet"
-            report_type="qweb-html"
-            paperformat="legal_landscape"
+            report_type="qweb-pdf"
+            paperformat="A4_portrait"
             name="education_exam.report_dsblsc_marksheet"
             file="education_exam.report_dsblsc_marksheet"
         />

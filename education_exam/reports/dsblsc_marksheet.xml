@@ -643,7 +643,7 @@
             then show subject unified tut_mark for all the papaers-->
                                                             <t t-if="result_line.pass_rule_id.tut_pass>0">
                                                                 <t t-if="paper_name_first">
-                                                                    <td t-att-rowspan="len(result_line.pass_rule_ids)">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
                                                                         <t t-esc="round(result_line.pass_rule_id.tut_pass)"/>
                                                                     </td>
                                                                 </t>
@@ -673,7 +673,7 @@
             then show subject unified subj_mark for all the papaers-->
                                                             <t t-if="result_line.pass_rule_id.subj_pass>0">
                                                                 <t t-if="paper_name_first">
-                                                                    <td t-att-rowspan="len(result_line.pass_rule_ids)">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
                                                                         <t t-esc="round(result_line.pass_rule_id.subj_pass)"/>
                                                                     </td>
                                                                 </t>
@@ -702,7 +702,7 @@
             then show subject unified obj_mark for all the papaers-->
                                                             <t t-if="result_line.pass_rule_id.obj_pass>0">
                                                                 <t t-if="paper_name_first">
-                                                                    <td t-att-rowspan="len(result_line.pass_rule_ids)">
+                                                                    <td t-att-rowspan="len(result_line.paper_ids)">
                                                                         <t t-esc="round(result_line.pass_rule_id.obj_pass)"/>
                                                                     </td>
                                                                 </t>

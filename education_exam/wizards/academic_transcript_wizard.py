@@ -155,7 +155,7 @@ class academicTranscript(models.Model):
                         result_paper_line_list.append(new_paper)
             self.calculate_subject_rules(subject_list,exam)
             # self.calculate_result_paper_lines(result_paper_line_list)
-            self.calculate_result_subject_lines(result_subject_line_list)
+            #self.calculate_result_subject_lines(result_subject_line_list)
             self.get_result_type_count(exam)
             self.calculate_subjects_results(exam)
     @api.multi
@@ -223,9 +223,11 @@ class academicTranscript(models.Model):
                 mark_subj=0
                 mark_obj=0
                 subject_obtained=0
+                subject_full=0
 
                 for paper in subject.paper_ids:
                     paper_obtained=0
+                    paper_full=0
                     if paper.paper_id in student.student_history.optional_subjects:
                         optional = True
                     elif paper.paper_id.evaluation_type == 'extra':
@@ -233,18 +235,26 @@ class academicTranscript(models.Model):
                     paper_count = paper_count + 1
                     if paper.pass_rule_id.tut_mark > 0:
                         student.show_tut = True
+                        paper_obtained=paper_obtained+paper.tut_obt
                         obt_tut=obt_tut+paper.tut_obt
+                        paper_full=paper_full+paper.pass_rule_id.tut_mark
                         mark_tut=mark_tut+paper.pass_rule_id.tut_mark
                     if paper.pass_rule_id.subj_mark > 0:
                         student.show_subj = True
+                        paper_obtained = paper_obtained + paper.subj_obt
+                        paper_full = paper_full + paper.pass_rule_id.subj_mark
                         obt_subj = obt_subj + paper.subj_obt
                         mark_subj = mark_subj + paper.pass_rule_id.subj_mark
                     if paper.pass_rule_id.obj_mark > 0:
                         student.show_obj = True
+                        paper_obtained = paper_obtained + paper.obj_obt
+                        paper_full = paper_full + paper.pass_rule_id.obj_mark
                         obt_obj = obt_obj + paper.obj_obt
                         mark_obj = mark_obj + paper.pass_rule_id.obj_mark
                     if paper.pass_rule_id.prac_mark > 0:
                         student.show_prac = True
+                        paper_obtained = paper_obtained + paper.prac_obt
+                        paper_full = paper_full + paper.pass_rule_id.prac_mark
                         obt_prac = obt_prac + paper.prac_obt
                         mark_prac = mark_prac + paper.pass_rule_id.prac_mark
 
@@ -256,15 +266,17 @@ class academicTranscript(models.Model):
                         passed = False
                     elif paper.pass_rule_id.prac_pass > paper.prac_obt:
                         passed = False
-                    paper.paper_obt=obt_prac+obt_tut+obt_subj+obt_obj
+                    paper.paper_obt=paper_obtained
                     paper.passed=passed
+                    paper.paper_marks=paper_full
                     subject_obtained=subject_obtained+paper.paper_obt
-                subject.mark_scored=obt_tut+obt_subj+obt_obj+obt_prac
+                    subject_full=subject_full+paper_full
                 subject.obj_obt=obt_obj
                 subject.tut_obt=obt_tut
                 subject.subj_obt=obt_subj
                 subject.prac_obt=obt_prac
                 subject.subject_obt=subject_obtained
+                subject.subject_marks=subject_full
                 if subject.pass_rule_id.tut_pass > subject.tut_obt:
                     passed = False
                 elif subject.pass_rule_id.subj_pass > subject.subj_obt:
@@ -274,33 +286,42 @@ class academicTranscript(models.Model):
                 elif subject.pass_rule_id.prac_pass > subject.prac_obt:
                     passed = False
                 subject.passed=passed
+                if passed==False:
+                    count_fail=1
+                    subject_grade_point=0
+                    subject_letter_grade='F'
+                else:
+                    count_fail = 0
+                    subject_grade_point = self.env['education.result.grading'].get_grade_point(
+                            subject_full,subject_obtained)
+                    subject_letter_grade = self.env['education.result.grading'].get_letter_grade(
+                        subject_full, subject_obtained)
+                subject.grade_point=subject_grade_point
+                subject.letter_grade=subject_letter_grade
                 if extra == True:
                     subject.extra_for = student.id
-                    obtained_extra = obtained_extra+subject.mark_scored
+                    obtained_extra = obtained_extra+subject.subject_obt
                     count_extra_subjects =count_extra_subjects+1
                     count_extra_paper = count_extra_paper+paper_count
-                    extra_full_mark = extra_full_mark+subject.pass_rule_id.subject_marks
-                    gp_extra = gp_extra + subject.grade_point
-                    if passed == False:
-                        count_extra_fail = count_extra_fail + 1
+                    extra_full_mark = extra_full_mark+subject_full
+                    gp_extra = gp_extra + subject_grade_point
+                    count_extra_fail = count_extra_fail + count_fail
                 elif optional == True:
                     subject.optional_for = student.id
-                    obtained_optional = obtained_optional + subject.mark_scored
+                    obtained_optional = obtained_optional + subject.subject_obt
                     count_optional_subjects = count_optional_subjects + 1
                     count_optional_paper = count_optional_paper + paper_count
                     optional_full_mark = optional_full_mark + subject.pass_rule_id.subject_marks
-                    gp_optional = gp_optional + subject.grade_point
-                    if passed == False:
-                        count_optional_fail = count_optional_fail + 1
+                    gp_optional = gp_optional + subject_grade_point
+                    count_optional_fail = count_optional_fail + count_fail
                 else:
                     general_full_mark = general_full_mark + subject.pass_rule_id.subject_marks
                     subject.general_for = student.id
                     count_general_subjects = count_general_subjects + 1
-                    obtained_general=obtained_general+ subject.mark_scored
+                    obtained_general=obtained_general+ subject.subject_obt
                     count_general_paper = count_general_paper + paper_count
-                    gp_general = gp_general + subject.grade_point
-                    if passed == False:
-                        count_general_fail =count_general_fail + 1
+                    gp_general = gp_general + subject_grade_point
+                    count_general_fail =count_fail + 1
                 subject.paper_count= paper_count
                 if paper_count > 1:
                     student.show_paper = True

@@ -133,7 +133,7 @@
                             <field name="extra_for" />
                         </group>
                     </group>
-                    <group col="6">
+                    <group col="4">
                         <group string="Obtained Marks">
                             <field name="tut_obt"/>
                             <field name="subj_obt"/>

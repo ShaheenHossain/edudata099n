@@ -266,7 +266,7 @@
                                                 <td>Sub</td>
                                                 <td>pass</td>
                                             </t>
-                                            <t t-if="results[exam.id][student.id]['result'].show_subj">
+                                            <t t-if="results[exam.id][student.id]['result'].show_obj">
                                                 <td>Obj</td>
                                                 <td>Pass</td>
                                             </t>
@@ -320,7 +320,6 @@
                                                                     <t t-esc="round(paper_name.pass_rule_id.tut_mark)"/>
                                                                 </t>
                                                                 <t t-else="">
-
                                                                 </t>
                                                             </td>
         <!-- if tut_mark in subject rule is set
@@ -338,7 +337,6 @@
                                                                         <t t-esc="round(paper_name.pass_rule_id.tut_pass)"/>
                                                                     </t>
                                                                     <t t-else="">
-
                                                                     </t>
                                                                 </td>
                                                             </t>
@@ -439,7 +437,7 @@
                                                         <t t-if="results[exam.id][student.id]['result'].show_tut">
                                                             <td>
                                                                 <t t-if="paper_name.pass_rule_id.tut_mark>0">
-                                                                    <t t-if="paper_name.tutj_pr==True">
+                                                                    <t t-if="paper_name.tut_pr==True">
                                                                         <t t-esc="round(paper_name.tut_obt)"/>
                                                                     </t>
                                                                     <t t-else="">

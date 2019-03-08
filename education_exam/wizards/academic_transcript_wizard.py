@@ -26,7 +26,6 @@ class academicTranscript(models.Model):
                     return True
         self.state='done'
 
-
     @api.multi
     @api.onchange('level', 'section')
     def get_student_domain(self):
@@ -194,6 +193,7 @@ class academicTranscript(models.Model):
             count_general_subjects = 0
             count_general_paper = 0
             count_general_fail = 0
+            student.general_fail_count=0
             general_full_mark=0
             gp_general = 0
             obtained_optional = 0

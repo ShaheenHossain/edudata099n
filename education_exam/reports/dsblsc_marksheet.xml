@@ -240,8 +240,7 @@
                                     </tr>
                                     <tr>
                                         <t t-foreach="exams" t-as="exam">
-                                            <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count">Marks obtained</th>
-                                            <th rowspan="2">Total marks</th>
+                                            <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count+1">Marks obtained</th>
                                             <th rowspan="2">Highest marks</th>
                                             <th rowspan="2">LG</th>
                                             <th rowspan="2">GP</th>
@@ -288,6 +287,7 @@
                                         <t t-if="results[exam.id][student.id]['result'].show_prac">
                                             <td>Prac</td>
                                         </t>
+                                        <td>Total marks</td>
                                         <t t-if="exam_last">
                                                 <!--here I input </tr>-->
                                             <p>&lt;/tr&gt;</p>
@@ -538,30 +538,34 @@
                             <tr>
                                                 <t t-foreach="exams" t-as="exam">
                                                     <t t-if="exam_first">
-                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +1 + results[exam.id][student.id]['result'].show_paper">
+                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 2 +1 + results[exam.id][student.id]['result'].show_paper">
                                                                 Total Mark :
                                                         </td>
                                                     </t>
+                                                    <td  >
+                                                        <t t-esc="round(results[exam.id][student.id]['result'].general_full_mark)"/>
+                                                    </td>
+                                                    <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count">
+                                                                Obtained :
+                                                    </td>
                                                     <td >
                                                         <t t-esc="round(results[exam.id][student.id]['result'].general_obtained)"/>
                                                     </td>
-                                                    <td  >
-                                                    </td>
-                                                    <td t-att-colspan="3" >
+
+                                                    <td t-att-colspan="4" >
                                                     </td>
                                                 </t>
                                             </tr>
                                             <tr>
                                                 <t t-foreach="exams" t-as="exam">
                                                     <t t-if="exam_first">
-                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +1 + results[exam.id][student.id]['result'].show_paper">
+                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +2+ results[exam.id][student.id]['result'].show_paper">
                                                                 Percentage of total mark :
                                                         </td>
                                                     </t>
                                                     <td >
-                                                        <t t-esc="round(results[exam.id][student.id]['result'].general_obtained/results[exam.id][student.id]['result'].general_obtained * 100,2)"/> %</td>
-                                                    <td  ></td>
-                                                    <td t-att-colspan="3" >
+                                                        <t t-esc="round(results[exam.id][student.id]['result'].general_obtained/results[exam.id][student.id]['result'].general_full_mark * 100,2)"/> %</td>
+                                                    <td t-att-colspan="4" >
                                                     </td>
                                                 </t>
                                             </tr>
@@ -1069,12 +1073,12 @@
                                                                 <t t-esc="result_line.grade_point"/>
                                                             </td>
                                                             <t t-if="subject_first">
-                                                                <td t-att-rowspan="results[exam.id][student.id]['result'].extra_row_count+ fourth_subject"
-                                                                    t-att-colspan="1+fourth_subject">
+                                                                <td t-att-rowspan="results[exam.id][student.id]['result'].extra_row_count"
+                                                                    t-att-colspan="3+fourth_subject">
                                                                 </td>
                                                             </t>
                                                         </t>
-                                                        <p>&lt;/tr&gt;&lt;tr&gt;</p>
+                                                        <!--<p>&lt;/tr&gt;&lt;tr&gt;</p>-->
                                                     </t>
                                                 </t>
                                             </t>

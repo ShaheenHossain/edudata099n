@@ -8,6 +8,9 @@
             <field name="arch" type="xml">
                 <form >
                     <button name="generate_results" type="object" string="Calculate Result" attrs="{'invisible': [('state', '=', 'done')]}"/>
+                    <button name="%(action_dsblsc_marksheet)d" string="Marksheet A4 Portrait" type="action" />
+
+
 
                     <group>
                         <field name="academic_year" options="{'no_quick_create': True, 'no_create_edit' : True}"/>

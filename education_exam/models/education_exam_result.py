@@ -202,7 +202,7 @@ class ResultsSubjectLineNew(models.Model):
     subj_mark=fields.Float("Subjective",related="pass_rule_id.subj_mark")
     obj_mark=fields.Float("Objective",related="pass_rule_id.obj_mark")
     prac_mark=fields.Float("Practical",related="pass_rule_id.prac_mark")
-    subject_mark=fields.Float("Full Mark")
+    subject_marks=fields.Float("Full Mark")
 
     tut_obt = fields.Integer(string='Tutorial')
     subj_obt = fields.Integer(string='Subjective')

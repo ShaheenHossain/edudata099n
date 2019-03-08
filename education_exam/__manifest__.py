@@ -33,6 +33,7 @@
         'reports/exam_academic_transcript_dsblsc.xml',
         'reports/report.xml',
         'reports/dsblsc_marksheet.xml',
+        'reports/dsblsc_marksheet_converted.xml',
         'wizards/academic_transcript_wizard.xml',
     ],
     'images': ['static/description/banner.jpg'],

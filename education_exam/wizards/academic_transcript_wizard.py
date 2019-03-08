@@ -285,7 +285,7 @@ class academicTranscript(models.Model):
                     passed = False
                 elif subject.pass_rule_id.prac_pass > subject.prac_obt:
                     passed = False
-                subject.passed=passed
+                subject.pass_or_fail=passed
                 if passed==False:
                     count_fail=1
                     subject_grade_point=0
@@ -321,7 +321,7 @@ class academicTranscript(models.Model):
                     obtained_general=obtained_general+ subject.subject_obt
                     count_general_paper = count_general_paper + paper_count
                     gp_general = gp_general + subject_grade_point
-                    count_general_fail =count_fail + 1
+                    count_general_fail =count_fail + count_fail
                 subject.paper_count= paper_count
                 if paper_count > 1:
                     student.show_paper = True

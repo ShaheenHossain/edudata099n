@@ -71,6 +71,15 @@
             name="education_exam.report_exam_evaluation"
             file="education_exam.report_exam_evaluation"
         />
+<report
+            id="action_dsblsc_evaluation"
+            model="academic.transcript"
+            string="dsblsc Exam Evaluation "
+            report_type="qweb-html"
+            paperformat="legal_landscape"
+            name="education_exam.report_dsblsc_evaluation"
+            file="education_exam.report_dsblsc_evaluation"
+        />
     <report
             id="action_exam_academic_transcript1"
             model="academic.transcript"

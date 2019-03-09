@@ -29,6 +29,13 @@ class acdemicTranscripts(models.AbstractModel):
 
         return student
 
+    def get_sections(self,object):
+        sections=[]
+        if object.section:
+            return object.section
+        elif object.level:
+            section=self.env['education.class.division'].search([('class_id','=',object.level.id),('academic_year_id','=',object.academic_year.id)])
+            return section
 
     def get_subjects(self,student):
         subjs = {}
@@ -73,6 +80,7 @@ class acdemicTranscripts(models.AbstractModel):
 
     def get_exams(self, objects):
         return objects.exams
+
     def get_exam_result(self,objects,student):
         exam_list={}
         for exam in objects.exams:
@@ -88,8 +96,8 @@ class acdemicTranscripts(models.AbstractModel):
             if exam_list[exam.id]['result'].show_prac:
                 result_type_count=result_type_count+1
             exam_list[exam.id]['row_count'] = result_type_count
-
         return exam_list
+
     def get_results(self,objects):
         results={}
         students = self.get_students(objects)
@@ -103,9 +111,6 @@ class acdemicTranscripts(models.AbstractModel):
                     results[exam.id][student.id][subject.subject_id.id]=subject
 
         return results
-
-
-
 
     def get_gradings(self,obj):
         grading=self.env['education.result.grading'].search([('id','>','0')],order='min_per desc',)
@@ -142,7 +147,6 @@ class acdemicTranscripts(models.AbstractModel):
                     suffix = 'th'
         return str(numb) + suffix
 
-
     def get_date(self, date):
         date1 = datetime.strptime(date, "%Y-%m-%d")
         return str(date1.month) + ' / ' + str(date1.year)
@@ -160,4 +164,41 @@ class acdemicTranscripts(models.AbstractModel):
             'get_gradings':self.get_gradings,
             'num2serial': self.num2serial,
             'get_results': self.get_results,
+            'get_sections': self.get_sections,
+        }
+class acdemicTranscripts(models.AbstractModel):
+    _name = 'report.education_exam.report_dsblsc_marksheet_converted'
+
+    @api.model
+    def get_report_values(self, docids, data=None):
+        docs = self.env['academic.transcript'].browse(docids)
+        return {
+            'doc_model': 'education.exam.results',
+            'docs': docs,
+            'time': time,
+            'get_students': self.env['report.education_exam.report_dsblsc_marksheet'].get_students,
+            'get_exams': self.env['report.education_exam.report_dsblsc_marksheet'].get_exams,
+            'get_subjects': self.env['report.education_exam.report_dsblsc_marksheet'].get_subjects,
+            'get_gradings':self.env['report.education_exam.report_dsblsc_marksheet'].get_gradings,
+            'num2serial': self.env['report.education_exam.report_dsblsc_marksheet'].num2serial,
+            'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
+            'get_sections': self.env['report.education_exam.report_dsblsc_marksheet'].get_sections,
+        }
+class acdemicTranscripts(models.AbstractModel):
+    _name = 'report.education_exam.report_dsblsc_evaluation'
+
+    @api.model
+    def get_report_values(self, docids, data=None):
+        docs = self.env['academic.transcript'].browse(docids)
+        return {
+            'doc_model': 'education.exam.results',
+            'docs': docs,
+            'time': time,
+            'get_students': self.env['report.education_exam.report_dsblsc_marksheet'].get_students,
+            'get_exams': self.env['report.education_exam.report_dsblsc_marksheet'].get_exams,
+            'get_subjects': self.env['report.education_exam.report_dsblsc_marksheet'].get_subjects,
+            'get_gradings':self.env['report.education_exam.report_dsblsc_marksheet'].get_gradings,
+            'num2serial': self.env['report.education_exam.report_dsblsc_marksheet'].num2serial,
+            'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
+            'get_sections': self.env['report.education_exam.report_dsblsc_marksheet'].get_sections,
         }

@@ -7,7 +7,6 @@ from . import exam_academic_transcript_new
 from . import exam_academic_transcript_dsblsc
 from . import merit_list
 from . import dsblsc_marksheet
-from . import dsblsc_marksheet_converted
 from . import merit_list_history
 from . import exam_gpa
 

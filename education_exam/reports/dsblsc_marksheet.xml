@@ -1154,6 +1154,7 @@
                 <t t-call="education_exam.external_layout_mark_sheet_dsblsc">
                     <t t-set="exams" t-value="get_exams(docs)"/>
                     <t t-foreach="get_students(docs)" t-as="student">
+                        <t t-set="convert_total" t-value="0"/>
                         <t t-set="results" t-value="get_results(docs)"/>
                         <t t-set="subjects" t-value="get_subjects(student)"/>
 
@@ -1843,10 +1844,12 @@
                                                         <t t-if="paper_name_first">
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="round(result_line.subject_obt)"/>
-                                                            </td><td t-att-rowspan="result_line.paper_count">
+                                                            </td>
+                                                            <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-set="converted_number" t-value="round(result_line.subject_obt/result_line.subject_marks*100*result_line.paper_count)"/>
-                                                                <t t-set="convert_total" t-value="convert_total+converted_number"/>
                                                                 <t t-esc="converted_number"/>
+                                                                <t t-set="converted_number" t-value="converted_number-(40*result_line.paper_count)"/>
+                                                                <t t-set="convert_total" t-value="convert_total+converted_number"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-if="result_line.pass_rule_id.subject_highest>0">
@@ -1892,30 +1895,24 @@
                                             </t>
                                         </tr>
                                     </t>
+                            <tr>
+                                <t t-foreach="exams" t-as="exam">
+                                    <t t-if="exam_first">
+                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +3 + results[exam.id][student.id]['result'].show_paper">
+                                            Total Mark With Additional Subject:
+                                        </td>
+                                    </t>
+                                    <td >
+                                        <t t-esc="round(convert_total)"/>
+                                    </td>
+                                    <td  >
+                                    </td>
+                                    <td t-att-colspan="4" >
+                                    </td>
+                                </t>
+                            </tr>
 
-
-
-
-
-
-                                                            <tr>
-                                                                <t t-foreach="exams" t-as="exam">
-                                                                    <t t-if="exam_first">
-                                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +3 + results[exam.id][student.id]['result'].show_paper">
-                                                                            Total Mark With Additional Subject:
-                                                                        </td>
-                                                                    </t>
-                                                                    <td >
-                                                                        <t t-esc="round(results[exam.id][student.id]['result'].net_obtained)"/>
-                                                                    </td>
-                                                                    <td  >
-                                                                    </td>
-                                                                    <td t-att-colspan="4" >
-                                                                    </td>
-                                                                </t>
-                                                            </tr>
-
-                                                            <tr>
+                            <tr>
                                                                 <t t-foreach="exams" t-as="exam">
                                                                     <t t-if="exam_first">
                                                                         <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +3 + results[exam.id][student.id]['result'].show_paper">
@@ -1923,8 +1920,7 @@
                                                                         </td>
                                                                     </t>
                                                                     <td >
-                                                                            <t t-esc="round(results[exam.id][student.id]['result'].net_obtained
-                                                                            /results[exam.id][student.id]['result'].general_full_mark * 100,2)"/>
+                                                                            <t t-esc="round(convert_total/results[exam.id][student.id]['result'].general_row_count,2)"/>
                                                                     %</td>
                                                                     <td></td>
                                                                     <td t-att-colspan="4" >

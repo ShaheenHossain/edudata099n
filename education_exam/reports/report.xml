@@ -81,13 +81,13 @@
             file="education_exam.report_dsblsc_evaluation"
         />
     <report
-            id="action_exam_academic_transcript1"
+            id="action_dsblsc_tabulation"
             model="academic.transcript"
-            string="Academic Transcript1"
+            string="Tabulation"
             report_type="qweb-html"
             paperformat="legal_landscape"
-            name="education_exam.report_exam_academic_transcript1"
-            file="education_exam.report_exam_academic_transcript1"
+            name="education_exam.report_dsblsc_tabulation"
+            file="education_exam.report_dsblsc_tabulation"
         />
         <report
             id="action_exam_academic_transcript_s"

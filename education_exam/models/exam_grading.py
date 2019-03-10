@@ -33,3 +33,8 @@ class resultGradingSystem(models.Model):
                 if gr.min_per <= per_obtained and gr.max_per >= per_obtained:
                     letter_grade = gr.result
         return letter_grade
+    @api.multi
+    def get_lg(self,gp):
+        grade = self.env['education.result.grading'].search([('score', '<=', gp)], limit=1,
+                                                             order='score DESC')
+        return grade.result

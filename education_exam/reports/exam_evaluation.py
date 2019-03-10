@@ -7,6 +7,21 @@ from odoo import fields, models,api
 
 class examEvaluation(models.AbstractModel):
     _name = 'report.education_exam.report_exam_evaluation'
+
+    def get_results(self,section,exams):
+        results={}
+        students = self.get_students(section)
+        for exam in exams:
+            results[exam.id]={}
+            for student in students:
+                results[exam.id][student.id]={}
+                student_results = self.env['education.exam.results.new'].search([('exam_id', '=', exam.id),('student_history','=',student.id)])
+                results[exam.id][student.id]['result']=student_results
+                for subject in student_results.subject_line:
+                    results[exam.id][student.id][subject.subject_id.id]=subject
+
+        return results
+
     def get_sections(self,object):
         sections=[]
 
@@ -22,13 +37,11 @@ class examEvaluation(models.AbstractModel):
 
         return exams
 
-    def get_students(self,objects):
+    def get_students(self,section):
 
-        student=[]
-        student_list=self.env['education.class.history'].search([('class_id.id', '=', objects.id)])
-        for stu in student_list:
-            student.extend(stu.student_id)
-        return student
+        students=self.env['education.class.history'].search([('class_id.id', '=', section.id)])
+
+        return students
     def get_subjects(self, section,obj):
         subjs=self.env['education.syllabus'].search([('class_id','=',section.class_id.id),('academic_year','=',obj.academic_year.id)])
         subject_list=[]
@@ -109,4 +122,5 @@ class examEvaluation(models.AbstractModel):
             'get_lg': self.get_lg,
             'get_exam_obtained_total': self.get_exam_obtained_total,
             'check_optional': self.check_optional,
+            'get_results': self.get_results,
         }

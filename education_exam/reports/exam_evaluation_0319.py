@@ -8,7 +8,7 @@ import numpy
 
 
 class acdemicTranscripts(models.AbstractModel):
-    _name = 'report.education_exam.report_dsblsc_marksheet'
+    _name = 'report.education_exam.report_dsblsc_tabulation'
 
     def get_students(self,objects):
 
@@ -37,41 +37,19 @@ class acdemicTranscripts(models.AbstractModel):
             section=self.env['education.class.division'].search([('class_id','=',object.level.id),('academic_year_id','=',object.academic_year.id)])
             return section
 
-    def get_subjects(self,student):
-        subjs = {}
-        subjs['general']=[]
-        subjs['optional']=[]
-        subjs['extra']=[]
-        gen_row_count=0
-        op_row_count=0
-        ex_row_count=0
-        for subj in student.compulsory_subjects:
-            if subj.evaluation_type=='general' :
-                gen_row_count=gen_row_count+1
-                if subj.subject_id not in subjs['general']:
-                    subjs['general'].append(subj.subject_id)
-            elif subj.evaluation_type=='extra' :
-                ex_row_count=ex_row_count+1
-                if subj.subject_id not in subjs['extra']:
-                    subjs['extra'].append(subj.subject_id)
-        for subj in student.optional_subjects:
-            op_row_count=op_row_count+1
-            if subj.subject_id not in subjs['optional']:
-                subjs['optional'].append(subj.subject_id)
-        for subj in student.selective_subjects:
-            if subj.subject_id not in subjs['optional']:
-                if subj.evaluation_type=='general':
-                    gen_row_count = gen_row_count + 1
-                    if subj.subject_id not in subjs['general']:
-                        subjs['general'].append(subj.subject_id)
-                if subj.evaluation_type=='extra':
-                    ex_row_count = ex_row_count + 1
-                    if subj.subject_id not in subjs['extra']:
-                        subjs['extra'].append(subj.subject_id)
-        subjs['gen_row_count']=gen_row_count
-        subjs['op_row_count']=op_row_count
-        subjs['ex_row_count']=ex_row_count
-        return subjs
+    def get_subjects(self, students):
+        subject_list = []
+        for student in students:
+            for subj in student.compulsory_subjects:
+                if subj.subject_id not in subject_list:
+                    subject_list.append(subj.subject_id)
+            for subj in student.optional_subjects:
+                if subj.subject_id not in subject_list:
+                    subject_list.append(subj.subject_id)
+            for subj in student.selective_subjects:
+                if subj.subject_id not in subject_list:
+                    subject_list.append(subj.subject_id)
+        return subject_list
 
     def get_student_result(self,student,exam):
         student_result = self.env['education.exam.results.new'].search(
@@ -165,41 +143,4 @@ class acdemicTranscripts(models.AbstractModel):
             'num2serial': self.num2serial,
             'get_results': self.get_results,
             'get_sections': self.get_sections,
-        }
-
-class acdemicTranscripts(models.AbstractModel):
-    _name = 'report.education_exam.report_dsblsc_marksheet_converted'
-
-    @api.model
-    def get_report_values(self, docids, data=None):
-        docs = self.env['academic.transcript'].browse(docids)
-        return {
-            'doc_model': 'education.exam.results',
-            'docs': docs,
-            'time': time,
-            'get_students': self.env['report.education_exam.report_dsblsc_marksheet'].get_students,
-            'get_exams': self.env['report.education_exam.report_dsblsc_marksheet'].get_exams,
-            'get_subjects': self.env['report.education_exam.report_dsblsc_marksheet'].get_subjects,
-            'get_gradings':self.env['report.education_exam.report_dsblsc_marksheet'].get_gradings,
-            'num2serial': self.env['report.education_exam.report_dsblsc_marksheet'].num2serial,
-            'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
-            'get_sections': self.env['report.education_exam.report_dsblsc_marksheet'].get_sections,
-        }
-class acdemicTranscripts(models.AbstractModel):
-    _name = 'report.education_exam.report_dsblsc_evaluation'
-
-    @api.model
-    def get_report_values(self, docids, data=None):
-        docs = self.env['academic.transcript'].browse(docids)
-        return {
-            'doc_model': 'education.exam.results',
-            'docs': docs,
-            'time': time,
-            'get_students': self.env['report.education_exam.report_dsblsc_marksheet'].get_students,
-            'get_exams': self.env['report.education_exam.report_dsblsc_marksheet'].get_exams,
-            'get_subjects': self.env['report.education_exam.report_dsblsc_marksheet'].get_subjects,
-            'get_gradings':self.env['report.education_exam.report_dsblsc_marksheet'].get_gradings,
-            'num2serial': self.env['report.education_exam.report_dsblsc_marksheet'].num2serial,
-            'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
-            'get_sections': self.env['report.education_exam.report_dsblsc_marksheet'].get_sections,
         }

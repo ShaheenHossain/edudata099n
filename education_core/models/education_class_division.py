@@ -53,8 +53,6 @@ class EducationDivision(models.Model):
     faculty_id = fields.Many2one('education.faculty', string='Class Faculty', help="Class teacher/Faculty")
     classes_ids = fields.Many2many('education.class','class_dev_rel','classes_ids','division_ids', string='Class')
 
-
-
 class EducationClassDivision(models.Model):
     _name = 'education.class.division'
     _description = "Class room"

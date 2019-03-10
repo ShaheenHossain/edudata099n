@@ -266,11 +266,11 @@
                                             <p>&lt;tr&gt;</p>
                                             <t t-if="results[exam.id][student.id]['result'].show_tut">
                                                 <td>Tut</td>
-                                                <td>Pass Mark</td>
+                                                <td>Pass</td>
                                             </t>
                                             <t t-if="results[exam.id][student.id]['result'].show_subj">
                                                 <td>Sub</td>
-                                                <td>pass</td>
+                                                <td>Pass</td>
                                             </t>
                                             <t t-if="results[exam.id][student.id]['result'].show_obj">
                                                 <td>Obj</td>
@@ -503,7 +503,7 @@
                                                                 <t t-esc="result_line.grade_point"/>
                                                             </td>
                                                             <t t-if="subject_first">
-                                                                <td t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
+                                                                <td class="rotated" t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
                                                                     <t t-set="gpa" t-value="results[exam.id][student.id]['result'].general_gpa"/>
                                                                     <t t-if="5 > gpa">
                                                                         <t t-esc="round(gpa,2)"/>
@@ -511,12 +511,16 @@
                                                                     <t t-else="">
                                                                         5
                                                                     </t>
-                                                                    (
-                                                                    <t t-esc="results[exam.id][student.id]['result'].general_fail_count"/>
-                                                                     F)
+                                                                    <t t-set="f_count" t-value="results[exam.id][student.id]['result'].general_fail_count"/>
+                                                                    <t t-if="f_count>0">
+                                                                        (
+                                                                        <t t-esc="f_count"/>
+                                                                         F)
+                                                                    </t>
+
                                                                 </td>
                                                                 <t t-if="fourth_subject>0">
-                                                                    <td t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
+                                                                    <td class="rotated" t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
                                                                         <t t-set="gpa" t-value="results[exam.id][student.id]['result'].net_gpa"/>
                                                                         <t t-if="5 > gpa">
                                                                             <t t-esc="round(gpa,2)"/>
@@ -524,6 +528,12 @@
                                                                         <t t-else="">
                                                                             5
                                                                         </t>
+                                                                        <t t-set="f_count" t-value="results[exam.id][student.id]['result'].general_fail_count"/>
+                                                                    <t t-if="f_count>0">
+                                                                        (
+                                                                        <t t-esc="f_count"/>
+                                                                         F)
+                                                                    </t>
                                                                     </td>
                                                                 </t>
                                                             </t>
@@ -1266,8 +1276,8 @@
                                             <th rowspan="2">LG</th>
                                             <th rowspan="2">GP</th>
                                             <t t-if="fourth_subject==1">
-                                                <th rowspan="2">GPA <br>(without 4th Sub)</br></th>
-                                                <th rowspan="2">GPA <br>(with 4th sub)</br></th>
+                                                <th class="rotated" rowspan="2">GPA <br>(without 4th Sub)</br></th>
+                                                <th class="rotated" rowspan="2">GPA <br>(with 4th sub)</br></th>
                                             </t>
                                             <t t-else="">
                                                 <th rowspan="2">GPA </th>
@@ -1513,7 +1523,11 @@
                                                                 <t t-esc="converted_number"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-esc="round(result_line.pass_rule_id.subject_highest)"/>
+                                                                <t t-if="result_line.pass_rule_id.subject_highest>0">
+                                                                    <t t-set="converted_number" t-value="round(result_line.subject_obt/result_line.pass_rule_id.subject_highest*100*result_line.paper_count)"/>
+                                                                    <t t-esc="converted_number"/>
+                                                                </t>
+
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="result_line.letter_grade"/>
@@ -1522,7 +1536,7 @@
                                                                 <t t-esc="result_line.grade_point"/>
                                                             </td>
                                                             <t t-if="subject_first">
-                                                                <td t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
+                                                                <td class="rotated" t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
                                                                     <t t-set="gpa" t-value="results[exam.id][student.id]['result'].general_gpa"/>
                                                                     <t t-if="5 > gpa">
                                                                         <t t-esc="round(gpa,2)"/>
@@ -1535,7 +1549,7 @@
                                                                      F)
                                                                 </td>
                                                                 <t t-if="fourth_subject>0">
-                                                                    <td t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
+                                                                    <td class="rotated" t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
                                                                         <t t-set="gpa" t-value="results[exam.id][student.id]['result'].net_gpa"/>
                                                                         <t t-if="5 > gpa">
                                                                             <t t-esc="round(gpa,2)"/>
@@ -1600,7 +1614,7 @@
                                             <tr>
                                                 <t t-foreach="exams" t-as="exam">
                                                     <t t-if="exam_first">
-                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +3 + results[exam.id][student.id]['result'].show_paper">
+                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 2 +1 + results[exam.id][student.id]['result'].show_paper">
                                                             <t t-if="fourth_subject>0">
                                                                 Total Mark Without Additional Subject:
                                                             </t>
@@ -1627,7 +1641,7 @@
                                             <tr>
                                                 <t t-foreach="exams" t-as="exam">
                                                     <t t-if="exam_first">
-                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +2 + results[exam.id][student.id]['result'].show_paper">
+                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +3 + results[exam.id][student.id]['result'].show_paper">
                                                             <t t-if="fourth_subject>0">
                                                                 Percentage of total mark without additional subject:
                                                             </t>
@@ -1829,9 +1843,17 @@
                                                         <t t-if="paper_name_first">
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="round(result_line.subject_obt)"/>
+                                                            </td><td t-att-rowspan="result_line.paper_count">
+                                                                <t t-set="converted_number" t-value="round(result_line.subject_obt/result_line.subject_marks*100*result_line.paper_count)"/>
+                                                                <t t-set="convert_total" t-value="convert_total+converted_number"/>
+                                                                <t t-esc="converted_number"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-esc="round(result_line.subject_highest)"/>
+                                                                <t t-if="result_line.pass_rule_id.subject_highest>0">
+                                                                    <t t-set="converted_number" t-value="round(result_line.subject_obt/result_line.pass_rule_id.subject_highest*100*result_line.paper_count)"/>
+                                                                    <t t-esc="converted_number"/>
+                                                                </t>
+
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="result_line.letter_grade"/>
@@ -1879,7 +1901,7 @@
                                                             <tr>
                                                                 <t t-foreach="exams" t-as="exam">
                                                                     <t t-if="exam_first">
-                                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +2 + results[exam.id][student.id]['result'].show_paper">
+                                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +3 + results[exam.id][student.id]['result'].show_paper">
                                                                             Total Mark With Additional Subject:
                                                                         </td>
                                                                     </t>
@@ -1896,7 +1918,7 @@
                                                             <tr>
                                                                 <t t-foreach="exams" t-as="exam">
                                                                     <t t-if="exam_first">
-                                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +2 + results[exam.id][student.id]['result'].show_paper">
+                                                                        <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +3 + results[exam.id][student.id]['result'].show_paper">
                                                                             Percentage of total mark with additional subject:
                                                                         </td>
                                                                     </t>

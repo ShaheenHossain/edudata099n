@@ -106,7 +106,6 @@ class academicTranscript(models.Model):
                                 'prac_mark': paper.subject_id.prac_mark
                             }
                             present_paper_rules = present_paper_rules.create(paper_values)
-
                         subjectId = paper.subject_id.subject_id
                         if subjectId not in subject_list:
                             newSubject=self.env['results.subject.line.new'].search([("subject_id","=",subjectId.id),
@@ -194,7 +193,7 @@ class academicTranscript(models.Model):
             count_general_paper = 0
             count_general_fail = 0
             student.general_fail_count=0
-            general_full_mark=0
+            full_general_mark=0
             gp_general = 0
             obtained_optional = 0
             count_optional_subjects = 0
@@ -224,15 +223,15 @@ class academicTranscript(models.Model):
                 mark_obj=0
                 subject_obtained=0
                 subject_full=0
-
+                count_fail=0
                 for paper in subject.paper_ids:
                     paper_obtained=0
                     paper_full=0
+                    paper_count = paper_count + 1
                     if paper.paper_id in student.student_history.optional_subjects:
                         optional = True
                     elif paper.paper_id.evaluation_type == 'extra':
                         extra = True
-                    paper_count = paper_count + 1
                     if paper.pass_rule_id.tut_mark > 0:
                         student.show_tut = True
                         paper_obtained=paper_obtained+paper.tut_obt
@@ -296,6 +295,8 @@ class academicTranscript(models.Model):
                             subject_full,subject_obtained)
                     subject_letter_grade = self.env['education.result.grading'].get_letter_grade(
                         subject_full, subject_obtained)
+                if subject_letter_grade=='F':
+                    count_fail=1
                 subject.grade_point=subject_grade_point
                 subject.letter_grade=subject_letter_grade
                 if extra == True:
@@ -315,13 +316,13 @@ class academicTranscript(models.Model):
                     gp_optional = gp_optional + subject_grade_point
                     count_optional_fail = count_optional_fail + count_fail
                 else:
-                    general_full_mark = general_full_mark + subject.pass_rule_id.subject_marks
+                    full_general_mark = full_general_mark + subject_full
                     subject.general_for = student.id
                     count_general_subjects = count_general_subjects + 1
                     obtained_general=obtained_general+ subject.subject_obt
                     count_general_paper = count_general_paper + paper_count
                     gp_general = gp_general + subject_grade_point
-                    count_general_fail =count_fail + count_fail
+                    count_general_fail =count_general_fail + count_fail
                 subject.paper_count= paper_count
                 if paper_count > 1:
                     student.show_paper = True
@@ -345,7 +346,7 @@ class academicTranscript(models.Model):
             student.general_obtained = obtained_general
             student.general_fail_count=count_general_fail
             student.general_gp=gp_general
-            student.general_full_mark = general_full_mark
+            student.general_full_mark = full_general_mark
 
             student.optional_row_count = count_optional_paper
             student.optional_count = count_optional_subjects
@@ -372,6 +373,7 @@ class academicTranscript(models.Model):
                 if student.optional_gpa_above_2 < 0:
                     student.optional_gpa_above_2 = 0
                 student.net_gpa = student.general_gpa + (student.optional_gpa_above_2 / student.general_count)
+                student.net_lg = self.env['education.result.grading'].get_lg(student.net_gpa)
             if student.extra_count > 0:
                 if student.extra_fail_count < 1:
                     student.extra_gpa = student.extra_gp / student.extra_count

@@ -147,7 +147,7 @@ class academicTranscript(models.Model):
                             new_paper.prac_obt= paper.prac_obt
                             new_paper.tut_pr= paper.tut_pr
                             new_paper.subj_pr= paper.subj_pr
-                            new_paper.obj_pr+ paper.obj_pr
+                            new_paper.obj_pr=paper.obj_pr
                             new_paper.prac_pr=paper.prac_pr
 
                         result_paper_line_list.append(new_paper)
@@ -234,28 +234,40 @@ class academicTranscript(models.Model):
                         extra = True
                     if paper.pass_rule_id.tut_mark > 0:
                         student.show_tut = True
-                        paper_obtained=paper_obtained+paper.tut_obt
-                        obt_tut=obt_tut+paper.tut_obt
-                        paper_full=paper_full+paper.pass_rule_id.tut_mark
-                        mark_tut=mark_tut+paper.pass_rule_id.tut_mark
+                        if paper.tut_pr==True:
+                            paper_obtained=paper_obtained+paper.tut_obt
+                            obt_tut=obt_tut+paper.tut_obt
+                            paper_full=paper_full+paper.pass_rule_id.tut_mark
+                            mark_tut=mark_tut+paper.pass_rule_id.tut_mark
+                        else:
+                            passed=False
                     if paper.pass_rule_id.subj_mark > 0:
                         student.show_subj = True
-                        paper_obtained = paper_obtained + paper.subj_obt
-                        paper_full = paper_full + paper.pass_rule_id.subj_mark
-                        obt_subj = obt_subj + paper.subj_obt
-                        mark_subj = mark_subj + paper.pass_rule_id.subj_mark
+                        if paper.subj_pr == True:
+                            paper_obtained = paper_obtained + paper.subj_obt
+                            paper_full = paper_full + paper.pass_rule_id.subj_mark
+                            obt_subj = obt_subj + paper.subj_obt
+                            mark_subj = mark_subj + paper.pass_rule_id.subj_mark
+                        else:
+                            passed = False
                     if paper.pass_rule_id.obj_mark > 0:
-                        student.show_obj = True
-                        paper_obtained = paper_obtained + paper.obj_obt
-                        paper_full = paper_full + paper.pass_rule_id.obj_mark
-                        obt_obj = obt_obj + paper.obj_obt
-                        mark_obj = mark_obj + paper.pass_rule_id.obj_mark
+                        student.show_obj =True
+                        if paper.obj_pr==True:
+                            paper_obtained = paper_obtained + paper.obj_obt
+                            paper_full = paper_full + paper.pass_rule_id.obj_mark
+                            obt_obj = obt_obj + paper.obj_obt
+                            mark_obj = mark_obj + paper.pass_rule_id.obj_mark
+                        else:
+                            passed=False
                     if paper.pass_rule_id.prac_mark > 0:
                         student.show_prac = True
-                        paper_obtained = paper_obtained + paper.prac_obt
-                        paper_full = paper_full + paper.pass_rule_id.prac_mark
-                        obt_prac = obt_prac + paper.prac_obt
-                        mark_prac = mark_prac + paper.pass_rule_id.prac_mark
+                        if paper.prac_pr==True:
+                            paper_obtained = paper_obtained + paper.prac_obt
+                            paper_full = paper_full + paper.pass_rule_id.prac_mark
+                            obt_prac = obt_prac + paper.prac_obt
+                            mark_prac = mark_prac + paper.pass_rule_id.prac_mark
+                        else:
+                            passed=False
 
                     if paper.pass_rule_id.tut_pass > paper.tut_obt:
                         passed = False
@@ -265,6 +277,7 @@ class academicTranscript(models.Model):
                         passed = False
                     elif paper.pass_rule_id.prac_pass > paper.prac_obt:
                         passed = False
+
                     paper.paper_obt=paper_obtained
                     paper.passed=passed
                     paper.paper_marks=paper_full

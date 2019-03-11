@@ -15,24 +15,18 @@ class resultGradingSystem(models.Model):
 
     @api.multi
     def get_grade_point(self,ful_mark,obtained):
-        grade_point=0
-        if ful_mark>0:
-            per_obtained = ((obtained * 100) / ful_mark)
-            grades = self.search([['id', '>', '0']])
-            for gr in grades:
-                if gr.min_per <= per_obtained and gr.max_per >= per_obtained:
-                    grade_point = gr.score
-        return grade_point
+        if ful_mark==0:
+            ful_mark=1      #####trick to avoide divided by zero error
+        obt_per=(obtained/ful_mark)*100
+        grading = self.env['education.result.grading'].search([('min_per','<=',obt_per)], order='min_per desc',limit=1)
+        return grading.score
     @api.multi
     def get_letter_grade(self,ful_mark,obtained):
-        letter_grade='F'
-        if ful_mark>0:
-            per_obtained = ((obtained * 100) / ful_mark)
-            grades = self.search([['id', '>', '0']])
-            for gr in grades:
-                if gr.min_per <= per_obtained and gr.max_per >= per_obtained:
-                    letter_grade = gr.result
-        return letter_grade
+        if ful_mark==0:
+            ful_mark=1      #####trick to avoide divided by zero error
+        obt_per=(obtained/ful_mark)*100
+        grading = self.env['education.result.grading'].search([('min_per','<=',obt_per)], order='min_per desc',limit=1)
+        return grading.result
     @api.multi
     def get_lg(self,gp):
         grade = self.env['education.result.grading'].search([('score', '<=', gp)], limit=1,

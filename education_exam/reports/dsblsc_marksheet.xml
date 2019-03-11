@@ -1525,7 +1525,7 @@
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-if="result_line.pass_rule_id.subject_highest>0">
-                                                                    <t t-set="converted_number" t-value="round(result_line.subject_obt/result_line.pass_rule_id.subject_highest*100*result_line.paper_count)"/>
+                                                                    <t t-set="converted_number" t-value="round(result_line.pass_rule_id.subject_highest/result_line.subject_marks*100*result_line.paper_count)"/>
                                                                     <t t-esc="converted_number"/>
                                                                 </t>
 
@@ -1853,7 +1853,7 @@
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-if="result_line.pass_rule_id.subject_highest>0">
-                                                                    <t t-set="converted_number" t-value="round(result_line.subject_obt/result_line.pass_rule_id.subject_highest*100*result_line.paper_count)"/>
+                                                                    <t t-set="converted_number" t-value="round(result_line.pass_rule_id.subject_highest/result_line.subject_marks*100*result_line.paper_count)"/>
                                                                     <t t-esc="converted_number"/>
                                                                 </t>
 

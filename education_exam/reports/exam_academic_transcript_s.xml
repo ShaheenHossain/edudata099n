@@ -439,16 +439,16 @@
 
                                                 <t t-foreach="get_marks(exam,subject,student)" t-as="mark">
                                                     <t t-if="tut_field==1">
-                                                        <td><span t-field="mark.tut_mark"/></td>
+                                                        <td><span t-field="mark.tut_obt"/></td>
                                                     </t>
                                                     <t t-if="subj_field==1">
-                                                        <td><span t-field="mark.subj_mark"/></td>
+                                                        <td><span t-field="mark.subj_obt"/></td>
                                                     </t>
                                                     <t t-if="obj_field==1">
-                                                        <td><span t-field="mark.obj_mark"/></td>
+                                                        <td><span t-field="mark.obj_obt"/></td>
                                                     </t>
                                                     <t t-if="prac_field==1">
-                                                        <td><span t-field="mark.prac_mark"/></td>
+                                                        <td><span t-field="mark.prac_obt"/></td>
                                                     </t>
                                                     <!--TODO -->
                                                     <t t-if="subject.paper=='1st'">
@@ -662,16 +662,16 @@
 
                                                        <t t-foreach="get_marks(exam,subject,student)" t-as="mark">
                                                            <t t-if="tut_field==1">
-                                                                <td><span t-field="mark.tut_mark"/></td>
+                                                                <td><span t-field="mark.tut_obt"/></td>
                                                            </t>
                                                            <t t-if="subj_field==1">
-                                                                <td><span t-field="mark.subj_mark"/></td>
+                                                                <td><span t-field="mark.subj_obt"/></td>
                                                            </t>
                                                            <t t-if="obj_field==1">
-                                                                <td><span t-field="mark.obj_mark"/></td>
+                                                                <td><span t-field="mark.obj_obt"/></td>
                                                            </t>
                                                           <t t-if="prac_field==1">
-                                                                <td><span t-field="mark.prac_mark"/></td>
+                                                                <td><span t-field="mark.prac_obt"/></td>
                                                           </t>
                                                           <td><span t-field="mark.mark_scored"/></td>
 
@@ -775,16 +775,16 @@
 
                                                        <t t-foreach="get_marks(exam,subject,student)" t-as="mark">
                                                            <t t-if="tut_field==1">
-                                                                <td><span t-field="mark.tut_mark"/></td>
+                                                                <td><span t-field="mark.tut_obt"/></td>
                                                            </t>
                                                            <t t-if="subj_field==1">
-                                                                <td><span t-field="mark.subj_mark"/></td>
+                                                                <td><span t-field="mark.subj_obt"/></td>
                                                            </t>
                                                            <t t-if="obj_field==1">
-                                                                <td><span t-field="mark.obj_mark"/></td>
+                                                                <td><span t-field="mark.obj_obt"/></td>
                                                            </t>
                                                           <t t-if="prac_field==1">
-                                                                <td><span t-field="mark.prac_mark"/></td>
+                                                                <td><span t-field="mark.prac_obt"/></td>
                                                           </t>
                                                           <td><span t-field="mark.mark_scored"/></td>
 

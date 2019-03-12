@@ -178,13 +178,13 @@ class acdemicTranscripts(models.AbstractModel):
             #do for single subject
 
             mark=self.get_marks( exam, subject, student)
-            if mark.tut_mark <mark.subject_id.tut_pass:
+            if mark.tut_obt <mark.subject_id.tut_pass:
                 fail=fail+1
-            if mark.prac_mark <mark.subject_id.prac_pass:
+            if mark.prac_obt <mark.subject_id.prac_pass:
                 fail = fail + 1
-            if mark.subj_mark <mark.subject_id.subj_pass:
+            if mark.subj_obt <mark.subject_id.subj_pass:
                 fail = fail + 1
-            if mark.obj_mark <mark.subject_id.obj_pass:
+            if mark.obj_obt <mark.subject_id.obj_pass:
                 fail = fail + 1
         if fail>0:
             return "fail"

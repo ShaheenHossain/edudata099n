@@ -1,5 +1,7 @@
 
 from odoo import models, fields, api
+import pandas as pd
+import numpy
 
 
 class EducationExamResultsNew(models.Model):
@@ -10,6 +12,9 @@ class EducationExamResultsNew(models.Model):
     result_id=fields.Many2one("education.exam.results","result_id",ondelete="cascade")             #relation to the result table
     exam_id = fields.Many2one('education.exam', string='Exam',ondelete="cascade")
     class_id = fields.Many2one('education.class.division', string='Class')
+    # todo here to change class_id to level
+    # todo group for merit list of group
+    group=fields.Integer('group')
     division_id = fields.Many2one('education.class.division', string='Division')
     section_id = fields.Many2one('education.class.section', string='Section')
     student_id = fields.Many2one('education.student', string='Student')
@@ -75,6 +80,74 @@ class EducationExamResultsNew(models.Model):
     show_prac=fields.Boolean('Show Prac')
     show_paper=fields.Boolean('Show Papers')
     result_type_count=fields.Integer("result type Count")
+
+    @api.multi
+    def calculate_merit_list(self,exam,level):
+        results=[]
+        roll_no=[]
+        general_total=[]
+        net_total=[]
+        optional_fail=[]
+        general_fail=[]
+        extra_fail=[]
+        section=[]
+        exam_no=[]
+        group=[]
+        records=self.env['education.exam.results.new'].search([('exam_id','=',exam.id),('class_id.class_id','=',level.id)])
+        for rec in records:
+            results.append(rec)
+            roll_no.append(rec.student_history.roll_no)
+            general_total.append(rec.general_obtained)
+            net_total.append(rec.net_obtained)
+            optional_fail.append(rec.optional_fail_count)
+            general_fail.append(rec.general_fail_count)
+            extra_fail.append(rec.extra_fail_count)
+            section.append(rec.student_history.section)
+            group.append(rec.group)
+            exam_no.append(exam)
+        data={
+            'result':results,
+            'gen_total':general_total,
+            'net_total': net_total,
+            'gen_fail': general_fail,
+            'op_fail': optional_fail,
+            'ext_fail': extra_fail,
+            'section': section,
+            'group':group,
+            'roll': roll_no,
+            'exam': exam_no,
+            'merit_class':0,
+            'merit_section':0,
+            'merit_group':0,
+
+        }
+        df = pd.DataFrame(data)
+        df1=df.sort_values(['gen_fail','net_total', 'op_fail','ext_fail','roll'], ascending=[True, False,True,True,True])
+        df= df1.reset_index(drop=True)
+        for index, row in df.iterrows():
+            df.loc[index,'merit_class' ] = index+1
+            row['result'].merit_class=index+1
+        grouped = df.groupby('section')
+        for name, group in grouped:
+            df_section = df[(df['section'] == name)]
+            df_section_sorted=df_section.sort_index()
+            df_section_sorted.reset_index(drop=True)
+            for index,row in df_section_sorted.iterrows():
+                # df.loc[df['result'] == row['result'], 'merit_section'] = index+1
+                row['result'].merit_section=index+1
+            # df_section_sorted.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df_section_'+str(name.id) +'.csv')
+        grouped = df.groupby('group')
+        for name, group in grouped:
+            df_section = df[(df['group'] == name)]
+            df_section_sorted=df_section.sort_index()
+            df_section_sorted.reset_index(drop=True)
+            for index,row in df_section_sorted.iterrows():
+                row['result'].merit_section = index+1
+                # df.loc[df['result'] == row['result'], 'merit_group'] = index+1
+            # df_section_sorted.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df_section_'+str(name.id) +'.csv')
+        # df.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df.csv')
+
+
 
     @api.onchange('general_gp','general_count','optional_gp','optional_count')
     def get_general_gpa(self):

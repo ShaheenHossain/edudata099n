@@ -17,6 +17,7 @@ class EducationExamResultsNew(models.Model):
     group=fields.Integer('group')
     division_id = fields.Many2one('education.class.division', string='Division')
     section_id = fields.Many2one('education.class.section', string='Section')
+    roll_no = fields.Integer('Roll', related='student_history.roll_no')
     student_id = fields.Many2one('education.student', string='Student')
     student_history=fields.Many2one('education.class.history',"Student History",compute='get_student_history',store="True")
     student_name = fields.Char(string='Student')

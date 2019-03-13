@@ -4,10 +4,10 @@
 
         <template id="external_layout_evaluation">
         <div class="header">
-             <div style="width: 100px;float: left;">
+             <div style="width: 10%;float: left;">
                 <img src='/web/binary/company_logo' style="width:100%"/>
             </div>
-            <div style="width: 80%;float: left;padding-left:10px">
+            <div style="width: 90%;float: left;padding-left:10px">
                 <h4 style="text-transform: uppercase;" t-if="res_company.name"><span t-field="res_company.name"/></h4>
                 <h5 t-if="res_company.street"><span t-field="res_company.street"/><t t-if="res_company.street2"><span t-field="res_company.street2"/> </t></h5>
                     <h5 t-if="res_company.country_id"><span t-field="res_company.country_id"/></h5>

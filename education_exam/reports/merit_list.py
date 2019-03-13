@@ -22,16 +22,19 @@ class examEvaluation(models.AbstractModel):
 
 
 
-
-
+    def get_result_line(self,exam,section):
+        result_Line=self.env['education.exam.results.new'].search([('exam_id','=',exam.id),('section_id','=',section.section_id.id)],order="roll_no asc",)
+        return result_Line
     def get_sections(self,object):
         sections=[]
 
         if object.section:
-            return object.section
+            sections.append(object.section)
         elif object.level:
             section=self.env['education.class.division'].search([('class_id','=',object.level.id),('academic_year_id','=',object.academic_year.id)])
-            return section
+            for sec in section:
+                sections.append(sec)
+        return sections
     def get_exams(self, objects):
         exams = []
         for exam in objects.exams:
@@ -109,4 +112,6 @@ class examEvaluation(models.AbstractModel):
             'get_sections': self.get_sections,
             'get_marks': self.get_marks,
             'get_merit_list': self.get_merit_list,
+            'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
+            'get_result_line': self.get_result_line,
         }

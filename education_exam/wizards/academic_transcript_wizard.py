@@ -27,6 +27,14 @@ class academicTranscript(models.Model):
         self.state='done'
 
     @api.multi
+    def get_merit_list(self):
+        for rec in self:
+            level=rec.level
+            for exam in rec.exams:
+                self.env['education.exam.results.new'].calculate_merit_list(exam,level)
+
+
+    @api.multi
     @api.onchange('level', 'section')
     def get_student_domain(self):
         for rec in self:
@@ -541,7 +549,3 @@ class academicTranscript(models.Model):
             if rec.show_prac == True:
                 res_type_count = res_type_count + 1
             rec.result_type_count = res_type_count
-
-
-
-

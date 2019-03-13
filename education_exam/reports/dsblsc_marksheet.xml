@@ -1119,7 +1119,6 @@
                                 <div class="row">
 
                                    <div class="col-xs-4" style="font-size:16px;">Position in Section:
-                                       <t t-set="sl" t-value="12"/>
                                        <t t-foreach="exams" t-as="exam">
                                            <t t-esc="num2serial(results[exam.id][student.id]['result'].merit_section)"/>
                                        </t>
@@ -1557,9 +1556,12 @@
                                                                     <t t-else="">
                                                                         5
                                                                     </t>
-                                                                    (
-                                                                    <t t-esc="results[exam.id][student.id]['result'].general_fail_count"/>
-                                                                     F)
+                                                                    <t t-set="f_count" t-value="results[exam.id][student.id]['result'].general_fail_count"/>
+                                                                    <t t-if="f_count>0">
+                                                                        (
+                                                                        <t t-esc="f_count"/>
+                                                                         F)
+                                                                    </t>
                                                                 </td>
                                                                 <t t-if="fourth_subject>0">
                                                                     <td class="rotated" t-att-rowspan="results[exam.id][student.id]['result'].general_row_count">
@@ -1570,6 +1572,12 @@
                                                                         <t t-else="">
                                                                             5
                                                                         </t>
+                                                                        <t t-set="f_count" t-value="results[exam.id][student.id]['result'].general_fail_count"/>
+                                                                    <t t-if="f_count>0">
+                                                                        (
+                                                                        <t t-esc="f_count"/>
+                                                                         F)
+                                                                    </t>
                                                                     </td>
                                                                 </t>
                                                             </t>
@@ -2162,9 +2170,10 @@
                                 <div class="row">
 
                                    <div class="col-xs-4" style="font-size:16px;">Position in Section:
-                                       <t t-set="sl" t-value="12"/>
-                                         <t t-esc="num2serial(int(45))"/>
-                                       </div>
+                                       <t t-foreach="exams" t-as="exam">
+                                           <t t-esc="num2serial(results[exam.id][student.id]['result'].merit_section)"/>
+                                       </t>
+                                   </div>
 
                                    <div class="col-xs-4" style="font-size:16px;"> Date of return :</div>
                                     <!--<div class="col-xs-4">Percentage of marks:  -->
@@ -2176,7 +2185,9 @@
                                 </div>
                                 <div class="row">
                                    <div class="col-xs-4" style="font-size:16px;">Position in Class:
-                                           <t t-esc="num2serial(23)"/>
+                                       <t t-foreach="exams" t-as="exam">
+                                           <t t-esc="num2serial(results[exam.id][student.id]['result'].merit_class)"/>
+                                       </t>
                                    </div>
                                 </div>
                                 <div class="row">

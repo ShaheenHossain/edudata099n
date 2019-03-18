@@ -218,7 +218,7 @@ class academicTranscript(models.Model):
             res_type_count=0
             for subject in student.subject_line:
                 paper_count = 0
-                passed = True
+                PassFail = True
                 optional = False
                 extra = False
                 obt_tut=0
@@ -248,7 +248,7 @@ class academicTranscript(models.Model):
                             paper_full=paper_full+paper.pass_rule_id.tut_mark
                             mark_tut=mark_tut+paper.pass_rule_id.tut_mark
                         else:
-                            passed=False
+                            PassFail=False
                     if paper.pass_rule_id.subj_mark > 0:
                         student.show_subj = True
                         if paper.subj_pr == True:
@@ -257,7 +257,7 @@ class academicTranscript(models.Model):
                             obt_subj = obt_subj + paper.subj_obt
                             mark_subj = mark_subj + paper.pass_rule_id.subj_mark
                         else:
-                            passed = False
+                            PassFail = False
                     if paper.pass_rule_id.obj_mark > 0:
                         student.show_obj =True
                         if paper.obj_pr==True:
@@ -266,7 +266,7 @@ class academicTranscript(models.Model):
                             obt_obj = obt_obj + paper.obj_obt
                             mark_obj = mark_obj + paper.pass_rule_id.obj_mark
                         else:
-                            passed=False
+                            PassFail=False
                     if paper.pass_rule_id.prac_mark > 0:
                         student.show_prac = True
                         if paper.prac_pr==True:
@@ -275,19 +275,19 @@ class academicTranscript(models.Model):
                             obt_prac = obt_prac + paper.prac_obt
                             mark_prac = mark_prac + paper.pass_rule_id.prac_mark
                         else:
-                            passed=False
+                            PassFail=False
 
                     if paper.pass_rule_id.tut_pass > paper.tut_obt:
-                        passed = False
+                        PassFail = False
                     elif paper.pass_rule_id.subj_pass > paper.subj_obt:
-                        passed = False
+                        PassFail = False
                     elif paper.pass_rule_id.obj_pass > paper.obj_obt:
-                        passed = False
+                        PassFail = False
                     elif paper.pass_rule_id.prac_pass > paper.prac_obt:
-                        passed = False
+                        PassFail = False
 
                     paper.paper_obt=paper_obtained
-                    paper.passed=passed
+                    paper.passed=PassFail
                     paper.paper_marks=paper_full
                     subject_obtained=subject_obtained+paper.paper_obt
                     subject_full=subject_full+paper_full
@@ -298,15 +298,15 @@ class academicTranscript(models.Model):
                 subject.subject_obt=subject_obtained
                 subject.subject_marks=subject_full
                 if subject.pass_rule_id.tut_pass > subject.tut_obt:
-                    passed = False
+                    PassFail = False
                 elif subject.pass_rule_id.subj_pass > subject.subj_obt:
-                    passed = False
+                    PassFail = False
                 elif subject.pass_rule_id.obj_pass > subject.obj_obt:
-                    passed = False
+                    PassFail = False
                 elif subject.pass_rule_id.prac_pass > subject.prac_obt:
-                    passed = False
-                subject.pass_or_fail=passed
-                if passed==False:
+                    PassFail = False
+                subject.pass_or_fail=PassFail
+                if PassFail==False:
                     count_fail=1
                     subject_grade_point=0
                     subject_letter_grade='F'
@@ -483,7 +483,7 @@ class academicTranscript(models.Model):
             subjective_mark = 0
             objective_mark = 0
             tutorial_mark = 0
-            passed = True
+            PassFail = True
             for line in rec.paper_ids:
                 practical_obt = practical_obt + line.prac_obt
                 subjective_obt = subjective_obt + line.subj_obt
@@ -494,7 +494,7 @@ class academicTranscript(models.Model):
                 objective_mark = objective_mark+line.pass_rule_id.obj_mark
                 tutorial_mark = tutorial_mark+line.pass_rule_id.tut_mark
                 if line.passed == False:
-                    passed = False
+                    PassFail = False
             rec.tut_obt = tutorial_obt
             rec.prac_obt = practical_obt
             rec.subj_obt = subjective_obt
@@ -504,16 +504,16 @@ class academicTranscript(models.Model):
             rec.subj_mark=subjective_mark
             rec.obj_mark=objective_mark
 
-            if passed == False:
-                passed = False
+            if PassFail == False:
+                PassFail = False
             elif rec.pass_rule_id.tut_pass > rec.tut_obt:
-                passed = False
+                PassFail = False
             elif rec.pass_rule_id.subj_pass > rec.subj_obt:
-                passed = False
+                PassFail = False
             elif rec.pass_rule_id.obj_pass > rec.obj_obt:
-                passed = False
+                PassFail = False
             elif rec.pass_rule_id.prac_pass > rec.prac_obt:
-                passed = False
+                PassFail = False
 
             rec.mark_scored = 0
             if rec.pass_rule_id.tut_mark > 0:
@@ -524,7 +524,7 @@ class academicTranscript(models.Model):
                 rec.mark_scored = rec.mark_scored + rec.obj_obt
             if rec.pass_rule_id.prac_mark > 0:
                 rec.mark_scored = rec.mark_scored + rec.prac_obt
-            if passed == True:
+            if PassFail == True:
                 rec.grade_point = rec.env['education.result.grading'].get_grade_point(
                     rec.pass_rule_id.subject_marks,
                     rec.mark_scored)

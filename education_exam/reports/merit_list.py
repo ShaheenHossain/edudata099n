@@ -23,7 +23,7 @@ class examEvaluation(models.AbstractModel):
 
 
     def get_result_line(self,exam,section):
-        result_Line=self.env['education.exam.results.new'].search([('exam_id','=',exam.id),('section_id','=',section.section_id.id)],order="roll_no asc",)
+        result_Line=self.env['education.exam.results.new'].search([('exam_id','=',exam.id),('section_id','=',section.section_id.id)],order="merit_section asc",)
         return result_Line
     def get_sections(self,object):
         sections=[]
@@ -41,6 +41,12 @@ class examEvaluation(models.AbstractModel):
            exams.extend(exam)
 
         return exams
+
+    def get_student_count(self,section):
+        """Return the number of students in the class"""
+        students = self.env['education.class.history'].search([('class_id', '=', section.id)])
+        student_count = len(students)
+        return student_count
 
     def get_students(self,objects):
 
@@ -113,5 +119,6 @@ class examEvaluation(models.AbstractModel):
             'get_marks': self.get_marks,
             'get_merit_list': self.get_merit_list,
             'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
+            'get_student_count': self.get_student_count,
             'get_result_line': self.get_result_line,
         }

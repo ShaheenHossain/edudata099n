@@ -108,12 +108,9 @@
         <div class="article">
           <t t-raw="0" />
         </div>
-        <div class="footer o_boxed_footer">
            <div class="footer">
 
             </div>
-        </div>
-
     </template>
 
 

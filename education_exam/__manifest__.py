@@ -31,7 +31,6 @@
         'reports/exam_academic_transcript_s.xml',
         'reports/exam_academic_transcript_new.xml',
         'reports/exam_academic_transcript_dsblsc.xml',
-        'reports/exam_evaluation_0319.xml',
         'reports/report.xml',
         'reports/dsblsc_marksheet.xml',
         'wizards/academic_transcript_wizard.xml',

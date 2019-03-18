@@ -16,6 +16,11 @@ class academicTranscript(models.Model):
     student=fields.Many2one('education.student','Student')
     state=fields.Selection([('draft','Draft'),('done','Done')],compute='calculate_state')
     @api.multi
+    def del_generated_results(self):
+        for exam in self.exams:
+            records=self.env['education.exam.results.new'].search([('exam_id','=',exam.id)]).unlink()
+
+    @api.multi
     def calculate_state(self):
         results=self.env[('education.exam.results')].search([('academic_year','=',self.academic_year.id),('class_id','=','level')])
         for exam in self.exams:

@@ -97,8 +97,8 @@
                                             </t>
 
                                         <t t-else="">
-                                            <td rowspan="2" style="text-align : center;">GPA <p font-size="10">(without 4th subjects)</p></td>
-                                            <td rowspan="2" style="text-align : center;">GPA <p font-size="10">(without 4th subjects)</p>
+                                            <td rowspan="2" style="text-align : center;">GPA <p font-size="10">(Without 4th sub)</p></td>
+                                            <td rowspan="2" style="text-align : center;">GPA <p font-size="10">(With 4th sub)</p>
                                                 </td><td  rowspan="2" style="text-align : center;">Total Marks</td>
                                             <td rowspan="2" style="text-align : center;">Position In Section</td>
                                             <td rowspan="2" style="text-align : center;">Position In Class</td>

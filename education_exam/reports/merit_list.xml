@@ -45,6 +45,23 @@
                          </style>
                          <div class="page">
                             <div class="oe_structure">
+                                <div class="row" align="center" padding-bottom="10px">
+                                    <t t-foreach="exam_list" t-as="exam">
+                                        <t t-if="exam_first">
+                                            <t t-esc="'Merit List For '+exam.name"/>
+                                        </t>
+                                        <t t-else="">
+
+                                            <t t-if="exam_last">
+                                                <t t-esc="' and '+exam.name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="','+exam.name"/>
+                                            </t>
+                                        </t>
+                                    </t>
+
+                                </div>
                                 <div class="row">
 
                                         <div class="col" style="width: 25%;float: left;">

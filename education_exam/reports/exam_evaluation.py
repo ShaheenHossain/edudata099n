@@ -9,18 +9,64 @@ class examEvaluation(models.AbstractModel):
     _name = 'report.education_exam.report_exam_evaluation'
 
     def get_results(self,section,exams):
+
         results={}
         students = self.get_students(section)
-        for exam in exams:
-            results[exam.id]={}
-            for student in students:
-                results[exam.id][student.id]={}
-                student_results = self.env['education.exam.results.new'].search([('exam_id', '=', exam.id),('student_history','=',student.id)])
-                results[exam.id][student.id]['result']=student_results
-                for subject in student_results.subject_line:
-                    results[exam.id][student.id][subject.subject_id.id]=subject
+        for student in students:
+            results[student]={}
+            results[student]['compulsory']={}
+            results[student]['optional']={}
+            results[student]['selective']={}
+            results[student]['subjects']={}
+            comp_results = {}
+            op_results = {}
+            sel_results = {}
+            for exam in exams:
+                result_line=self.env['education.exam.results.new'].search([('student_history','=',student.id),('exam_id','=',exam.id)])
+                results[student][exam]={}
+                results[student][exam]['subjects']={}
+                results[student][exam]['result']=result_line
+
+
+                for subject in student.compulsory_subjects:
+                    if subject.subject_id not in results[student][exam]['subjects']:
+                        subject_line=self.env['results.subject.line.new'].search([('result_id','=',result_line.id),('subject_id','=',subject.subject_id.id)])
+                        if subject.subject_id not in results[student]['compulsory']:
+                            results[student]['compulsory'][subject.subject_id]={}
+                        if subject.subject_id not in results[student]['subjects']:
+                            results[student]['subjects'][subject.subject_id]={}
+                            results[student]['subjects'][subject.subject_id][exam]={}
+                        results[student]['compulsory'][subject.subject_id][exam]=subject_line
+                        results[student][exam]['subjects'][subject.subject_id]=subject_line
+                        results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
+
+                for subject in student.optional_subjects:
+                    if subject.subject_id not in results[student][exam]['subjects']:
+                        subject_line=self.env['results.subject.line.new'].search([('result_id','=',result_line.id),('subject_id','=',subject.subject_id.id)])
+                        if subject.subject_id not in results[student]['optional']:
+                            results[student]['optional'][subject.subject_id]={}
+                        if subject.subject_id not in results[student]['subjects']:
+                            results[student]['subjects'][subject.subject_id]={}
+                            results[student]['subjects'][subject.subject_id][exam]={}
+                        results[student]['optional'][subject.subject_id][exam]=subject_line
+                        results[student][exam]['subjects'][subject.subject_id]=subject_line
+                        results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
+
+                for subject in student.selective_subjects:
+                    if subject.subject_id not in results[student][exam]['subjects']:
+                        subject_line=self.env['results.subject.line.new'].search([('result_id','=',result_line.id),('subject_id','=',subject.subject_id.id)])
+                        if subject.subject_id not in results[student]['selective']:
+                            results[student]['selective'][subject.subject_id]={}
+                        if subject.subject_id not in results[student]['subjects']:
+                            results[student]['subjects'][subject.subject_id]={}
+                            results[student]['subjects'][subject.subject_id][exam]={}
+                        results[student]['selective'][subject.subject_id][exam]=subject_line
+                        results[student][exam]['subjects'][subject.subject_id]=subject_line
+                        results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
 
         return results
+
+
 
     def get_sections(self,object):
         sections=[]
@@ -66,9 +112,12 @@ class examEvaluation(models.AbstractModel):
 
         return is_optional
     def get_marks(self,exam,subject,student):
-        marks=self.env['results.subject.line'].search([('exam_id','=',exam.id),('subject_id','=',subject.id),('student_id','=',student.id)])
+        result_line=self.env['education.exam.results.new'].search([('exam_id','=',exam.id),('student_id','=',student.id)])
+        marks=self.env['results.subject.line.new'].search([('subject_id','=',subject.subject_id.id),('result_id','=',result_line.id)])
         return marks
-
+    def get_paper(self,result_subject_line_new):
+        papers=result_subject_line_new.paper_ids
+        return papers
     def get_exam_obtained_total(self, exam, student_history, optional, evaluation):
         grand_total = self.env['report.education_exam.report_exam_academic_transcript_s'].get_exam_obtained_total( exam,
                                                                                                                    student_history,

@@ -71,19 +71,28 @@
                                         <field name="student_id" invisible="1"/>
                                         <field name="roll_no" invisible="0" readonly="1"/>
                                         <field name="student_name" readonly="1"/>
-                                        <field name="tut_mark" attrs="{'column_invisible': [('parent.tut_mark', '=', 0)]}"/>
-                                        <field name="tut_pr" attrs="{'column_invisible': [('parent.tut_mark', '=', 0)]}"/>
-                                        <field name="subj_mark" attrs="{'column_invisible': [('parent.subj_mark', '=', 0)]}"/>
-                                        <field name="subj_pr" attrs="{'column_invisible': [('parent.subj_mark', '=', 0)]}"/>
-                                        <field name="obj_mark"  attrs="{'column_invisible': [('parent.obj_mark', '=', 0)]}"/>
-                                        <field name="obj_pr"  attrs="{'column_invisible': [('parent.obj_mark', '=', 0)]}"/>
-                                        <field name="prac_mark" attrs="{'column_invisible': [('parent.prac_mark', '=', 0)]}"/>
-                                        <field name="prac_pr" attrs="{'column_invisible': [('parent.prac_mark', '=', 0)]}"/>
+                                        <field name="tut_input" attrs="{'column_invisible': [('parent.tut_mark', '=', 0)]}"/>
+                                        <field name="subj_input" attrs="{'column_invisible': [('parent.subj_mark', '=', 0)]}"/>
+                                        <field name="obj_input" attrs="{'column_invisible': [('parent.obj_mark', '=', 0)]}"/>
+                                        <field name="prac_input" attrs="{'column_invisible': [('parent.prac_mark', '=', 0)]}"/>
+
+
+                                        <!--<field name="tut_mark" attrs="{'column_invisible': [('parent.tut_mark', '=', 0)]}"/>-->
+                                        <!--<field name="tut_pr" attrs="{'column_invisible': [('parent.tut_mark', '=', 0)]}"/>-->
+                                        <!--<field name="subj_mark" attrs="{'column_invisible': [('parent.subj_mark', '=', 0)]}"/>-->
+                                        <!--<field name="subj_pr" attrs="{'column_invisible': [('parent.subj_mark', '=', 0)]}"/>-->
+                                        <!--<field name="obj_mark"  attrs="{'column_invisible': [('parent.obj_mark', '=', 0)]}"/>-->
+                                        <!--<field name="obj_pr"  attrs="{'column_invisible': [('parent.obj_mark', '=', 0)]}"/>-->
+                                        <!--<field name="prac_mark" attrs="{'column_invisible': [('parent.prac_mark', '=', 0)]}"/>-->
+                                        <!--<field name="prac_pr" attrs="{'column_invisible': [('parent.prac_mark', '=', 0)]}"/>-->
+
+
+
                                         <field name="mark_scored" />
-                                        <field name="pass_or_fail" widget="boolean_toggle"/>
+                                        <!--<field name="pass_or_fail" widget="boolean_toggle"/>-->
                                         <field name="valuation_id" invisible="1"/>
-                                        <field name="letter_grade" invisible="1"/>
-                                        <field name="grade_point" invisible="1"/>
+                                        <!--<field name="letter_grade" invisible="1"/>-->
+                                        <!--<field name="grade_point" invisible="1"/>-->
                                     </tree>
                                     <form>
                                         <sheet>
@@ -92,8 +101,8 @@
                                                 <field name="mark_scored"/>
                                                 <field name="pass_or_fail" widget="boolean_toggle"/>
                                                 <field name="valuation_id" invisible="1"/>
-                                                <field name="letter_grade"/>
-                                                <field name="grade_point" />
+                                                <!--<field name="letter_grade"/>-->
+                                                <!--<field name="grade_point" />-->
                                             </group>
                                         </sheet>
                                     </form>

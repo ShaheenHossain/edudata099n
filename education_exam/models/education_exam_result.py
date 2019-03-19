@@ -126,15 +126,13 @@ class EducationExamResultsNew(models.Model):
         df1=df.sort_values(['gen_fail','net_total', 'op_fail','ext_fail','roll'], ascending=[True, False,True,True,True])
         df= df1.reset_index(drop=True)
         for index, row in df.iterrows():
-            df.loc[index,'merit_class' ] = index+1
             row['result'].merit_class=index+1
         grouped = df.groupby('section')
         for name, group in grouped:
             df_section = df[(df['section'] == name)]
             df_section_sorted=df_section.sort_index()
-            df_section_sorted.reset_index(drop=True)
-            for index,row in df_section_sorted.iterrows():
-                # df.loc[df['result'] == row['result'], 'merit_section'] = index+1
+            df_section_indexed=df_section_sorted.reset_index(drop=True)
+            for index,row in df_section_indexed.iterrows():
                 row['result'].merit_section=index+1
             # df_section_sorted.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df_section_'+str(name.id) +'.csv')
         grouped = df.groupby('group')
@@ -143,11 +141,11 @@ class EducationExamResultsNew(models.Model):
             df_section_sorted=df_section.sort_index()
             df_section_sorted.reset_index(drop=True)
             for index,row in df_section_sorted.iterrows():
-                row['result'].merit_section = index+1
+                df.loc[df['result'] == row['result'], 'merit_group'] = index + 1
+                row['result'].merit_group = index+1
                 # df.loc[df['result'] == row['result'], 'merit_group'] = index+1
             # df_section_sorted.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df_section_'+str(name.id) +'.csv')
         # df.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df.csv')
-
 
 
     @api.onchange('general_gp','general_count','optional_gp','optional_count')

@@ -87,14 +87,15 @@ class academicTranscript(models.Model):
                         new_result = self.env['education.exam.results.new'].create(result_data)
                         results_new_list.append(new_result)
                     else:   # edit new result data
-                        new_result.name= exam.name,
-                        new_result.exam_id=exam.id,
-                        new_result.student_id= result.student_id.id,
-                        new_result.academic_year= exam.academic_year.id,
-                        new_result.student_name= result.student_name,
-                        new_result.class_id=result.division_id.id,
-                        new_result.section_id= result.division_id.section_id.id
-                        results_new_list.append(new_result)
+                        for result_to_edit in new_result:
+                            result_to_edit.name= exam.name,
+                            result_to_edit.exam_id=exam.id,
+                            result_to_edit.student_id= result.student_id.id,
+                            result_to_edit.academic_year= exam.academic_year.id,
+                            result_to_edit.student_name= result.student_name
+                            result_to_edit.class_id=result.division_id.id,
+                            result_to_edit.section_id= result.division_id.section_id.id
+                            results_new_list.append(result_to_edit)
                     #calculate paper and subject datas
                     for paper in result.subject_line_ids:
                         present_subject_rules = self.env['exam.subject.pass.rules'].search(

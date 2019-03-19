@@ -88,6 +88,7 @@ class EducationExamResultsNew(models.Model):
         roll_no=[]
         general_total=[]
         net_total=[]
+        net_gpa=[]
         optional_fail=[]
         general_fail=[]
         extra_fail=[]
@@ -100,6 +101,7 @@ class EducationExamResultsNew(models.Model):
             roll_no.append(rec.student_history.roll_no)
             general_total.append(rec.general_obtained)
             net_total.append(rec.net_obtained)
+            net_gpa.append(rec.net_gpa)
             optional_fail.append(rec.optional_fail_count)
             general_fail.append(rec.general_fail_count)
             extra_fail.append(rec.extra_fail_count)
@@ -110,6 +112,7 @@ class EducationExamResultsNew(models.Model):
             'result':results,
             'gen_total':general_total,
             'net_total': net_total,
+            'net_gpa': net_gpa,
             'gen_fail': general_fail,
             'op_fail': optional_fail,
             'ext_fail': extra_fail,
@@ -123,7 +126,7 @@ class EducationExamResultsNew(models.Model):
 
         }
         df = pd.DataFrame(data)
-        df1=df.sort_values(['gen_fail','net_total', 'op_fail','ext_fail','roll'], ascending=[True, False,True,True,True])
+        df1=df.sort_values(['gen_fail','net_gpa','net_total', 'op_fail','ext_fail','roll'], ascending=[True, False,False,True,True,True])
         df= df1.reset_index(drop=True)
         for index, row in df.iterrows():
             row['result'].merit_class=index+1
@@ -137,12 +140,11 @@ class EducationExamResultsNew(models.Model):
             # df_section_sorted.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df_section_'+str(name.id) +'.csv')
         grouped = df.groupby('group')
         for name, group in grouped:
-            df_section = df[(df['group'] == name)]
-            df_section_sorted=df_section.sort_index()
-            df_section_sorted.reset_index(drop=True)
-            for index,row in df_section_sorted.iterrows():
-                df.loc[df['result'] == row['result'], 'merit_group'] = index + 1
-                row['result'].merit_group = index+1
+            df_section = df[(df['section'] == name)]
+            df_section_sorted = df_section.sort_index()
+            df_section_indexed = df_section_sorted.reset_index(drop=True)
+            for index, row in df_section_indexed.iterrows():
+                row['result'].merit_group = index + 1
                 # df.loc[df['result'] == row['result'], 'merit_group'] = index+1
             # df_section_sorted.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df_section_'+str(name.id) +'.csv')
         # df.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df.csv')

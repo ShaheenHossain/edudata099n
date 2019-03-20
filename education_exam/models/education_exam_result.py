@@ -259,8 +259,6 @@ class EducationExamResultsNew(models.Model):
                     new_paper.get_name
                 newResult.get_result_type_count
 
-
-
 class ResultsSubjectLineNew(models.Model):
     _name = 'results.subject.line.new'
     name = fields.Char(string='Name',related='subject_id.name')

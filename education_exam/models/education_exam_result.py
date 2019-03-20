@@ -81,6 +81,7 @@ class EducationExamResultsNew(models.Model):
     show_prac=fields.Boolean('Show Prac')
     show_paper=fields.Boolean('Show Papers')
     result_type_count=fields.Integer("result type Count")
+    generate_date=fields.Date("Generated Date")
 
     @api.multi
     def calculate_merit_list(self,exam,level):

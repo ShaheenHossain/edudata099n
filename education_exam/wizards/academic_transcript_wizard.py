@@ -3,6 +3,7 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from datetime import datetime as dt
 
 class academicTranscript(models.Model):
     _name ='academic.transcript'
@@ -81,7 +82,8 @@ class academicTranscript(models.Model):
                             "academic_year": exam.academic_year.id,
                             "student_name": result.student_name,
                             "class_id": result.division_id.id,
-                            "section_id": result.division_id.section_id.id
+                            "section_id": result.division_id.section_id.id,
+                            "generate_date": dt.date.today
                         }
 
                         new_result = self.env['education.exam.results.new'].create(result_data)
@@ -95,6 +97,7 @@ class academicTranscript(models.Model):
                             result_to_edit.student_name= result.student_name
                             result_to_edit.class_id=result.division_id.id,
                             result_to_edit.section_id= result.division_id.section_id.id
+                            result_to_edit.generate_date= dt.date.today
                             results_new_list.append(result_to_edit)
                     #calculate paper and subject datas
                     for paper in result.subject_line_ids:

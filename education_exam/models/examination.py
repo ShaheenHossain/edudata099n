@@ -136,6 +136,7 @@ class EducationExam(models.Model):
                       'date':rec.start_date
                       }
                 subjline_obj.create(data)
+
 class SubjectLine(models.Model):
     _name = 'education.subject.line'
     _rec_name = 'subject_id'
@@ -158,6 +159,7 @@ class EducationExamType(models.Model):
                                                   string='Exam Type', default='class')
     company_id = fields.Many2one('res.company', string='Company',
                                  default=lambda self: self.env['res.company']._company_default_get())
+
 class examlist(models.AbstractModel):
     _name='exam.list'
     name=fields.Char("exam List")

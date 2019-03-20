@@ -10,6 +10,13 @@ import numpy
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_marksheet'
 
+    def get_student_no(self,object):
+        student_list = self.env['education.class.history'].search([('level.id', '=', object.level.id),
+                                                                   ('academic_year_id.id', '=',
+                                                                    object.academic_year.id)])
+        return len(student_list)
+
+
     def get_students(self,objects):
 
         student=[]
@@ -146,9 +153,9 @@ class acdemicTranscripts(models.AbstractModel):
                     suffix = 'th'
         return str(numb) + suffix
 
-    def get_date(self, date):
-        date1 = datetime.strptime(date, "%Y-%m-%d")
-        return str(date1.month) + ' / ' + str(date1.year)
+    def get_date(self,objects):
+        date1 = datetime.now()
+        return self.num2serial(int(date1.day)) + " " + date1.strftime('%B') + ' ' + str(date1.year)
 
     @api.model
     def get_report_values(self, docids, data=None):
@@ -157,6 +164,7 @@ class acdemicTranscripts(models.AbstractModel):
             'doc_model': 'education.exam.results',
             'docs': docs,
             'time': time,
+            'get_date': self.get_date,
             'get_students': self.get_students,
             'get_exams': self.get_exams,
             'get_subjects': self.get_subjects,
@@ -164,6 +172,7 @@ class acdemicTranscripts(models.AbstractModel):
             'num2serial': self.num2serial,
             'get_results': self.get_results,
             'get_sections': self.get_sections,
+            'get_student_no': self.get_student_no,
         }
 
 class acdemicTranscripts(models.AbstractModel):

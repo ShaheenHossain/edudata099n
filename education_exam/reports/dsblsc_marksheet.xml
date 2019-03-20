@@ -118,6 +118,7 @@
             <t t-call="web.html_container">
                 <t t-call="education_exam.external_layout_mark_sheet_dsblsc">
                     <t t-set="exams" t-value="get_exams(docs)"/>
+                    <t t-set="student_no" t-value="get_student_no(docs)"/>
                     <t t-foreach="get_students(docs)" t-as="student">
                         <t t-set="results" t-value="get_results(docs)"/>
                         <t t-set="subjects" t-value="get_subjects(student)"/>
@@ -170,10 +171,40 @@
                                     <div class="right_top">
                                         <table>
                                             <tr><td colspan="2">Information</td><td colspan="2">Co-curricular activities </td></tr>
-                                            <tr><td> Number of students</td><td width="40px"> </td><td> Behaviour</td><td width="40px"/></tr>
-                                            <tr><td> Total working days</td><td/><td> Sports program</td><td/></tr>
-                                            <tr><td> Attendance</td><td/><td> Uniform</td><td/></tr>
-                                            <tr><td> Percentage of attendance</td><td/><td> Cultural activities</td><td/></tr>
+                                            <tr><td> Number of students</td>
+                                                <td ><t t-esc="student_no" /> </td>
+                                                <td> Behaviour</td><td >
+                                                    <t t-foreach="exams" t-as="exam">
+                                                        <t t-esc="results[exam.id][student.id]['result'].behavior"/>
+                                                    </t>
+                                                </td></tr>
+                                            <tr><td> Total working days</td><td/><td> Sports program</td>
+                                                <td>
+                                                    <t t-foreach="exams" t-as="exam">
+                                                        <t t-esc="results[exam.id][student.id]['result'].sports"/>
+                                                    </t>
+                                                </td></tr>
+                                            <tr><td> Attendance</td>
+                                                <td>
+                                                    <t t-set="attendances" t-value="0"/>
+                                                    <t t-foreach="exams" t-as="exam">
+                                                        <t t-set="attendances" t-value="attendances+results[exam.id][student.id]['result'].attendance"/>
+                                                    </t>
+                                                    <t t-esc="attendances"/>
+                                                </td>
+                                                <td> Uniform</td>
+                                                <td>
+                                                    <t t-foreach="exams" t-as="exam">
+                                                        <t t-esc="results[exam.id][student.id]['result'].uniform"/>
+                                                    </t>
+                                                </td></tr>
+                                            <tr><td> Percentage of attendance</td><td/><td> Cultural activities</td>
+                                                <td>
+                                                    <t t-foreach="exams" t-as="exam">
+                                                        <t t-esc="results[exam.id][student.id]['result'].cultural"/>
+                                                    </t>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </div>
                                     <div class="left_top">
@@ -1099,7 +1130,7 @@
                                        </t>
                                        </div>
 
-                                   <div class="col-xs-4" style="font-size:16px;"> Date of return :</div>
+                                   <div class="col-xs-4" style="font-size:16px;"> Date of return : <t t-esc="get_date(docs)" /></div>
                                     <!--<div class="col-xs-4">Percentage of marks:  -->
                                         <!--<t t-if="exam_total!=0">-->
                                             <!--<t t-esc="round(exam_obtained_total/exam_total*100,2)"/> %-->

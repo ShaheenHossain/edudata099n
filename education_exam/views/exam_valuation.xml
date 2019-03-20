@@ -67,7 +67,7 @@
                         <notebook attrs="{'invisible': [('mark_sheet_created', '=', False)]}">
                             <page string="Mark Sheet">
                                 <field name="valuation_line" attrs="{'readonly': [('state', '!=', 'draft')]}">
-                                    <tree create="0" editable="bottom">
+                                    <tree create="0" delete="0" editable="bottom">
                                         <field name="student_id" invisible="1"/>
                                         <field name="roll_no" invisible="0" readonly="1"/>
                                         <field name="student_name" readonly="1"/>

@@ -28,8 +28,7 @@
     </template>
 
         <template id ="evaluation_subject_template">
-            <td>
-               <table border-collapse="collapse" width="100%" hight="100%" style="page-break-inside:avoide !important;">
+           <table border-collapse="collapse" width="100%" hight="100%" style="page-break-inside:avoide !important;">
                    <t t-esc="subject.name"/>
                    <t t-foreach="results[student]['subjects'][subject]" t-as="result_exam">
                        <p> &lt;tr&gt;</p>
@@ -48,53 +47,59 @@
                                                     <t t-esc="paper.paper_id.paper"/>
                                                 </td>
                                             </t>
+                                            <td>
+                                                <t t-if="paper.pass_rule_id.tut_mark>0">
 
-                                            <t t-if="paper.pass_rule_id.tut_mark>0">
-                                                <td>
                                                     <t t-if="paper.tut_pr==True">
                                                         <t t-esc="round(paper.tut_obt)"/>
                                                     </t>
                                                     <t t-else="">
                                                         A
                                                     </t>
-                                                </td>
-                                            </t>
-
+                                                </t>
+                                                <t t-else="">
+                                                    --
+                                                </t>
+                                            </td>
+                                            <td>
                                                 <t t-if="paper.pass_rule_id.subj_mark>0">
-                                                    <td>
-                                                        <t t-if="paper.subj_pr==True">
-                                                            <t t-esc="round(paper.subj_obt)"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                            A
-                                                        </t>
-                                                    </td>
+                                                    <t t-if="paper.subj_pr==True">
+                                                        <t t-esc="round(paper.subj_obt)"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        A
+                                                    </t>
                                                 </t>
-
-
+                                                <t t-else="">
+                                                    --
+                                                </t>
+                                            </td>
+                                            <td>
                                                 <t t-if="paper.pass_rule_id.obj_mark>0">
-                                                    <td>
-                                                        <t t-if="paper.obj_pr==True">
-                                                            <t t-esc="round(paper.obj_obt)"/>
-                                                        </t>
-                                                        <t t-else="">
-                                                            A
-                                                        </t>
-                                                    </td>
+                                                    <t t-if="paper.obj_pr==True">
+                                                        <t t-esc="round(paper.obj_obt)"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        A
+                                                    </t>
                                                 </t>
-
-
+                                                <t t-else="">
+                                                    --
+                                                </t>
+                                            </td>
+                                            <td>
                                                 <t t-if="paper.pass_rule_id.prac_mark>0">
-                                                    <td>
                                                     <t t-if="paper.prac_pr==True">
                                                         <t t-esc="round(paper.prac_obt)"/>
                                                     </t>
                                                     <t t-else="">
                                                         A
                                                     </t>
-                                                    </td>
                                                 </t>
-
+                                                <t t-else="">
+                                                    --
+                                                </t>
+                                            </td>
                                             <t t-if="paper_first">
                                                 <td >
                                                     <t t-esc="round(results[student]['subjects'][subject][exam]['res'].subject_obt)"/>
@@ -110,8 +115,8 @@
                             </t>
                    </t>
                </table>
-           </td>
         </template>
+
         <template id="evaluation_data_layout">
 
             <div class="page">
@@ -158,27 +163,69 @@
                                             <td>Roll</td>
                                             <td>Name</td>
                                             <td colspan="100%">Subjects</td>
+
                                         </tr>
                                         <t t-foreach="get_students(section)" t-as="student">
                                             <tr>
-                                                <td>
+                                                <td >
                                                     <t t-esc="student.student_id.student_id"/>
                                                 </td>
-                                                <td>
+                                                <td >
                                                     <t t-esc="student.student_id.roll_no"/>
                                                 </td>
-                                                <td>
+                                                <td >
                                                     <t t-esc="student.student_id.name"/>
                                                 </td>
-                                                <t t-foreach="results[student]['compulsory']" t-as="subject">
-                                                    <t t-call="education_exam.evaluation_subject_template"/>
-                                                </t>
-                                                <t t-foreach="results[student]['selective']" t-as="subject">
-                                                    <t t-call="education_exam.evaluation_subject_template"/>
-                                                </t>
-                                                <t t-foreach="results[student]['optional']" t-as="subject">
-                                                    <t t-call="education_exam.evaluation_subject_template"/>
-                                                </t>
+                                                   <t t-foreach="results[student]['compulsory']" t-as="subject">
+                                                       <td>
+                                                        <t t-call="education_exam.evaluation_subject_template"/>
+                                                       </td>
+
+                                                    </t>
+                                                    <t t-foreach="results[student]['selective']" t-as="subject">
+                                                        <td>
+                                                        <t t-call="education_exam.evaluation_subject_template"/>
+                                                        </td>
+                                                    </t>
+
+                                                    <t t-foreach="results[student]['optional']" t-as="subject">
+                                                        <td >
+                                                        <t t-call="education_exam.evaluation_subject_template"/>
+                                                        </td>
+                                                    </t>
+                                                <td >
+                                                    <table>
+                                                        <tr>
+                                                            <t t-foreach="exam_list" t-as="exam">
+
+                                                                <td>
+                                                                   <t t-esc="round(results[student][exam]['result'].net_obtained)"/>
+                                                                </td>
+                                                            </t>
+
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td >
+                                                    <table>
+                                                        <tr>
+                                                            <t t-foreach="exam_list" t-as="exam">
+
+                                                                <td>
+                                                                   <t t-esc="round(results[student][exam]['result'].net_gpa,2)"/>
+                                                                </td>
+                                                            </t>
+                                                        </tr>
+                                                        <tr>
+                                                           <t t-foreach="exam_list" t-as="exam">
+
+                                                                <td>
+                                                                   <t t-esc="results[student][exam]['result'].net_lg"/>
+                                                                </td>
+                                                            </t>
+                                                        </tr>
+                                                    </table>
+                                                </td>
                                             </tr>
                                         </t>
                                     </table>

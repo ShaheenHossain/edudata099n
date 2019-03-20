@@ -109,7 +109,6 @@ class acdemicTranscripts(models.AbstractModel):
                 results[exam.id][student.id]['result']=student_results
                 for subject in student_results.subject_line:
                     results[exam.id][student.id][subject.subject_id.id]=subject
-
         return results
 
     def get_gradings(self,obj):

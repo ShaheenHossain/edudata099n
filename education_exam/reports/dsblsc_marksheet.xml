@@ -799,7 +799,7 @@
                                                                 <t t-esc="round(result_line.subject_obt)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-esc="round(result_line.subject_highest)"/>
+                                                                <t t-esc="round(result_line.pass_rule_id.subject_highest)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="result_line.letter_grade"/>
@@ -1064,7 +1064,7 @@
                                                                 <t t-esc="round(result_line.subject_obt)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-esc="round(result_line.subject_highest)"/>
+                                                                <t t-esc="round(result_line.pass_rule_id.subject_highest)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="result_line.letter_grade"/>
@@ -2115,7 +2115,7 @@
                                                                 <t t-esc="converted_number"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-esc="round(result_line.subject_highest)"/>
+                                                                <t t-esc="round(result_line.pass_rule_id.subject_highest)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="result_line.letter_grade"/>

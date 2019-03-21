@@ -107,7 +107,7 @@
                                             </t>
                                             <t t-else="">
                                                 <td >
-                                                    <t t-esc="results[student]['subjects'][subject][exam]['res'].grade_point"/>
+                                                    <t t-esc="results[student]['subjects'][subject][exam]['res'].letter_grade"/>
                                                 </td>
                                             </t>
                                         </tr>
@@ -194,12 +194,18 @@
                                                         </td>
                                                     </t>
                                                 <td >
-                                                    <table>
-                                                        <tr>
+                                                    <table border="none" width="100%">
+                                                        <tr border="none">
                                                             <t t-foreach="exam_list" t-as="exam">
 
-                                                                <td>
-                                                                   <t t-esc="round(results[student][exam]['result'].net_obtained)"/>
+                                                                <td border="none">
+                                                                    <t t-esc="round(results[student][exam]['result'].net_gpa,2)"/>
+                                                                    <t t-if="results[student][exam]['result'].general_fail_count==0">
+
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        <t t-esc="'('+str(results[student][exam]['result'].general_fail_count)+'F)'"/>
+                                                                    </t>
                                                                 </td>
                                                             </t>
 
@@ -212,18 +218,11 @@
                                                             <t t-foreach="exam_list" t-as="exam">
 
                                                                 <td>
-                                                                   <t t-esc="round(results[student][exam]['result'].net_gpa,2)"/>
+                                                                    <t t-esc="round(results[student][exam]['result'].net_obtained)"/>
                                                                 </td>
                                                             </t>
                                                         </tr>
-                                                        <tr>
-                                                           <t t-foreach="exam_list" t-as="exam">
 
-                                                                <td>
-                                                                   <t t-esc="results[student][exam]['result'].net_lg"/>
-                                                                </td>
-                                                            </t>
-                                                        </tr>
                                                     </table>
                                                 </td>
                                             </tr>
@@ -235,6 +234,11 @@
         </template>
 
         <template id="report_exam_evaluation">
+            <style>
+                .border_less{
+                border:none
+                }
+            </style>
             <t t-call="web.html_container">
                 <t t-foreach="get_sections(docs)" t-as="section">
                     <!--<t t-set="subjects" t-value="get_subjects(section,docs)"/>-->
@@ -255,7 +259,7 @@
                                     }
                             td{
                                 border: 0.5px solid black;
-                                    vertical-align: middle;
+                                    vertical-align: top;
                                     padding-left:0px;
                                     padding-right:0px;
                                     padding-top:0px;

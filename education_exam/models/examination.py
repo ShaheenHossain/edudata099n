@@ -16,6 +16,7 @@ class EducationExam(models.Model):
     school_class_division_wise = fields.Selection([('school', 'School'), ('class', 'Class'), ('division', 'Division')],
                                                   related='exam_type.school_class_division_wise',
                                                   string='School/Class/Division Wise')
+    total_working_days=fields.Integer("Total Working Days")
     class_division_hider = fields.Char(string='Class Division Hider')
     start_date = fields.Date(string='Start Date', required=True)
     end_date = fields.Date(string='End Date', required=True)

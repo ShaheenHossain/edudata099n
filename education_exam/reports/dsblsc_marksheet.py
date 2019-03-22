@@ -104,6 +104,13 @@ class acdemicTranscripts(models.AbstractModel):
                 result_type_count=result_type_count+1
             exam_list[exam.id]['row_count'] = result_type_count
         return exam_list
+    def get_total_working_days(self,exams):
+        working_days=0
+        for exam in exams:
+            working_days=working_days+exam.total_working_days
+        return working_days
+
+
 
     def get_results(self,objects):
         results={}
@@ -169,6 +176,7 @@ class acdemicTranscripts(models.AbstractModel):
             'get_exams': self.get_exams,
             'get_subjects': self.get_subjects,
             'get_gradings':self.get_gradings,
+            'get_total_working_days':self.get_total_working_days,
             'num2serial': self.num2serial,
             'get_results': self.get_results,
             'get_sections': self.get_sections,

@@ -66,13 +66,13 @@ class EducationExamResultsNew(models.Model):
     merit_class=fields.Integer("Position In Class")
     merit_section=fields.Integer("Position In section")
 
-    working_days=fields.Integer('Working Days')
+    # working_days=fields.Integer('Working Days')
     attendance=fields.Integer('Attendance')
     percentage_of_attendance=fields.Float("Percentage of Attendance")
-    behavior=fields.Char("Behavior")
-    sports=fields.Char("Sports Program")
-    uniform=fields.Char("Uniform")
-    cultural=fields.Char("Caltural Activities")
+    behavior=fields.Selection([('0', 'Average'), ('1', 'Good'), ('2', 'Excellent')], default='1',string="Behavior")
+    sports=fields.Selection([('0', 'Average'), ('1', 'Active'), ('2', 'Excellent')], default='1',string="Sports")
+    uniform=fields.Selection([('0', 'Average'), ('1', 'Good'), ('2', 'Excellent')], default='1',string="Uniform")
+    cultural=fields.Selection([('0', 'Average'), ('1', 'Active'), ('2', 'Excellent')], default='1',string="Cultural")
     state=fields.Selection([('draft',"Draft"),('done',"Done")],"State",default='draft')
 
     show_tut=fields.Boolean('Show Tutorial')

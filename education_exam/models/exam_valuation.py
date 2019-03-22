@@ -239,19 +239,15 @@ class StudentsExamValuationLine(models.Model):
     student_id = fields.Many2one('education.student', string='Students')
     roll_no=fields.Integer('roll no',related='student_id.roll_no')
     student_name = fields.Char(string='Students')
-    mark_scored = fields.Integer(string='Mark',compute='onchange_mark_input')
-    tut_input=fields.Char("Tut")
-    subj_input=fields.Char("Sub")
-    obj_input=fields.Char("Obj")
-    prac_input=fields.Char("Prac")
+    mark_scored = fields.Integer(string='Mark',compute='calculate_marks')
     tut_mark=fields.Integer(string='Tutorial',default=0)
     subj_mark=fields.Integer(string='Subjective' ,default=0)
     obj_mark=fields.Integer(string='Objective',default=0)
     prac_mark=fields.Integer(string='Practical',default=0)
-    prac_pr = fields.Boolean(string='Prac',default=True)
-    subj_pr = fields.Boolean(string='Subj',default=True)
-    obj_pr = fields.Boolean(string='Obj',default=True)
-    tut_pr = fields.Boolean(string='Tut',default=True)
+    prac_pr = fields.Boolean(string='P',default=True)
+    subj_pr = fields.Boolean(string='P',default=True)
+    obj_pr = fields.Boolean(string='P',default=True)
+    tut_pr = fields.Boolean(string='P',default=True)
     pass_or_fail = fields.Boolean(string='Pass/Fail')
     valuation_id = fields.Many2one('education.exam.valuation', string='Valuation Id')
     letter_grade=fields.Char('Letter Grade')
@@ -259,100 +255,53 @@ class StudentsExamValuationLine(models.Model):
     company_id = fields.Many2one('res.company', string='Company',
                                  default=lambda self: self.env['res.company']._company_default_get())
 
-    @api.onchange('tut_input','subj_input','obj_input','prac_input',)
-    def onchange_mark_input(self):
+    @api.onchange('mark_scored', 'pass_or_fail')
+    def onchange_mark_scored(self):
+
+        per_obtained = (self.mark_scored * 100) / self.valuation_id.mark
+        grades = self.env['education.result.grading'].search([['id', '>', '0']])
+        for gr in grades:
+            if gr.min_per <= per_obtained and gr.max_per >= per_obtained:
+                self.letter_grade = gr.result
+                self.grade_point = gr.score
+
+        if self.mark_scored > self.valuation_id.mark:
+            raise UserError(_('Mark Scored must be less than Max Mark'))
+        # if self.mark_scored >= self.valuation_id.pass_mark:
+        #     self.pass_or_fail = True
+        # else:
+        #     self.pass_or_fail = False
+        if self.tut_mark >= self.valuation_id.tut_pass_mark and \
+                self.prac_mark >= self.valuation_id.prac_pass_mark and \
+                self.subj_mark >= self.valuation_id.subj_pass_mark and \
+                self.obj_mark >= self.valuation_id.obj_pass_mark :
+           self.pass_or_fail=True
+        else :
+            self.pass_or_fail=False
+
+
+
+    @api.multi
+    @api.onchange('tut_mark','subj_mark','obj_mark','prac_mark')
+    def calculate_marks(self):
         for rec in self:
-            totalMarks=0
-            if rec.tut_input !=False:
-                if rec.tut_input.lower() in ['a','abs','absent']:
-                    rec.tut_pr = False
-                    rec.tut_mark = 0
-                else:
-                    try:
-                        val=int(rec.tut_input)
-                    except ValueError:
-                        raise UserError(_('Please input marks or a/abs/absent for Absent'))
-                    else:
-                        rec.tut_pr=True
-                        rec.tut_mark=float(rec.tut_input)
-                        totalMarks = totalMarks + rec.tut_mark
-                if rec.tut_mark < 0:
-                    raise UserError(_('Mark Scored must be greater than Zero'))
-                elif rec.tut_mark > rec.valuation_id.tut_mark:
-                    raise UserError(_('Mark Scored must be less than Max Tutorial Mark'))
-            if rec.subj_input != False:
-                if rec.subj_input.lower() in ['a', 'abs', 'absent']:
-                    rec.subj_pr = False
-                    rec.subj_mark = 0
-                else:
-                    try:
-                        val = int(rec.subj_input)
-                    except ValueError:
-                        raise UserError(_('Please input marks or a/abs/absent for Absent'))
-                    else:
-                        rec.subj_pr = True
-                        rec.subj_mark = float(rec.subj_input)
-                        totalMarks = totalMarks + rec.subj_mark
-                if rec.subj_mark < 0:
-                    raise UserError(_('Mark Scored must be greater than Zero'))
-                elif rec.subj_mark > rec.valuation_id.subj_mark:
-                    raise UserError(_('Mark Scored must be less than Max Subjective Mark'))
-            if rec.obj_input != False:
-                if rec.obj_input.lower() in ['a', 'abs', 'absent']:
-                    rec.obj_pr = False
-                    rec.obj_mark = 0
-                else:
-                    try:
-                        val = int(rec.obj_input)
-                    except ValueError:
-                        raise UserError(_('Please input marks or a/abs/absent for Absent'))
-                    else:
-                        rec.obj_pr = True
-                        rec.obj_mark = float(rec.obj_input)
-                        totalMarks = totalMarks + rec.obj_mark
-                if rec.obj_mark < 0:
-                    raise UserError(_('Mark Scored must be greater than Zero'))
-                elif rec.obj_mark > rec.valuation_id.obj_mark:
-                    raise UserError(_('Mark Scored must be less than Max Objective Mark'))
-            if rec.prac_input != False:
-                if rec.prac_input.lower() in ['a', 'abs', 'absent']:
-                    rec.prac_pr = False
-                    rec.prac_mark = 0
-                else:
-                    try:
-                        val = int(rec.prac_input)
-                    except ValueError:
-                        raise UserError(_('Please input marks or a/abs/absent for Absent'))
-                    else:
-                        rec.prac_pr = True
-                        rec.prac_mark = float(rec.prac_input)
-                        totalMarks = totalMarks + rec.prac_mark
-                if rec.prac_mark < 0:
-                    raise UserError(_('Mark Scored must be greater than Zero'))
-                elif rec.prac_mark > rec.valuation_id.prac_mark:
-                    raise UserError(_('Mark Scored must be less than Max Practical Mark'))
-            rec.mark_scored=totalMarks
 
-    # @api.onchange('mark_scored', 'pass_or_fail')
-    # def onchange_mark_scored(self):
-    #
-    #     per_obtained = (self.mark_scored * 100) / self.valuation_id.mark
-    #     grades = self.env['education.result.grading'].search([['id', '>', '0']])
-    #     for gr in grades:
-    #         if gr.min_per <= per_obtained and gr.max_per >= per_obtained:
-    #             self.letter_grade = gr.result
-    #             self.grade_point = gr.score
-    #
-    #     if self.mark_scored > self.valuation_id.mark:
-    #         raise UserError(_('Mark Scored must be less than Max Mark'))
-    #     # if self.mark_scored >= self.valuation_id.pass_mark:
-    #     #     self.pass_or_fail = True
-    #     # else:
-    #     #     self.pass_or_fail = False
-    #
-
-
-    # @api.multi
-    # def calculate_marks(self):
-    #     for rec in self:
-    #         rec.mark_scored = rec.tut_mark + rec.obj_mark + rec.subj_mark + rec.prac_mark
+            if rec.tut_mark<0:
+                raise UserError(_('Mark Scored must be greater than Zero'))
+            elif rec.tut_mark>rec.valuation_id.tut_mark:
+                raise UserError(_('Mark Scored must be less than Max Tutorial Mark'))
+            if rec.obj_mark<0:
+                raise UserError(_('Mark Scored must be greater than Zero'))
+            elif rec.obj_mark>rec.valuation_id.obj_mark:
+                raise UserError(_('Mark Scored must be less than Max Objective Mark'))
+            if rec.subj_mark<0:
+                raise UserError(_('Mark Scored must be greater than Zero'))
+            elif rec.subj_mark>rec.valuation_id.subj_mark:
+                raise UserError(_('Mark Scored must be less than Max Subjective Mark'))
+            if rec.prac_mark<0:
+                raise UserError(_('Mark Scored must be greater than Zero'))
+            elif rec.prac_mark>rec.valuation_id.prac_mark:
+                raise UserError(_('Mark Scored must be less than Max Practical Mark'))
+            rec.mark_scored = rec.tut_mark + rec.obj_mark + rec.subj_mark + rec.prac_mark
+            if rec.mark_scored > rec.valuation_id.highest:
+                rec.valuation_id.highest = rec.mark_scored

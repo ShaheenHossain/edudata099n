@@ -9,6 +9,7 @@ class EducationExam(models.Model):
     _name = 'education.exam'
 
     name = fields.Char(string='Name', default='New')
+    _rec_name = "exam_type"
     generated_name=fields.Char(string='Gen Name',default='New')
     class_id = fields.Many2one('education.class', string='Class')
     division_id = fields.Many2one('education.class.division', string='Division')
@@ -28,6 +29,7 @@ class EducationExam(models.Model):
     company_id = fields.Many2one('res.company', string='Company',
                                  default=lambda self: self.env['res.company']._company_default_get())
     transcript_id=fields.Many2one('academic.transcript')
+    return_date = fields.Date(string="Date Of Return")
     result_sheet_created = fields.Boolean(string='result sheet Created')
     @api.multi
     @api.onchange('academic_year','exam_type')

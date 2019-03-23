@@ -120,12 +120,30 @@
                 </tree>
             </field>
         </record>
+    <record id="examination_valuation_search" model="ir.ui.view">
+            <field name="name">examination_valuation_search</field>
+            <field name="model">education.exam.valuation</field>
+            <field name="arch" type="xml">
+               <search string="Exam Valuation">
+                    <group expand="1" string="Group By">
+                        <filter string="Batch" name="group_batch" context="{'group_by':'academic_year'}"/>
+                        <filter string="Class" name="group_level" context="{'group_by':'class_id'}"/>
+                        <filter string="Exam" name="group_exam" context="{'group_by':'exam_id'}"/>
+                        <filter string="Section" name="group_section" context="{'group_by':'division_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
 
         <record id="act_exam_valuation_view" model="ir.actions.act_window">
             <field name="name">Exam Valuation</field>
             <field name="res_model">education.exam.valuation</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_group_batch': 1,
+                'search_default_group_level': 1,
+                'search_default_group_exam': 1,
+                'search_default_group_section': 1}</field>
             <field name="target">current</field>
         </record>
 

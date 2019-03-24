@@ -29,23 +29,47 @@
 
         <template id ="evaluation_subject_template">
            <table border-collapse="collapse" width="100%" hight="100%" style="page-break-inside:avoide !important;">
-                   <t t-esc="subject.name"/>
-                   <t t-foreach="results[student]['subjects'][subject]" t-as="result_exam">
-                       <p> &lt;tr&gt;</p>
+                <t t-if="show_mark_heading!=0">
+                    <tr>
+                        <t t-if="show_paper_column==1">
+                            <td>
+                                Paper
+                            </td>
+                        </t>
+                        <td>Tut</td>
+                        <td>Sub</td>
+                        <td>Obj</td>
+                        <td>Prac</td>
+                        <td>Ev</td>
+                    </tr>
+                </t>
+
+                    <tr>
+                        <td colspan="100%">
+                            <t t-esc="subject.name"/>
+                        </td>
+                    </tr>
+               <t t-foreach="results[student]['subjects'][subject]" t-as="result_exam">
                             <t t-foreach="exam_list" t-as="exam">
                                 <t t-if="len(exam_list)>1">
                                     <td>
                                         <t t-esc="exam.name"/>
                                     </td>
                                 </t>
-                                <p> &lt;/tr&gt;</p>
                                     <t t-foreach="results[student]['subjects'][subject][exam]['res'].paper_ids" t-as="paper">
+                                        <t t-set="paper_count" t-value="len(results[student]['subjects'][subject][exam]['res'].paper_ids)"/>
                                         <tr>
-                                            <t t-set="paper_count" t-value="len(results[student]['subjects'][subject][exam]['res'].paper_ids)"/>
-                                            <t t-if="paper_count>1">
+                                            <t t-if="show_paper_column!=0">
                                                 <td>
-                                                    <t t-esc="paper.paper_id.paper"/>
+                                                   <t t-if="paper.paper_id.paper">
+                                                       <t t-esc="paper.paper_id.paper"/>
+                                                   </t>
+                                                    <t t-else="">
+                                                        1st
+                                                    </t>
                                                 </td>
+
+
                                             </t>
                                             <td>
                                                 <t t-if="paper.pass_rule_id.tut_mark>0">
@@ -111,10 +135,25 @@
                                                 </td>
                                             </t>
                                         </tr>
+        <!-- if subject has one paper only to show letergrade below-->
+                                        <t t-if="paper_count==1">
+                                            <tr>
+                                                <t t-if="show_paper_column!=0">
+                                                        <td>
+                                                            2nd
+                                                        </td>
+                                                </t>
+                                                <td colspan="4"></td>
+                                                <td>
+                                                    <t t-esc="results[student]['subjects'][subject][exam]['res'].letter_grade"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+
                                     </t>
                             </t>
                    </t>
-               </table>
+           </table>
         </template>
 
         <template id="evaluation_data_layout">
@@ -122,10 +161,8 @@
             <div class="page">
 
                             <div class="oe_structure">
-
+<t t-set="show_mark_heading" t-value="1"/>
                                 <div class="row">
-
-
                                     <table width="100%" >
                                             <tr><td colspan ="100%" >
                                                 <div class="left_top">
@@ -158,14 +195,17 @@
                                             </td>
                                                 <!--subject row of evaluation -->
                                             </tr>
+
                                         <tr>
-                                            <td>Id</td>
-                                            <td>Roll</td>
-                                            <td>Name</td>
-                                            <td colspan="100%">Subjects</td>
+                                            <th>Id</th>
+                                            <th>Roll</th>
+                                            <th>Name</th>
+                                            <th colspan="100%">Subjects</th>
 
                                         </tr>
                                         <t t-foreach="get_students(section)" t-as="student">
+                                            <t t-set="show_paper_column" t-value="1"/>
+                                        <tbody style="page-break-inside:avoide !important;">
                                             <tr>
                                                 <td >
                                                     <t t-esc="student.student_id.student_id"/>
@@ -177,23 +217,26 @@
                                                     <t t-esc="student.student_id.name"/>
                                                 </td>
                                                    <t t-foreach="results[student]['compulsory']" t-as="subject">
-                                                       <td>
+                                                       <td style="page-break-inside:avoide !important;">
                                                         <t t-call="education_exam.evaluation_subject_template"/>
+                                                           <t t-set="show_paper_column" t-value="0"/>
                                                        </td>
-
-                                                    </t>
-                                                    <t t-foreach="results[student]['selective']" t-as="subject">
+                                                   </t>
+                                                <t t-foreach="results[student]['selective']" t-as="subject">
                                                         <td>
-                                                        <t t-call="education_exam.evaluation_subject_template"/>
+                                                            <t t-set="show_paper_column" t-value="0"/>
+                                                            <t t-call="education_exam.evaluation_subject_template"/>
                                                         </td>
                                                     </t>
 
                                                     <t t-foreach="results[student]['optional']" t-as="subject">
                                                         <td >
-                                                        <t t-call="education_exam.evaluation_subject_template"/>
+                                                            <t t-set="show_paper_column" t-value="0"/>
+                                                            <t t-call="education_exam.evaluation_subject_template"/>
                                                         </td>
                                                     </t>
                                                 <td >
+                                                    <t t-set="show_mark_heading" t-value="0"/>
                                                     <table border="none" width="100%">
                                                         <tr border="none">
                                                             <t t-foreach="exam_list" t-as="exam">
@@ -213,7 +256,7 @@
                                                     </table>
                                                 </td>
                                                 <td >
-                                                    <table>
+                                                    <table width="100%" hight="100%">
                                                         <tr>
                                                             <t t-foreach="exam_list" t-as="exam">
 
@@ -226,6 +269,7 @@
                                                     </table>
                                                 </td>
                                             </tr>
+                                        </tbody>
                                         </t>
                                     </table>
                                 </div>

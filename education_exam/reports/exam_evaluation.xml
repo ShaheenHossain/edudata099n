@@ -22,7 +22,11 @@
 
         <!--<div class="footer o_boxed_footer">-->
            <div class="footer">
-
+               <div class="row">
+                   <div class="col-xs-4" style="font-size:16px;">Signature of Class Teacher</div>
+                   <div class="col-xs-4" style="font-size:16px;">Compared By</div>
+                   <div class="col-xs-4" style="font-size:16px;">Signature of The Principal</div>
+               </div>
             </div>
         <!--</div>-->
     </template>

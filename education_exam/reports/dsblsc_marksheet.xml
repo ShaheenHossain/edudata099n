@@ -2191,7 +2191,7 @@
                                        </t>
                                    </div>
 
-                                   <div class="col-xs-4" style="font-size:16px;"> Date of return :</div>
+                                   <!--<div class="col-xs-4" style="font-size:16px;"> Date of return :</div>-->
                                     <!--<div class="col-xs-4">Percentage of marks:  -->
                                         <!--<t t-if="exam_total!=0">-->
                                             <!--<t t-esc="round(exam_obtained_total/exam_total*100,2)"/> %-->

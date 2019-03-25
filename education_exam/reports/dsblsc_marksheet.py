@@ -15,6 +15,9 @@ class acdemicTranscripts(models.AbstractModel):
                                                                    ('academic_year_id.id', '=',
                                                                     object.academic_year.id)])
         return len(student_list)
+    def get_student_in_section(self,student_history):
+        student_list = self.env['education.class.history'].search([('class_id.id', '=', student_history.class_id.id)])
+        return len(student_list)
 
 
     def get_students(self,objects):
@@ -181,6 +184,7 @@ class acdemicTranscripts(models.AbstractModel):
             'get_results': self.get_results,
             'get_sections': self.get_sections,
             'get_student_no': self.get_student_no,
+            'get_student_in_section': self.get_student_in_section,
         }
 
 class acdemicTranscripts(models.AbstractModel):

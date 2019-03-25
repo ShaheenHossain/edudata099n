@@ -172,7 +172,7 @@
                                         <table>
                                             <tr><td colspan="2">Information</td><td colspan="2">Co-curricular activities </td></tr>
                                             <tr><td> Number of students</td>
-                                                <td ><t t-esc="get_student_no(docs)" /> </td>
+                                                <td ><t t-esc="get_student_in_section(student)" /> </td>
                                                 <td> Behaviour</td><td >
                                                     <t t-foreach="exams" t-as="exam">
                                                         <t t-esc="results[exam.id][student.id]['result'].behavior"/>

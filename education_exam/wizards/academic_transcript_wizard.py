@@ -402,7 +402,10 @@ class academicTranscript(models.Model):
             if student.general_count > 0:
                 if student.optional_gpa_above_2 < 0:
                     student.optional_gpa_above_2 = 0
-                student.net_gpa = student.general_gpa + (student.optional_gpa_above_2 / student.general_count)
+                netGPA=student.general_gpa + (student.optional_gpa_above_2 / student.general_count)
+                if netGPA<5:
+                    student.net_gpa = round(netGPA,2)
+                else:student.net_gpa=5
                 student.net_lg = self.env['education.result.grading'].get_lg(student.net_gpa)
             if student.extra_count > 0:
                 if student.extra_fail_count < 1:

@@ -617,7 +617,7 @@
                                                     <t t-if="exam_first">
                                                         <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +2 + results[exam.id][student.id]['result'].show_paper">
                                                             <t t-if="fourth_subject>0">
-                                                                Total Mark Without Additional Subject:
+                                                                Total Mark Without 4th Subject:
                                                             </t>
                                                             <t t-else="">
                                                                 Total Mark :
@@ -638,7 +638,7 @@
                                                     <t t-if="exam_first">
                                                         <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +2 + results[exam.id][student.id]['result'].show_paper">
                                                             <t t-if="fourth_subject>0">
-                                                                Percentage of total mark without additional subject:
+                                                                Percentage of total mark without 4Th subject:
                                                             </t>
                                                         </td>
                                                     </t>
@@ -658,7 +658,7 @@
 <!-- Additional subject Starts-->
 
 
-                                            <tr><td colspan="100%">Additional Subjects</td></tr>
+                                            <tr><td colspan="100%">4Th Subjects</td></tr>
                                     <t t-foreach="subjects['optional']" t-as="subject">
                                         <tr>
                                             <t t-foreach="exams" t-as="exam">
@@ -889,7 +889,7 @@
                                                                 <t t-foreach="exams" t-as="exam">
                                                                     <t t-if="exam_first">
                                                                         <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +2 + results[exam.id][student.id]['result'].show_paper">
-                                                                            Total Mark With Additional Subject:
+                                                                            Total Mark With 4th Subject:
                                                                         </td>
                                                                     </t>
                                                                     <td >
@@ -906,7 +906,7 @@
                                                                 <t t-foreach="exams" t-as="exam">
                                                                     <t t-if="exam_first">
                                                                         <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +2 + results[exam.id][student.id]['result'].show_paper">
-                                                                            Percentage of total mark with additional subject:
+                                                                            Percentage of total mark with 4th subject:
                                                                         </td>
                                                                     </t>
                                                                     <td >
@@ -1653,7 +1653,7 @@
                                                     <t t-if="exam_first">
                                                         <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 2 +1 + results[exam.id][student.id]['result'].show_paper">
                                                             <t t-if="fourth_subject>0">
-                                                                Total Mark Without Additional Subject:
+                                                                Total Mark Without 4th Subject:
                                                             </t>
                                                             <t t-else="">
                                                                 Total Mark :
@@ -1680,7 +1680,7 @@
                                                     <t t-if="exam_first">
                                                         <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +3 + results[exam.id][student.id]['result'].show_paper">
                                                             <t t-if="fourth_subject>0">
-                                                                Percentage of total mark without additional subject:
+                                                                Percentage of total mark without 4th subject:
                                                             </t>
                                                         </td>
                                                     </t>
@@ -1700,7 +1700,7 @@
 <!-- Additional subject Starts-->
 
 
-                                            <tr><td colspan="100%">Additional Subjects</td></tr>
+                                            <tr><td colspan="100%">4th Subjects</td></tr>
                                     <t t-foreach="subjects['optional']" t-as="subject">
                                         <tr>
                                             <t t-foreach="exams" t-as="exam">
@@ -1935,7 +1935,7 @@
                                 <t t-foreach="exams" t-as="exam">
                                     <t t-if="exam_first">
                                         <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +3 + results[exam.id][student.id]['result'].show_paper">
-                                            Total Mark With Additional Subject:
+                                            Total Mark With 4th Subject:
                                         </td>
                                     </t>
                                     <td >
@@ -1952,7 +1952,7 @@
                                                                 <t t-foreach="exams" t-as="exam">
                                                                     <t t-if="exam_first">
                                                                         <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count * 3 +3 + results[exam.id][student.id]['result'].show_paper">
-                                                                            Percentage of total mark with additional subject:
+                                                                            Percentage of total mark with 4th subject:
                                                                         </td>
                                                                     </t>
                                                                     <td >

@@ -32,7 +32,7 @@
     </template>
 
         <template id ="evaluation_subject_template">
-           <table border-collapse="collapse" width="100%" hight="100%" style="page-break-inside:avoide !important;">
+           <table border-collapse="collapse" width="100%" hight="100%" style="page-break-inside:avoide !important; font-size:19px; border:0">
                 <t t-if="show_mark_heading!=0">
                     <tr>
                         <t t-if="show_paper_column==1">
@@ -211,13 +211,13 @@
                                             <t t-set="show_paper_column" t-value="1"/>
                                         <tbody style="page-break-inside:avoide !important;">
                                             <tr>
-                                                <td >
+                                                <td style="vertical-align:middle;">
                                                     <t t-esc="student.student_id.student_id"/>
                                                 </td>
-                                                <td >
+                                                <td style="vertical-align:middle;" >
                                                     <t t-esc="student.student_id.roll_no"/>
                                                 </td>
-                                                <td >
+                                                <td style="vertical-align:middle;">
                                                     <t t-esc="student.student_id.name"/>
                                                 </td>
                                                    <t t-foreach="results[student]['compulsory']" t-as="subject">
@@ -239,13 +239,13 @@
                                                             <t t-call="education_exam.evaluation_subject_template"/>
                                                         </td>
                                                     </t>
-                                                <td >
+                                                <td style="vertical-align:middle;">
                                                     <t t-set="show_mark_heading" t-value="0"/>
-                                                    <table border="none" width="100%">
-                                                        <tr border="none">
+                                                    <table border="0" width="100%">
+                                                        <tr border="0">
                                                             <t t-foreach="exam_list" t-as="exam">
 
-                                                                <td border="none">
+                                                                <td border="0">
                                                                     <t t-esc="round(results[student][exam]['result'].net_gpa,2)"/>
                                                                     <t t-if="results[student][exam]['result'].general_fail_count==0">
 
@@ -259,12 +259,12 @@
                                                         </tr>
                                                     </table>
                                                 </td>
-                                                <td >
-                                                    <table width="100%" hight="100%">
+                                                <td style="vertical-align:middle;" >
+                                                    <table width="100%" hight="100%" border="0">
                                                         <tr>
                                                             <t t-foreach="exam_list" t-as="exam">
 
-                                                                <td>
+                                                                <td >
                                                                     <t t-esc="round(results[student][exam]['result'].net_obtained)"/>
                                                                 </td>
                                                             </t>

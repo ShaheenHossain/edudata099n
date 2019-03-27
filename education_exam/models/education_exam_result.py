@@ -12,6 +12,7 @@ class EducationExamResultsNew(models.Model):
     result_id=fields.Many2one("education.exam.results","result_id",ondelete="cascade")             #relation to the result table
     exam_id = fields.Many2one('education.exam', string='Exam',ondelete="cascade")
     class_id = fields.Many2one('education.class.division', string='Class')
+    level_id=fields.Many2one('education.class',string='Level',compute='_get_level',store='True')
     # todo here to change class_id to level
     # todo group for merit list of group
     group=fields.Integer('group')
@@ -82,6 +83,12 @@ class EducationExamResultsNew(models.Model):
     show_paper=fields.Boolean('Show Papers')
     result_type_count=fields.Integer("result type Count")
     generate_date=fields.Date("Generated Date")
+
+    @api.depends('class_id')
+    def _get_level(self):
+        for rec in self:
+            rec.level_id=rec.class_id.class_id
+
 
     @api.multi
     def calculate_merit_list(self,exam,level):

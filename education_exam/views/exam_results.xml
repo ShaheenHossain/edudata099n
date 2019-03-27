@@ -181,10 +181,10 @@
 
         <menuitem id="examination_result_main_menu" parent="education_exam.examination_main_menu" name="Exam Results"
                   sequence="20"/>
-        <menuitem id="examination_result_sub_menu" parent="education_exam.examination_result_main_menu"
-                  action="act_exam_result_view" name="Exam Results" sequence="20"/>
-        <menuitem id="examination_result_report_menu" parent="education_exam.examination_result_main_menu"
-                  action="act_exam_result_report_view" name="Report" sequence="22"/>
+        <!--<menuitem id="examination_result_sub_menu" parent="education_exam.examination_result_main_menu"-->
+                  <!--action="act_exam_result_view" name="Exam Results" sequence="20"/>-->
+        <!--<menuitem id="examination_result_report_menu" parent="education_exam.examination_result_main_menu"-->
+                  <!--action="act_exam_result_report_view" name="Report" sequence="22"/>-->
 
     </data>
 </odoo>

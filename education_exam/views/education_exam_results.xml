@@ -7,12 +7,23 @@
             <field name="arch" type="xml">
                 <form string="Student Performance">
                     <group>
-                        <field name="student_name"/>
-                        <field name="attendance"/>
-                        <field name="behavior"/>
-                        <field name="sports"/>
-                        <field name="uniform"/>
-                        <field name="cultural"/>
+                        <group>
+                            <field name="roll_no" readonly="1"/>
+                            <field name="student_name" readonly="1"/>
+                            <field name="attendance"/>
+                            <field name="behavior"/>
+                            <field name="sports"/>
+                            <field name="uniform"/>
+                            <field name="cultural"/>
+                        </group>
+                        <group>
+                            <field name="level_id" readonly="1"/>
+                            <field name="class_id" readonly="1"/>
+                            <field name="division_id" readonly="1"/>
+                            <field name="section_id" readonly="1"/>
+                            <field name="group" readonly="1"/>
+
+                        </group>
                     </group>
                 </form>
             </field>
@@ -24,8 +35,8 @@
             <field name="arch" type="xml">
                 <tree create="0" delete="0" editable="top">
                                 <!--<field name="result_id" />-->
-                                <field name="exam_id" readonly="True"/>
-                                <field name="section_id" readonly="True"/>
+                                <field name="roll_no" readonly="True"/>
+                                <!--<field name="section_id" readonly="True"/>-->
                                 <field name="student_id" readonly="True"/>
                                 <!--<field name="student_history" />-->
                                 <!--<field name="student_name" />-->
@@ -33,9 +44,10 @@
                                 <!--<field name="general_subject_line" />-->
                                 <!--<field name="optional_subject_line" />-->
                                 <!--<field name="extra_subject_line" />-->
-                                <field name="class_id" readonly="True"/>
-                                <field name="division_id" readonly="True"/>
-                                <field name="academic_year" readonly="True"/>
+                                <!--<field name="class_id" readonly="True"/>-->
+                                <!--<field name="division_id" readonly="True"/>-->
+                                <!--<field name="academic_year" readonly="True"/>-->
+                            <field name="attendance"/>
                             <field name="behavior"/>
                             <field name="uniform"/>
                             <field name="cultural"/>
@@ -43,6 +55,22 @@
                             <!--<field name="subject_line"/>-->
 
                                 </tree>
+            </field>
+        </record>
+<record id="education_exam_result_search" model="ir.ui.view">
+            <field name="name">education_examination_result_search</field>
+            <field name="model">education.exam.results.new</field>
+            <field name="arch" type="xml">
+                <search>
+                    <group expand="1" string="Group By">
+                        <filter string="Academic Year" name="group_academic_year"
+                                context="{'group_by':'academic_year'}"/>
+                        <filter string="Level" name="group_level_id" context="{'group_by':'level_id'}"/>
+                        <filter string="Class" name="group_class_id" context="{'group_by':'class_id'}"/>
+                        <filter string="Division" name="group_division_id" context="{'group_by':'division_id'}"/>
+                        <filter string="Exam" name="group_exam_id" context="{'group_by':'exam_id'}"/>
+                    </group>
+                </search>
             </field>
         </record>
 
@@ -312,10 +340,14 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <!--<field name="target">current</field>-->
-            <field name="context">{'search_default_group_class_id': 1, 'search_default_group_division_id':1,
-                'search_default_group_exam_id':1}
+            <field name="context">{'search_default_group_academic_year':1,
+                                    'search_default_group_level':1,
+                                    'search_default_group_class_id': 1,
+                                    'search_default_group_exam_id':1
+                                    }
             </field>
         </record>
+
         <record id="act_exam_subject_new_view" model="ir.actions.act_window">
             <field name="name">Exam subjects</field>
             <field name="res_model">results.subject.line.new</field>
@@ -326,6 +358,7 @@
                 'search_default_group_exam_id':1}
             </field>
         </record>
+
         <record id="act_exam_paper_view" model="ir.actions.act_window">
             <field name="name">Exam subjects</field>
             <field name="res_model">results.paper.line</field>
@@ -338,7 +371,7 @@
         </record>
 
         <menuitem id="examination_result_sub_menu_new" parent="education_exam.examination_result_main_menu"
-                  action="act_exam_result_new_view" name="Exam Results New" sequence="20"/>
+                  action="act_exam_result_new_view" name="Exam Results" sequence="20"/>
         <menuitem id="examination_result_subject_menu" parent="education_exam.examination_result_main_menu"
                   action="act_exam_subject_new_view" name="subject_line" sequence="22"/>
         <menuitem id="examination_result_paper_menu" parent="education_exam.examination_result_main_menu"

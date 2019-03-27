@@ -4,15 +4,16 @@
 # Copyright (C) 2011 Smartmode LTD (<http://www.smartmode.co.uk>).
 
 {
-    'name': 'Bangladesh - Accounting',
+    'name': 'BANGLADESH - Accounting',
     'version': '1.0',
     'category': 'Localization',
     'description': """
-This is the latest Bangladesh Odoo localisation necessary to run Odoo accounting for Bangladesh SME's with:
-=================================================================================================
+This is the first ever and the latest Bangladesh Odoo localisation necessary to run Odoo accounting for Bangladesh SME's
+========================================================================================================================
    """,
     'author': 'SM Ashraf',
     'website': 'http://www.eagle_erp.com',
+    'price': '0 BDT'
     'depends': [
         'account',
         'base_iban',

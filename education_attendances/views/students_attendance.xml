@@ -210,8 +210,7 @@
             </field>
         </record>
 
-        <menuitem id="student_attendance_root_menu" name="Attendance"
-                  sequence="12"/>
+        <menuitem id="student_attendance_root_menu" name="Attendance" sequence="12" web_icon="education_attendances,static/description/icon.png"/>
 
         <menuitem id="student_attendance_main_menu" parent="education_attendances.student_attendance_root_menu" name="Attendance"
                   sequence="3"/>

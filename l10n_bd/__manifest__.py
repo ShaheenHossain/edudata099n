@@ -13,7 +13,8 @@ This is the first ever and the latest Bangladesh Odoo localisation necessary to 
    """,
     'author': 'SM Ashraf',
     'website': 'http://www.eagle_erp.com',
-    'price': '0 BDT'
+    'price': '0',
+    'currency':'BDT',
     'depends': [
         'account',
         'base_iban',

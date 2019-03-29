@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * l10n_uk
+# * l10n_bd
 #
 # Translators:
 msgid ""
@@ -18,12 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: l10n_uk
-#: model:ir.ui.menu,name:l10n_uk.account_reports_uk_statements_menu
+#. module: l10n_bd
+#: model:ir.ui.menu,name:l10n_bd.account_reports_bd_statements_menu
 msgid "British Statements"
 msgstr ""
 
-#. module: l10n_uk
-#: model:ir.actions.client,name:l10n_uk.action_client_l10n_uk_menu
+#. module: l10n_bd
+#: model:ir.actions.client,name:l10n_bd.action_client_l10n_bd_menu
 msgid "Open Account Dashboard Menu"
 msgstr "Open Account Dashboard Menu"

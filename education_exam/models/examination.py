@@ -139,6 +139,16 @@ class EducationExam(models.Model):
                       'date':rec.start_date
                       }
                 subjline_obj.create(data)
+    @api.multi
+    def print_results(self):
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'education.exam.result.wizard',
+            'target': 'new',
+            'type': 'ir.actions.act_window',
+            'context': {'current_id': self.id}
+        }
 
 class SubjectLine(models.Model):
     _name = 'education.subject.line'

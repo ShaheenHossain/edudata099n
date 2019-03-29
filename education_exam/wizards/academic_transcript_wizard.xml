@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-
         <record id="academic_transcript_wizard_form" model="ir.ui.view">
             <field name="name">academic.transcript.wizard.form</field>
             <field name="model">academic.transcript</field>
@@ -9,6 +8,7 @@
                 <form >
                     <button name="generate_results" type="object" string="Calculate Result" attrs="{'invisible': [('state', '=', 'done')]}"/>
                     <button name="%(action_dsblsc_marksheet)d" string="Marksheet A4 Portrait" type="action" />
+                    <button name="%(education_exam_test_wizard)d" string="test" type="action" />
                     <button name="get_merit_list" string="meritList" type="object" />
                     <button name="del_generated_results" string="Delete Generated Results" type="object" />
 
@@ -34,9 +34,9 @@
             <field name="model">academic.transcript</field>
             <field name="arch" type="xml">
                 <tree >
-                        <field name="academic_year"/>
-                        <field name="exams"/>
-                        <field name="student"/>
+                    <field name="academic_year"/>
+                    <field name="exams"/>
+                    <field name="student"/>
                 </tree>
             </field>
         </record>

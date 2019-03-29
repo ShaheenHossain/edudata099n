@@ -33,6 +33,7 @@
         'reports/report.xml',
         'reports/dsblsc_marksheet.xml',
         'wizards/academic_transcript_wizard.xml',
+        'wizards/test_wizard.xml',
     ],
     'images': ['static/description/banner.jpg'],
     'license': 'AGPL-3',

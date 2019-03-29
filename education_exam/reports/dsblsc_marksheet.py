@@ -169,7 +169,7 @@ class acdemicTranscripts(models.AbstractModel):
 
     @api.model
     def get_report_values(self, docids, data=None):
-        docs = self.env['academic.transcript'].browse(docids)
+        docs = self.env['education.exam.result.wizard'].browse(docids)
         return {
             'doc_model': 'education.exam.results',
             'docs': docs,

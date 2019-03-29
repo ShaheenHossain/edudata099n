@@ -15,6 +15,9 @@
                         <button name="cancel_exam" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"
                                 string="Cancel"/>
                         <field name="state" readonly="1" widget="statusbar" statusbar_visible="draft,ongoing,close"/>
+                        <!--ToDO here to pass context values for selected exams-->
+                        <!--<button name="%(education_exam_test_wizard)d" string="test" type="action" />-->
+                        <button name="print_results" string="Print Results" type="object"  attrs="{'invisible': [('state', '=', 'draft')]}" context="{'default_exams': active_id}"/>
                     </header>
                     <sheet>
                         <h1>

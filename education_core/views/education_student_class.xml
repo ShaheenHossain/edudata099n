@@ -33,6 +33,7 @@
                         <group>
                             <field name="assign_date" attrs="{'readonly': [('state', '=', 'done')]}"/>
                             <field name="class_id" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="keep_roll_no"/>
                             <field name="admitted_class" attrs="{'readonly': [('state', '=', 'done')] , 'invisible': [('class_id', '=', False)]}"  domain="[('class_id','=',class_id)]"/>
                             <field name="assigned_by" attrs="{'invisible': [('state', '!=', 'done')]}"/>
                             <!--<field name="admitted_class" attrs="{'invisible': [('admitted_class', '=', False)]}"/>-->

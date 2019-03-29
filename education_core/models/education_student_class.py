@@ -12,7 +12,7 @@ class EducationStudentClass(models.Model):
     # _rec_name = 'class_assign_name'
     name = fields.Char('Class Assign Register', compute='get_class_assign_name')
     assign_date=fields.Date(default=fields.Date.today)
-
+    keep_roll_no=fields.Boolean("keep Roll No")
     class_id = fields.Many2one('education.class', string='Class')
     student_list = fields.One2many('education.student.list', 'connect_id', string="Students")
     admitted_class = fields.Many2one('education.class.division', string="Admitted Class" )
@@ -54,11 +54,12 @@ class EducationStudentClass(models.Model):
             for sub in elect_sub:
                 el_subjects.append(sub.id)
             for line in self.student_list:
-                next_roll = next_roll + 1
-                st=self.env['education.student'].search([('id','=',line.student_id.id)])
-                st.roll_no = next_roll
-                st.class_id = rec.admitted_class.id
-                line.roll_no=next_roll
+                if self.keep_roll_no==True:
+                    next_roll = next_roll + 1
+                    st=self.env['education.student'].search([('id','=',line.student_id.id)])
+                    st.roll_no = next_roll
+                    st.class_id = rec.admitted_class.id
+                    line.roll_no=next_roll
 
 
                 # create student history
@@ -66,7 +67,7 @@ class EducationStudentClass(models.Model):
                 self.env['education.class.history'].create({'academic_year_id': rec.admitted_class.academic_year_id.id,
                                                             'class_id': rec.admitted_class.id,
                                                             'student_id': line.student_id.id,
-                                                            'roll_no': next_roll,
+                                                            'roll_no': line.roll_no,
                                                             'compulsory_subjects': [(6, 0,com_subjects)],
                                                             'selective_subjects': [(6, 0, el_subjects)]
                                                             })

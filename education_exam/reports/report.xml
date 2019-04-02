@@ -43,10 +43,19 @@
             name="education_exam.report_exam_academic_transcript"
             file="education_exam.report_exam_academic_transcript"
         />
-<report
+        <report
             id="action_dsblsc_marksheet"
             model="academic.transcript"
             string="Dsblsc Marksheet"
+            report_type="qweb-pdf"
+            paperformat="A4_portrait"
+            name="education_exam.report_dsblsc_marksheet"
+            file="education_exam.report_dsblsc_marksheet"
+        />
+        <report
+            id="action_test_marksheet"
+            model="education.exam.result.wizard"
+            string="Marksheet"
             report_type="qweb-pdf"
             paperformat="A4_portrait"
             name="education_exam.report_dsblsc_marksheet"

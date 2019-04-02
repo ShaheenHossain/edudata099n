@@ -4,6 +4,8 @@ from odoo import models, fields, api
 class ExamSubjectPassRules(models.Model):
     _name = 'exam.subject.pass.rules'
     _description = 'This table contains subject wise pass and fail rules for levels'
+    _order = 'sl asc'
+    sl=fields.Integer("Serial")
     name = fields.Char(string='Name'  )
     exam_id = fields.Many2one('education.exam', string='Exam')
     class_id = fields.Many2one('education.class', string='Class')
@@ -28,6 +30,8 @@ class ExamSubjectPassRules(models.Model):
 class ExamPaperPassRules(models.Model):
     _name = 'exam.paper.pass.rules'
     _description = 'This table contains paper wise pass and fail rules for levels'
+    _order = 'sl asc'
+    sl = fields.Integer("Serial")
     name = fields.Char(string='Name' )
     subject_rule_id = fields.Many2one('exam.subject.pass.rules', string='Subject Rules',ondelete="cascade")
     paper_id = fields.Many2one("education.syllabus", "Paper")

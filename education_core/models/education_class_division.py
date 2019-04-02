@@ -158,6 +158,13 @@ class EducationClassDivisionHistory(models.Model):
         ('student_class_history', 'unique(academic_year_id,class_id,roll_no)', "Roll no must be qnique for Class"),
     ]
 
+class EducationSchool_divisioan(models.Model):
+    _name = "education.school.division"
+    _description = " School can be devided into parts like Kg, Primery, Highschool, College Etc"
+    name=fields.Char("Name", required="True")
+    code=fields.Char("Code",required="True")
+
+
 
 class EducationClassAmenities(models.Model):
     _name = 'education.class.amenities'

@@ -57,6 +57,32 @@
         </field>
     </record>
 
+    <record id="view_education_school_division_tree" model="ir.ui.view">
+        <field name="name">education.school.division.tree</field>
+        <field name="model">education.school.division</field>
+        <field name="arch" type="xml">
+            <tree string="School Division">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_education_school_division_form" model="ir.ui.view">
+        <field name="name">education.school.division.form</field>
+        <field name="model">education.school.division</field>
+        <field name="arch" type="xml">
+            <form string="School Division">
+                <group>
+                    <field name="name"/>
+                    <field name="code"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+
     <record id="view_education_class_division_form" model="ir.ui.view">
         <field name="name">education.class.division.form</field>
         <field name="model">education.class.division</field>
@@ -136,8 +162,22 @@
             </p>
         </field>
     </record>
+    <record id="action_education_school_division" model="ir.actions.act_window">
+        <field name="name">School Division</field>
+        <field name="res_model">education.school.division</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create the your first School division here.
+            </p>
+        </field>
+    </record>
 
     <menuitem action="action_education_class_division_tree" parent="menu_education_admission"
-              id="menu_action_education_class_division" sequence="20"/>
+              name="Class Division" id="menu_action_education_class_division" sequence="20"/>
+    <menuitem action="action_education_school_division" parent="menu_education_admission"
+              name="School Division" id="menu_action_education_school_division" sequence="20"/>
 
 </odoo>

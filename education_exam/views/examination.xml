@@ -15,6 +15,8 @@
                         <button name="cancel_exam" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"
                                 string="Cancel"/>
                         <field name="state" readonly="1" widget="statusbar" statusbar_visible="draft,ongoing,close"/>
+                        <!--ToDO here to pass context values for selected exams-->
+                        <button name="print_results" string="Print Results" type="object"  attrs="{'invisible': [('state', '=', 'draft')]}" context="{'default_exams': active_id}"/>
                     </header>
                     <sheet>
                         <h1>
@@ -181,7 +183,7 @@
             <field name="target">current</field>
         </record>
 
-        <menuitem id="examination_root_menu" name="Exam" sequence="11"/>
+        <menuitem id="examination_root_menu" name="Exam" sequence="11" web_icon="education_exam,static/description/icon.png" />
 
         <menuitem id="examination_main_menu" parent="education_exam.examination_root_menu" name="Exam" sequence="3"/>
 

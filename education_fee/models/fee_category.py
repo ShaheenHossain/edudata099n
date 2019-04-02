@@ -20,4 +20,9 @@ class FeeCategory(models.Model):
                                         'For an example Institution category have different kind of fee structures '
                                         'for different syllabuses')
 
+class feeRateCategory(models.Model):
+    _name="education.fee.rate.category"
+    _description = "Internal/external/regular/free"
+    name=fields.Char("Name")
+    description=fields.Char("Description")
 

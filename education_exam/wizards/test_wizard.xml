@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <record id="academic_transcript_wizard_form" model="ir.ui.view">
-            <field name="name">academic.transcript.wizard.form</field>
-            <field name="model">academic.transcript</field>
+
+        <record id="education_exam_result_wizard_form" model="ir.ui.view">
+            <field name="name">education.exam.result.wizard.form</field>
+            <field name="model">education.exam.result.wizard</field>
             <field name="arch" type="xml">
                 <form >
                     <button name="generate_results" type="object" string="Calculate Result" attrs="{'invisible': [('state', '=', 'done')]}"/>
-                    <button name="%(action_dsblsc_marksheet)d" string="Marksheet A4 Portrait" type="action" />
+                    <!--<button name="%(action_dsblsc_marksheet)d" string="Marksheet A4 Portrait" type="action" />-->
+                    <button name="%(action_test_marksheet)d" string="Marksheet A4 Portrait" type="action" />
                     <button name="get_merit_list" string="meritList" type="object" />
                     <button name="del_generated_results" string="Delete Generated Results" type="object" />
 
@@ -28,32 +30,40 @@
                 </form>
             </field>
         </record>
-         <record id="academic_transcript_wizard_tree" model="ir.ui.view">
-            <field name="name">academic.transcript.wizard.tree</field>
-            <field name="model">academic.transcript</field>
+         <record id="education_exam_result_wizard_tree" model="ir.ui.view">
+            <field name="name">education.exam.result.wizard</field>
+            <field name="model">education.exam.result.wizard</field>
             <field name="arch" type="xml">
                 <tree >
-                    <field name="academic_year"/>
-                    <field name="exams"/>
-                    <field name="student"/>
+                        <field name="academic_year"/>
+                        <field name="exams"/>
+                        <field name="student"/>
                 </tree>
             </field>
         </record>
-        <record id="act_academic_transcript_wizard" model="ir.actions.act_window">
-            <field name="name">academic Transcript</field>
-            <field name="res_model">academic.transcript</field>
+        <record id="act_education_exam_result_wizard" model="ir.actions.act_window">
+            <field name="name">Education Exam Test Wizard</field>
+            <field name="res_model">education.exam.result.wizard</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="target">current</field>
+            <field name="target">new</field>
             <!--<field name="context">{'search_default_group_class_id': 1, 'search_default_group_division_id':1,-->
                 <!--'search_default_group_exam_id':1}-->
             <!--</field>-->
         </record>
 
+        <act_window id="education_exam_result_wizard"
+                    name="test Results"
+                    src_model="academic.transcript"
+                    res_model="education.exam.result.wizard"
+                    view_mode="form"
+                    target="new"
+                    key2="client_action_multi"/>
 
 
-        <menuitem id="academic_transcript_sub_menu" parent="education_exam.examination_result_main_menu"
-                  action="act_academic_transcript_wizard" name="Academic Transcript" sequence="20" groups="base.group_user"/>
+
+        <menuitem id="education_exam_result_wizard_menu" parent="education_exam.examination_result_main_menu"
+                  action="act_education_exam_result_wizard" name="Test" sequence="20" groups="base.group_user"/>
 
     </data>
 </odoo>

@@ -5,12 +5,12 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from datetime import datetime
 
-class academicTranscript(models.Model):
-    _name ='academic.transcript'
+class testTranscript(models.TransientModel):
+    _name ='education.exam.result.wizard'
     _description='print academic transcript for selected exams'
     academic_year=fields.Many2one('education.academic.year',"Academic Year")
     level=fields.Many2one('education.class',"Level")
-    exams=fields.Many2many('education.exam','transcript_id')
+    exams=fields.Many2one('education.exam','transcript_id')
     specific_section = fields.Boolean('For a specific section')
     section=fields.Many2one('education.class.division')
     specific_student=fields.Boolean('For a specific Student')

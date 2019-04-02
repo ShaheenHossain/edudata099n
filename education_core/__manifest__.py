@@ -53,6 +53,7 @@
         'data/religion.religion.csv',
         'data/education.class.division.csv',
         'data/education.admission.register.csv',
+        'data/education.month.csv',
     ],
     'demo': [
         'demo/education_data.xml',

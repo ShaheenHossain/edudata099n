@@ -239,6 +239,8 @@
                             <field name="cash_rounding_id" groups="account.group_cash_rounding"/>
                         </group>
                         <group>
+                            <field name="from_month"/>
+                            <field name="till_month" domain="[('id','>=',from_month)]"/>
                             <field name="fee_category_id"/>
                             <field name="fee_structure" attrs="{'invisible':[('is_fee_structure','=',False)]}"/>
                         </group>
@@ -282,6 +284,7 @@
                                         domain="[('type_tax_use','=','sale'),('company_id', '=', parent.company_id)]"/>
                                     <field name="price_subtotal"/>
                                     <field name="currency_id" invisible="1"/>
+                                    <field name="paid_upto" invisible="1"/>
                                 </tree>
                                 <kanban class="o_kanban_mobile">
                                     <field name="product_id" string="Fee Name"/>

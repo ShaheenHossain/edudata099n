@@ -54,12 +54,12 @@ class EducationStudentClass(models.Model):
             for sub in elect_sub:
                 el_subjects.append(sub.id)
             for line in self.student_list:
-                if self.keep_roll_no==True:
+                st=self.env['education.student'].search([('id','=',line.student_id.id)])
+                st.class_id = rec.admitted_class.id
+                if self.keep_roll_no != True:
                     next_roll = next_roll + 1
-                    st=self.env['education.student'].search([('id','=',line.student_id.id)])
-                    st.roll_no = next_roll
-                    st.class_id = rec.admitted_class.id
                     line.roll_no=next_roll
+                st.roll_no = line.roll_no
 
 
                 # create student history

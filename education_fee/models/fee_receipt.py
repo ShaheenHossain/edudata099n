@@ -36,12 +36,12 @@ class FeeReceipts(models.Model):
                 # search last invoice for the lin and take the paid_upto
                 fee_type_last_paid=self.env['account.invoice.line'].search([('invoice_id.student_id','=',item.student_id.id),
                                                                             ('product_id','=',line.fee_type.product_id.id)],order='invoice_id asc', limit=1)
-                if len(fee_type_last_paid)==0:
+                if fee_type_last_paid.paid_upto:
                     #Here to set feetype started from
-                    fee_type_paid_upto = '2018-12-31'
+                    fee_type_paid_upto = fee_type_last_paid.paid_upto
                     ##fee_type_paid_upto= the date of fee_type started
                 else:
-                    fee_type_paid_upto=fee_type_last_paid.paid_upto
+                    fee_type_paid_upto='2018-12-31'
 
                 duration_in_month = 0
                 qty=0

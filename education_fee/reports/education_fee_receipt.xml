@@ -6,7 +6,11 @@
             <div class="article">
               <t t-raw="0" />
             </div>
-            <div class="footer"></div>
+            <div class="footer">
+                <table width="100%">
+                    <tr></tr>
+                </table>
+            </div>
         </template>
         <template id="single_fee_receipt_template">
             <div  style="width:100%">
@@ -167,7 +171,7 @@
                     <td colspan="100%">Signatures and Seals</td>
                 </tr>
                 <tr>
-                    <td><br/><br/><br/></td>
+                    <td><br/><br/><br/><br/></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -186,16 +190,23 @@
                 <div class="page">
                     <table width="100%">
                         <tr>
-                            <td style="border-right:1px solid #dddddd; pading-right:5px">
+                            <td style="border-right:1px solid #dddddd; pading-right:15px">
+                                Student's Copy:
                                 <t t-call="education_fee.single_fee_receipt_template"/>
                             </td>
+                            <td>-</td><td>-</td>
                             <td style="border-right:1px solid #dddddd; pading-right:5px">
+                                Student To Teacher's copy
                                 <t t-call="education_fee.single_fee_receipt_template"/>
                             </td>
+                            <td>-</td><td>-</td>
                             <td style="border-right:1px solid #dddddd; pading-right:5px">
+                                Bank to Accountant's copy
                                 <t t-call="education_fee.single_fee_receipt_template"/>
                             </td>
+                            <td>-</td><td>-</td>
                             <td style="border-right:1px solid #dddddd; pading-right:5px">
+                                Bank's Copy
                                 <t t-call="education_fee.single_fee_receipt_template"/>
                             </td>
                         </tr>

@@ -6,15 +6,18 @@ from odoo import models, fields, api
 
 class FeeStructure(models.Model):
     _name = 'education.fee.structure'
-    _rec_name = 'fee_structure_name'
-
-    @api.one
-    @api.depends('fee_type_ids.fee_amount')
-    def compute_total(self):
-        self.amount_total = sum(line.fee_amount for line in self.fee_type_ids)
-
-    company_currency_id = fields.Many2one('res.currency', compute='get_company_id', readonly=True, related_sudo=False)
+    _rec_name = 'fee_rate_category'
     fee_structure_name = fields.Char('Name', required=True)
+    fee_rate_category=fields.Many2one('education.fee.rate.category',"Fee Rate Category")
+    division=fields.Many2one("education.school.division","Division",)
+    level=fields.Many2one("education.class","Level")
+    group=fields.Many2one("education.division","Group")
+    section=fields.Many2one("education.class.division","Section")
+    #Todo implement campus shift and Medium Here
+    # campus=fields.Many2one()
+    start_date=fields.Date("Applicable From")
+    end_date=fields.Date("Applicable Till")
+    company_currency_id = fields.Many2one('res.currency', compute='get_company_id', readonly=True, related_sudo=False)
     fee_type_ids = fields.One2many('education.fee.structure.lines', 'fee_structure_id', string='Fee Types')
     comment = fields.Text('Additional Information')
     academic_year = fields.Many2one('education.academic.year', string='Academic Year', required=True)
@@ -23,6 +26,12 @@ class FeeStructure(models.Model):
     category_id = fields.Many2one('education.fee.category', string='Category', required=True,
                                   default=lambda self: self.env['education.fee.category'].search([], limit=1),
                                   domain=[('fee_structure', '=', True)])
+
+    @api.one
+    @api.depends('fee_type_ids.fee_amount')
+    def compute_total(self):
+        self.amount_total = sum(line.fee_amount for line in self.fee_type_ids)
+
 
 
 class FeeStructureLines(models.Model):
@@ -55,11 +64,11 @@ class FeeType(models.Model):
     _inherits = {'product.product': 'product_id'}
 
     payment_type = fields.Selection([
-                                    ('onetime', 'One Time'),
-                                    ('permonth', 'Per Month'),
-                                    ('peryear', 'Per Year'),
-                                    ('sixmonth', '6 Months'),
-                                    ('threemonth', '3 Months')
+                                    (0, 'One Time'),
+                                    (1, 'Per Month'),
+                                    (12, 'Per Year'),
+                                    (6, '6 Months'),
+                                    (3, '3 Months')
                                 ], string='Payment Type', default='permonth',
                                 help='Payment type describe how much a payment effective.'
                                      ' Like, bus fee per month is 30 dollar, sports fee per year is 40 dollar, etc')

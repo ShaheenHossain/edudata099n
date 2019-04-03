@@ -43,8 +43,8 @@
                     <strong>Description:</strong>
                     <p t-field="o.name"/>
                 </div>
-                <div width="100%">
-                    <img t-att-src="'/report/barcode/Code128/%s' % o.number" style="width:100%;height:20px"/>
+                <div width="50%">
+                    <img t-att-src="'/report/barcode/Code128/%s' % o.number" style="width:100%;height:40px"/>
                 </div>
                 <table class="table table-condensed" name="invoice_line_table">
                     <thead>

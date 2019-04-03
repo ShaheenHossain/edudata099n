@@ -74,7 +74,9 @@ class FeeReceipts(models.Model):
                     lines.append((0, 0, fee_line))
             item.invoice_line_ids = lines
             if not item.date_invoice:
-            item.date_invoice=datetime.date.today()
+                item.date_invoice=datetime.date.today()
+                item.date_due=datetime.date.today()+ datetime.timedelta(days=15)
+
     @api.onchange('student_id', 'fee_category_id', 'payed_from_date', 'payed_to_date')
     def _get_partner_details(self):
         """Student_id is inherited from res_partner. Set partner_id from student_id """
@@ -148,6 +150,7 @@ class FeeReceipts(models.Model):
 class InvoiceLineInherit(models.Model):
     _inherit = 'account.invoice.line'
     paid_upto=fields.Date("Paid Upto")
+    paid_from=fields.Date("Paid from")
 
     @api.onchange('product_id')
     def _get_category_domain(self):

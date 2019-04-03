@@ -7,11 +7,10 @@
               <t t-raw="0" />
             </div>
             <div class="footer">
-                <table width="100%">
-                    <tr></tr>
-                </table>
+
             </div>
         </template>
+
         <template id="single_fee_receipt_template">
             <div  style="width:100%">
                 <div style="width: 15%;float: left;">
@@ -30,29 +29,39 @@
                 </div>
             </div>
 
-            <h6>
-                <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>
-                <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
-                <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
-                <span t-if="o.type == 'out_refund'">Credit Note</span>
-                <span t-if="o.type == 'in_refund'">Vendor Credit Note</span>
-                <span t-if="o.type == 'in_invoice'">Vendor Bill</span>
-                <span t-field="o.number"/>
-            </h6>
-
+            <!--<h6>-->
+                <!--<span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>-->
+                <!--<span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>-->
+                <!--<span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>-->
+                <!--<span t-if="o.type == 'out_refund'">Credit Note</span>-->
+                <!--<span t-if="o.type == 'in_refund'">Vendor Credit Note</span>-->
+                <!--<span t-if="o.type == 'in_invoice'">Vendor Bill</span>-->
+                <!--<span t-field="o.number"/>-->
+            <!--</h6>-->
             <div >
                 <div  t-if="o.name">
                     <strong>Description:</strong>
                     <p t-field="o.name"/>
                 </div>
-                <div t-if="o.date_invoice">
-                    <strong>Invoice Date:</strong>
-                    <p t-field="o.date_invoice"/>
+                <div width="100%">
+                    <img t-att-src="'/report/barcode/Code128/%s' % o.number" style="width:100%;height:20px"/>
                 </div>
-                <div  t-if="o.date_due and o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">
-                    <strong>Due Date:</strong>
-                    <p t-field="o.date_due"/>
-                </div>
+                <table class="table table-condensed" name="invoice_line_table">
+                    <thead>
+                        <tr>
+                            <th t-if="o.number"> Invoice No </th>
+                            <th t-if="o.date_invoice"> Invoice Date </th>
+                            <th t-if="o.date_invoice">Due Date</th>
+                        </tr>
+                         <tr>
+                             <td t-if="o.number"><p t-field="o.number"/></td>
+                            <td t-if="o.date_due"> <p t-field="o.date_invoice"/> </td>
+                            <td t-if="o.date_due"> <p t-field="o.date_invoice"/> </td>
+                        </tr>
+                    </thead>
+                </table>
+
+
                 <div  t-if="o.origin">
                     <strong>Source:</strong>
                     <p t-field="o.origin"/>
@@ -75,29 +84,31 @@
                     <tr>
                         <th>Description</th>
                         <th class="hidden">Source Document</th>
-                        <th class="text-right">Quantity</th>
-                        <th class="text-right">Unit Price</th>
-                        <th t-if="display_discount" class="text-right">Disc.(%)</th>
-                        <th class="text-right">Taxes</th>
+                        <th class="text-right">Qty</th>
+                        <th class="text-right">Rate</th>
+                        <th  class="text-right">from</th>
+                        <th class="text-right">Till</th>
                         <th class="text-right">Amount</th>
                     </tr>
                 </thead>
-                <tbody class="invoice_tbody">
+                <tbody class="invoice_tbody" style="font-size:12px">
                     <tr t-foreach="o.invoice_line_ids" t-as="l">
                         <td><span t-field="l.name"/></td>
                         <td class="hidden"><span t-field="l.origin"/></td>
                         <td class="text-right">
-                            <span t-field="l.quantity"/>
+                            <span t-esc="round(l.quantity)"/>
                             <span t-field="l.uom_id"  groups="product.group_uom"/>
                         </td>
                         <td class="text-right">
                             <span t-field="l.price_unit"/>
                         </td>
-                        <td t-if="display_discount" class="text-right">
-                            <span t-field="l.discount"/>
+                        <td  class="text-right">
+                            <t t-if="l.paid_from==''">
+                                <span t-esc="datetime.datetime.strptime(l.paid_upto, '%Y-%m-%d').strftime('%b-%y')"/>
+                            </t>
                         </td>
                         <td class="text-right">
-                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), l.invoice_line_tax_ids))"/>
+                            <span t-esc="datetime.datetime.strptime(l.paid_upto, '%Y-%m-%d').strftime('%b-%y')"/>
                         </td>
                         <td class="text-right" id="subtotal">
                             <span t-field="l.price_subtotal"
@@ -121,38 +132,12 @@
                     <div >
                         <table class="table table-condensed" >
                             <tr class="border-black" style="border-bottom:1px solid #dddddd;">
-                                <td><strong>Subtotal</strong></td>
+                                <td><strong>Total</strong></td>
                                 <td class="text-right">
                                     <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                 </td>
                             </tr>
-                            <t t-foreach="o._get_tax_amount_by_group()" t-as="amount_by_group">
-                                <tr style="border-bottom:1px solid #dddddd;">
-                                    <t t-if="len(o.tax_line_ids) == 1 and o.amount_untaxed == amount_by_group[2]">
-                                        <td>
-                                            <span t-esc="amount_by_group[0]"/>
-                                            <span>&amp;nbsp;<span>on</span>
-                                                <t t-esc="amount_by_group[4]"/>
-                                            </span>
-                                        </td>
-                                        <td class="text-right">
-                                            <span t-esc="amount_by_group[3]"/>
-                                        </td>
-                                    </t>
-                                    <t t-else="">
-                                        <td><span t-esc="amount_by_group[0]"/></td>
-                                        <td class="text-right">
-                                            <span t-esc="amount_by_group[3]" />
-                                        </td>
-                                    </t>
-                                </tr>
-                            </t>
-                            <tr class="border-black">
-                                <td><strong>Total</strong></td>
-                                <td class="text-right">
-                                    <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                </td>
-                            </tr>
+
                         </table>
                     </div>
                 </div>
@@ -179,6 +164,9 @@
                     <td>Accountant</td>
                     <td>Received By</td>
                     <td>Student</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="font-size:10px; padding-top:10px; text-align:center; border-top:1px solid black">Powered By : Eagle ERP</td>
                 </tr>
             </table>
         </template>

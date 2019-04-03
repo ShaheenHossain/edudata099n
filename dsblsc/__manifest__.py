@@ -62,6 +62,7 @@
 
         'data/sms.number.csv',
         'data/sms.template.csv',
+        'data/default.absent.sms.csv',
         'views/views.xml',
         'views/templates.xml',
     ],

@@ -73,7 +73,8 @@ class FeeReceipts(models.Model):
                     }
                     lines.append((0, 0, fee_line))
             item.invoice_line_ids = lines
-
+            if not item.date_invoice:
+            item.date_invoice=datetime.date.today()
     @api.onchange('student_id', 'fee_category_id', 'payed_from_date', 'payed_to_date')
     def _get_partner_details(self):
         """Student_id is inherited from res_partner. Set partner_id from student_id """

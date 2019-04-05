@@ -43,6 +43,9 @@
                     <strong>Description:</strong>
                     <p t-field="o.name"/>
                 </div>
+                <div  style=" width=80%; text-align:center;">
+                    <t t-esc="whose_copy"/>
+                </div>
                 <div width="50%">
                     <img t-att-src="'/report/barcode/Code128/%s' % o.number" style="width:100%;height:40px"/>
                 </div>
@@ -179,22 +182,22 @@
                     <table width="100%">
                         <tr>
                             <td style="border-right:1px solid #dddddd; pading-right:15px">
-                                Student's Copy:
+                                <t t-set="whose_copy" t-value="'Students Copy'"/>
                                 <t t-call="education_fee.single_fee_receipt_template"/>
                             </td>
                             <td>-</td><td>-</td>
                             <td style="border-right:1px solid #dddddd; pading-right:5px">
-                                Student To Teacher's copy
+                                <t t-set="whose_copy" t-value="'Student to Teacher Copy'"/>
                                 <t t-call="education_fee.single_fee_receipt_template"/>
                             </td>
                             <td>-</td><td>-</td>
                             <td style="border-right:1px solid #dddddd; pading-right:5px">
-                                Bank to Accountant's copy
+                                <t t-set="whose_copy" t-value="'Bank to Accountant Copy'"/>
                                 <t t-call="education_fee.single_fee_receipt_template"/>
                             </td>
                             <td>-</td><td>-</td>
                             <td style="border-right:1px solid #dddddd; pading-right:5px">
-                                Bank's Copy
+                                <t t-set="whose_copy" t-value="'Bank Copy'"/>
                                 <t t-call="education_fee.single_fee_receipt_template"/>
                             </td>
                         </tr>

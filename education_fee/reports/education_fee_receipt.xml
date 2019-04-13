@@ -48,7 +48,7 @@
                     <strong>Description:</strong>
                     <p t-field="o.name"/>
                 </div>
-                <div  style=" width=80%; text-align:center;">
+                <div  style=" width=80%; text-align:center; font-size:10px;">
                     <t t-esc="whose_copy"/>
                 </div>
                 <div width="50%">
@@ -58,7 +58,7 @@
                     <thead>
                         <tr>
                             <th t-if="o.number"> Invoice No </th>
-                            <th t-if="o.date_invoice"> Invoice Date </th>
+                            <th t-if="o.date_invoice"> Date </th>
                             <th t-if="o.date_invoice">Due Date</th>
                         </tr>
                          <tr>
@@ -93,7 +93,7 @@
                         <th>Description</th>
                         <th class="hidden">Source Document</th>
                         <th class="text-right">Qty</th>
-                        <th class="text-right">Rate</th>
+                        <!--<th class="text-right">Rate</th>-->
                         <th  class="text-right">from</th>
                         <th class="text-right">Till</th>
                         <th class="text-right">Amount</th>
@@ -107,9 +107,9 @@
                             <span t-esc="round(l.quantity)"/>
                             <span t-field="l.uom_id"  groups="product.group_uom"/>
                         </td>
-                        <td class="text-right">
-                            <span t-field="l.price_unit"/>
-                        </td>
+                        <!--<td class="text-right">-->
+                            <!--<span t-field="l.price_unit"/>-->
+                        <!--</td>-->
                         <td  class="text-right">
                             <t t-if="l.paid_from==''">
                                 <span t-esc="datetime.datetime.strptime(l.paid_upto, '%Y-%m-%d').strftime('%b-%y')"/>

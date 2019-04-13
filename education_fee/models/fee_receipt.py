@@ -3,6 +3,23 @@
 import datetime
 from odoo import models, fields, api, _
 
+class studentClassHistory(models.Model):
+    _inherit='education.class.history'
+    search_name=fields.Char("Name",compute="get_name_search")
+    _rec_name='search_name'
+
+    @api.multi
+    def get_name_search(self):
+        for rec in self:
+            rec.search_name=rec.student_id.name +" (" + rec.student_id.student_id+")"
+
+
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
+        if name:
+            recs = self.search(['|','|',('student_id.name', operator, name),('roll_no', operator, name),('student_id.student_id', operator, name)] + (args or []), limit=limit)
+            return recs.name_get()
+        return super(studentClassHistory, self).name_search(name, args=args, operator=operator, limit=limit)
 
 class FeeReceipts(models.Model):
     _inherit = 'account.invoice'

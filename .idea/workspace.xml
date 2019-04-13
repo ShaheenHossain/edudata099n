@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bcac989f-0042-483e-bff0-ad2eeca973d2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/education_fee/reports/education_fee_receipt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/education_fee/reports/education_fee_receipt.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/education_fee/models/fee_receipt.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_fee/models/fee_receipt.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,32 +23,42 @@
     <session id="1486531713">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+          <entry key="py" value="789" />
           <entry key="xml" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+          <entry key="Python" value="789" />
           <entry key="XML" value="18" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="3" />
+          <entry key="xml" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="3" />
+          <entry key="XML" value="1" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://C:/Python35/Lib/tokenize.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="453" selection-start-line="453" selection-end-line="453" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/education_fee/models/fee_receipt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="12" column="65" lean-forward="true" selection-start-line="12" selection-start-column="65" selection-end-line="12" selection-end-column="65" />
+            <state relative-caret-position="96">
+              <caret line="19" column="40" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+              <folding>
+                <element signature="e#25#40#0" expanded="true" />
+                <marker date="1555162030526" expanded="true" signature="122:838" ph="..." />
+                <marker date="1555162030526" expanded="true" signature="870:875" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -56,8 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/education_fee/views/fee_register.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="230" column="56" selection-start-line="230" selection-start-column="56" selection-end-line="230" selection-end-column="56" />
+            <state relative-caret-position="19">
+              <caret line="203" column="30" lean-forward="true" selection-start-line="203" selection-start-column="30" selection-end-line="203" selection-end-column="30" />
               <folding>
                 <element signature="n#record#0;n#data#0;n#odoo#0;n#!!top" />
                 <element signature="n#record#1;n#data#0;n#odoo#0;n#!!top" />
@@ -73,25 +83,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/education_fee/reports/education_fee_receipt.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="56" column="66" selection-start-line="56" selection-start-column="59" selection-end-line="56" selection-end-column="66" />
+            <state relative-caret-position="172">
+              <caret line="60" column="55" selection-start-line="60" selection-start-column="55" selection-end-line="60" selection-end-column="55" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/education_core/models/education_class_wizard.py">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/education_core/models/education_student.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="28" column="26" lean-forward="true" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/education_core/models/education_class_division.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="140" column="44" selection-start-line="140" selection-start-column="44" selection-end-line="140" selection-end-column="44" />
+            <state relative-caret-position="208">
+              <caret line="145" column="14" selection-start-line="145" selection-start-column="4" selection-end-line="145" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -100,9 +114,20 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>student_id</find>
       <find>whos</find>
+      <find>print_results</find>
+      <find>rec_name</find>
+      <find>name_get</find>
+      <find>_inherits</find>
+      <find>inherits</find>
+      <find>name_sear</find>
+      <find>rec_na</find>
+      <find>compute</find>
+      <find>name_sea</find>
+      <find>name_search</find>
+      <find>student_id</find>
       <find>invoice</find>
+      <find>.search</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -112,6 +137,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/education_fee/reports/education_fee_receipt.xml" />
+        <option value="$PROJECT_DIR$/education_fee/models/fee_receipt.py" />
       </list>
     </option>
   </component>
@@ -239,17 +265,13 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/education_core/models/education_class_division.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="140" column="44" selection-start-line="140" selection-start-column="44" selection-end-line="140" selection-end-column="44" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/education_core/models/education_class_wizard.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/education_fee/views/fee_register.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="230" column="56" selection-start-line="230" selection-start-column="56" selection-end-line="230" selection-end-column="56" />
+        <state relative-caret-position="19">
+          <caret line="203" column="30" lean-forward="true" selection-start-line="203" selection-start-column="30" selection-end-line="203" selection-end-column="30" />
           <folding>
             <element signature="n#record#0;n#data#0;n#odoo#0;n#!!top" />
             <element signature="n#record#1;n#data#0;n#odoo#0;n#!!top" />
@@ -264,20 +286,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/education_fee/models/fee_receipt.py">
+    <entry file="file://C:/Python35/Lib/tokenize.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="12" column="65" lean-forward="true" selection-start-line="12" selection-start-column="65" selection-end-line="12" selection-end-column="65" />
+        <state relative-caret-position="115">
+          <caret line="453" selection-start-line="453" selection-end-line="453" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/education_core/models/education_class_wizard.py">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/education_exam/models/examination.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="136" column="18" lean-forward="true" selection-start-line="136" selection-start-column="18" selection-end-line="136" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/views/examination.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_core/models/education_class_division.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="145" column="14" selection-start-line="145" selection-start-column="4" selection-end-line="145" selection-end-column="14" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/education_fee/reports/education_fee_receipt.xml">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="60" column="55" selection-start-line="60" selection-start-column="55" selection-end-line="60" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_core/models/education_student.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="28" column="26" lean-forward="true" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_fee/models/fee_receipt.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
-          <caret line="56" column="66" selection-start-line="56" selection-start-column="59" selection-end-line="56" selection-end-column="66" />
+          <caret line="19" column="40" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
+          <folding>
+            <element signature="e#25#40#0" expanded="true" />
+            <marker date="1555162030526" expanded="true" signature="122:838" ph="..." />
+            <marker date="1555162030526" expanded="true" signature="870:875" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

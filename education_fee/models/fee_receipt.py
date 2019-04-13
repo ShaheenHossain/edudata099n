@@ -6,8 +6,8 @@ from odoo import models, fields, api, _
 
 class FeeReceipts(models.Model):
     _inherit = 'account.invoice'
-
-    student_id = fields.Many2one('education.student', string='Admission No')
+    student_history=fields.Many2one('education.class.history',string="student")
+    student_id = fields.Many2one('education.student',related='student_history.student_id', string='Admission No')
     student_name = fields.Char(string='Name', related='student_id.partner_id.name', store=True)
     class_division_id = fields.Many2one('education.class.division', string='Class')
     fee_structure = fields.Many2one('education.fee.structure', string='Fee Structure')
@@ -77,7 +77,7 @@ class FeeReceipts(models.Model):
                 item.date_invoice=datetime.date.today()
                 item.date_due=datetime.date.today()+ datetime.timedelta(days=15)
 
-    @api.onchange('student_id', 'fee_category_id', 'payed_from_date', 'payed_to_date')
+    @api.onchange('student_history', 'fee_category_id', 'payed_from_date', 'payed_to_date')
     def _get_partner_details(self):
         """Student_id is inherited from res_partner. Set partner_id from student_id """
         self.ensure_one()
@@ -115,8 +115,8 @@ class FeeReceipts(models.Model):
                         invoice_line_list.append((0, 0, fee_line))
                 item.payed_line_ids = invoice_line_list
 
-    @api.onchange('student_id')
-    def student_id_onchange(self):
+    @api.onchange('student_history')
+    def student_history_onchange(self):
         for rec in self:
             if rec.student_id:
                 last_invoice=self.env['account.invoice'].search([('student_id','=',rec.student_id.id)],order="id desc",limit=1)

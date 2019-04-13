@@ -23,8 +23,13 @@
             </div>
             <div >
                 <div name="invoice_address" >
-                    <address t-field="o.partner_id"
-                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    <table width="100%">
+                        <tr><td colspan="100%">Name: <t t-esc="o.student_id.name"/> </td> </tr>
+                        <tr><td><t t-esc="o.student_history.level.name"/> </td>
+                            <td>Section: <t t-esc="o.student_history.section.name"/> </td>
+                            <td>Roll: <t t-esc="o.student_history.roll_no"/> </td>
+                        </tr>
+                    </table>
                     <div t-if="o.partner_id.vat" class="mt16"><t t-esc="o.company_id.country_id.vat_label or 'TIN'"/>: <span t-field="o.partner_id.vat"/></div>
                 </div>
             </div>

@@ -147,7 +147,9 @@ class EducationExam(models.Model):
             'res_model': 'education.exam.result.wizard',
             'target': 'new',
             'type': 'ir.actions.act_window',
-            'context': {'current_id': self.id}
+            'context': {'current_id': self.id,
+                        'default_academic_year':self.academic_year.id,
+                        'default_level':self.class_id.id}
         }
 
 class SubjectLine(models.Model):

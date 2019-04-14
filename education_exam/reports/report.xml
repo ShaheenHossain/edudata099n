@@ -134,6 +134,15 @@
             name="education_exam.report_merit_list"
             file="education_exam.report_merit_list"
         />
+        <report
+            id="action_new_result"
+            model="education.exam"
+            string="New Result"
+            report_type="qweb-html"
+            paperformat="A4_portrait"
+            name="education_exam.report_new_result"
+            file="education_exam.report_new_result"
+        />
 
 
     </data>

@@ -9,4 +9,5 @@ from . import merit_list
 from . import dsblsc_marksheet
 from . import merit_list_history
 from . import exam_gpa
+from . import new_result
 

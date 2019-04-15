@@ -31,6 +31,7 @@ class EducationExam(models.Model):
     transcript_id=fields.Many2one('academic.transcript')
     return_date = fields.Date(string="Date Of Return")
     result_sheet_created = fields.Boolean(string='result sheet Created')
+    exam_result = fields.Char(string='Results')
     @api.multi
     @api.onchange('academic_year','exam_type')
     def get_class_domain(self):
@@ -147,7 +148,9 @@ class EducationExam(models.Model):
             'res_model': 'education.exam.result.wizard',
             'target': 'new',
             'type': 'ir.actions.act_window',
-            'context': {'current_id': self.id}
+            'context': {'default_exams': [self.id],
+                        'default_academic_year':self.academic_year.id,
+                        'default_level':self.class_id.id}
         }
 
 class SubjectLine(models.Model):

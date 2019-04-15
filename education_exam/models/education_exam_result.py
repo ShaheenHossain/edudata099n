@@ -1,6 +1,7 @@
 
 from odoo import models, fields, api
 import pandas as pd
+import os
 import numpy
 
 
@@ -155,8 +156,18 @@ class EducationExamResultsNew(models.Model):
                 row['result'].merit_group = index + 1
                 # df.loc[df['result'] == row['result'], 'merit_group'] = index+1
             # df_section_sorted.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df_section_'+str(name.id) +'.csv')
-        # df.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df.csv')
+        outname = 'merit_list_exam_'+str(exam.id) +'.csv'
 
+        outdir = './result_data'
+        if not os.path.exists(outdir):
+            os.mkdir(outdir)
+
+        fullname = os.path.join(outdir, outname)
+
+        df.to_csv(fullname)
+        dd=pd.read_csv(fullname)
+        for index, row in dd.iterrows():
+            print(dd.loc[index,'merit_class'])
 
     @api.onchange('general_gp','general_count','optional_gp','optional_count')
     def get_general_gpa(self):

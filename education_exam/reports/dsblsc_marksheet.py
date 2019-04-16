@@ -192,7 +192,7 @@ class acdemicTranscripts(models.AbstractModel):
 
     @api.model
     def get_report_values(self, docids, data=None):
-        docs = self.env['academic.transcript'].browse(docids)
+        docs = self.env['education.exam.result.wizard'].browse(docids)
         return {
             'doc_model': 'education.exam.results',
             'docs': docs,
@@ -204,6 +204,8 @@ class acdemicTranscripts(models.AbstractModel):
             'num2serial': self.env['report.education_exam.report_dsblsc_marksheet'].num2serial,
             'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
             'get_sections': self.env['report.education_exam.report_dsblsc_marksheet'].get_sections,
+            'get_student_no': self.env['report.education_exam.report_dsblsc_marksheet'].get_student_no,
+            'get_student_in_section': self.env['report.education_exam.report_dsblsc_marksheet'].get_student_in_section,
         }
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_evaluation'

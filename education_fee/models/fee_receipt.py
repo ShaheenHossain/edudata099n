@@ -26,7 +26,7 @@ class FeeReceipts(models.Model):
     student_history=fields.Many2one('education.class.history',string="student")
     student_id = fields.Many2one('education.student',related='student_history.student_id', string='Admission No')
     student_name = fields.Char(string='Name', related='student_id.partner_id.name', store=True)
-    class_division_id = fields.Many2one('education.class.division', string='Class')
+    class_division_id = fields.Many2one('education.class.division',related='student_history.class_id', string='Class',  store=True)
     fee_structure = fields.Many2one('education.fee.structure', string='Fee Structure')
     is_fee = fields.Boolean(string='Is Fee', store=True, default=False)
     from_month=fields.Many2one('education.academic.month','From')

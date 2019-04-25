@@ -222,7 +222,7 @@
                                             <tr><td style="border-right:0px solid transparent; text-align:right;"> ID -</td><td style="border-left:0px solid transparent; text-align:left;" width="50px"><span t-field="student.student_id.student_id"/></td>
                                                 <td colspan="2" style="width:100px;"> Roll -<span t-field="student.student_id.roll_no"/></td>
                                                 <td colspan="2" style="width:100px;">Section -<span t-field="student.student_id.class_id.section_id"/></td>
-                                                <td colspan="2" style="width:100px;">Category -<t t-if="student.student_id.student_category=='internal'">I</t>
+                                                <td colspan="2" style="width:100px;">Category -<t t-if="student.student_id.student_category=='I'"> I</t>
                                                                         <t t-else="">E</t> </td>
                                             </tr>
                                             <tr>
@@ -1237,11 +1237,58 @@
                                     <div class="right_top">
                                         <table>
                                             <tr><td colspan="2">Information</td><td colspan="2">Co-curricular activities </td></tr>
-                                            <tr><td> Number of students</td><td width="40px"> </td><td> Behaviour</td><td width="40px"/></tr>
-                                            <tr><td> Total working days</td><td/><td> Sports program</td><td/></tr>
-                                            <tr><td> Attendance</td><td/><td> Uniform</td><td/></tr>
-                                            <tr><td> Percentage of attendance</td><td/><td> Cultural activities</td><td/></tr>
+                                            <tr><td> Number of students</td>
+                                                <td ><t t-esc="get_student_in_section(student)" /> </td>
+                                                <td> Behaviour</td><td >
+                                                    <t t-foreach="exams" t-as="exam">
+                                                        <t t-esc="results[exam.id][student.id]['result'].behavior"/>
+                                                    </t>
+                                                </td></tr>
+                                            <tr><td> Total working days</td>
+                                                <td>
+                                                    <t t-esc="working_days"/>
+                                                </td>
+                                                <td> Sports program</td>
+                                                <td>
+                                                    <t t-foreach="exams" t-as="exam">
+                                                        <t t-esc="results[exam.id][student.id]['result'].sports"/>
+                                                    </t>
+                                                </td></tr>
+                                            <tr><td> Attendance</td>
+                                                <td>
+                                                    <t t-set="attendances" t-value="0"/>
+                                                    <t t-foreach="exams" t-as="exam">
+                                                        <t t-set="attendances" t-value="attendances+results[exam.id][student.id]['result'].attendance"/>
+                                                    </t>
+                                                    <t t-esc="attendances"/>
+                                                </td>
+                                                <td> Uniform</td>
+                                                <td>
+                                                    <t t-foreach="exams" t-as="exam">
+                                                        <t t-esc="results[exam.id][student.id]['result'].uniform"/>
+                                                    </t>
+                                                </td></tr>
+                                            <tr><td> Percentage of attendance</td>
+                                                <td>
+                                                    <t t-if="working_days>0">
+                                                        <t t-esc="round((attendances/working_days)*100)"/>%
+                                                    </t>
+                                                </td>
+                                                <td> Cultural activities</td>
+                                                <td>
+                                                    <t t-foreach="exams" t-as="exam">
+                                                        <t t-esc="results[exam.id][student.id]['result'].cultural"/>
+                                                    </t>
+                                                </td>
+                                            </tr>
                                         </table>
+                                        <!--<table>-->
+                                            <!--<tr><td colspan="2">Information</td><td colspan="2">Co-curricular activities </td></tr>-->
+                                            <!--<tr><td> Number of students</td><td width="40px"> </td><td> Behaviour</td><td width="40px"/></tr>-->
+                                            <!--<tr><td> Total working days</td><td/><td> Sports program</td><td/></tr>-->
+                                            <!--<tr><td> Attendance</td><td/><td> Uniform</td><td/></tr>-->
+                                            <!--<tr><td> Percentage of attendance</td><td/><td> Cultural activities</td><td/></tr>-->
+                                        <!--</table>-->
                                     </div>
                                     <div class="left_top">
                                         <table>

@@ -52,7 +52,7 @@ class EducationSyllabus(models.Model):
     _name = 'education.syllabus'
     _rec_name = 'display'
     name = fields.Char('Name')
-    display=fields.Char('Subject')
+    display=fields.Char('Display',help="This is printed on the marksheet as Subject")
     code = fields.Char('Code', compute="_get_code")
     class_id = fields.Many2one('education.class', string='Class')
     has_group=fields.Integer(related='class_id.division_count')
@@ -106,14 +106,15 @@ class EducationSyllabus(models.Model):
                 reccode=rec.subject_id.code
             rec.display = recname
             if recname != '':
-
-                if rec.divisional == True:
-                    recname=recname + rec.class_id.name +'-' + rec.academic_year.name # +' ('+rec.division_id.name +')'
-                    reccode=reccode + rec.class_id.code +'-' + rec.academic_year.ay_code # +' ('+rec.division_id.code +')'
-                else:
-                    recname = recname + rec.class_id.name + '-' + rec.academic_year.name
-                    reccode = reccode + rec.class_id.code + '-' + rec.academic_year.ay_code
-                    rec.division_id=False
+                if  rec.class_id :
+                    if rec.academic_year :
+                        if rec.divisional == True:
+                            recname=recname + rec.class_id.name +'-' + rec.academic_year.name # +' ('+rec.division_id.name +')'
+                            reccode=reccode + rec.class_id.code +'-' + rec.academic_year.ay_code # +' ('+rec.division_id.code +')'
+                        else:
+                            recname = recname + rec.class_id.name + '-' + rec.academic_year.name
+                            reccode = reccode + rec.class_id.code + '-' + rec.academic_year.ay_code
+                            rec.division_id=False
             rec.name=recname
             rec.code=reccode
     @api.model

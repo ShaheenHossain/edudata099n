@@ -187,24 +187,25 @@ class newResult(models.AbstractModel):
             'get_student_in_section': self.get_student_in_section,
         }
 
-class acdemicTranscripts(models.AbstractModel):
-    _name = 'report.education_exam.report_dsblsc_marksheet_converted'
+# class acdemicTranscripts(models.AbstractModel):
+#     _name = 'report.education_exam.report_dsblsc_marksheet_converted'
+#
+#     @api.model
+#     def get_report_values(self, docids, data=None):
+#         docs = self.env['education.exam.result.wizard'].browse(docids)
+#         return {
+#             'doc_model': 'education.exam.results',
+#             'docs': docs,
+#             'time': time,
+#             'get_students': self.env['report.education_exam.report_dsblsc_marksheet'].get_students,
+#             'get_exams': self.env['report.education_exam.report_dsblsc_marksheet'].get_exams,
+#             'get_subjects': self.env['report.education_exam.report_dsblsc_marksheet'].get_subjects,
+#             'get_gradings':self.env['report.education_exam.report_dsblsc_marksheet'].get_gradings,
+#             'num2serial': self.env['report.education_exam.report_dsblsc_marksheet'].num2serial,
+#             'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
+#             'get_sections': self.env['report.education_exam.report_dsblsc_marksheet'].get_sections,
+#         }
 
-    @api.model
-    def get_report_values(self, docids, data=None):
-        docs = self.env['academic.transcript'].browse(docids)
-        return {
-            'doc_model': 'education.exam.results',
-            'docs': docs,
-            'time': time,
-            'get_students': self.env['report.education_exam.report_dsblsc_marksheet'].get_students,
-            'get_exams': self.env['report.education_exam.report_dsblsc_marksheet'].get_exams,
-            'get_subjects': self.env['report.education_exam.report_dsblsc_marksheet'].get_subjects,
-            'get_gradings':self.env['report.education_exam.report_dsblsc_marksheet'].get_gradings,
-            'num2serial': self.env['report.education_exam.report_dsblsc_marksheet'].num2serial,
-            'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
-            'get_sections': self.env['report.education_exam.report_dsblsc_marksheet'].get_sections,
-        }
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_evaluation'
 

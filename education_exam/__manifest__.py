@@ -16,6 +16,10 @@
     'data': [
         'security/ir.model.access.csv',
         'data/education.result.grading.csv',
+        'data/student.behavior.csv',
+        'data/student.uniform.csv',
+        'data/student.cultural.csv',
+        'data/student.sports.csv',
         'views/grade_configuration_view.xml',
         'views/examination.xml',
         'views/exam_valuation.xml',

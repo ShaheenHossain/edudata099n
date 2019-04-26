@@ -258,7 +258,7 @@
                                             <tr><td style="border-right:0px solid transparent; text-align:right;"> ID -</td><td style="border-left:0px solid transparent; text-align:left;" width="50px"><span t-field="student.student_id.student_id"/></td>
                                                 <td colspan="2" style="width:100px;"> Roll -<span t-field="student.student_id.roll_no"/></td>
                                                 <td colspan="2" style="width:100px;">Section -<span t-field="student.student_id.class_id.section_id"/></td>
-                                                <td colspan="2" style="width:100px;">Category -<t t-if="student.student_id.student_category=='internal'">I</t>
+                                                <td colspan="2" style="width:100px;">Category -<t t-if="student.student_id.student_category=='I'">I</t>
                                                                         <t t-else="">E</t> </td>
                                             </tr>
                                             <tr>

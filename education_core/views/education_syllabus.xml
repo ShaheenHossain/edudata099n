@@ -24,31 +24,30 @@
                 <sheet>
 
                         <group col="4">
-                            <field name="name"/>
-                            <field name="code"/>
-                            <field name="display"/>
-                        </group>
-                        <group col="4">
 
-                            <field name="academic_year" required="1"/>
-                            <field name="class_id" required="1"/>
-                            <field name="divisional" required="1" attrs="{'invisible': [('has_group', '=',0)]}"/>
-                             <field name="has_group" required="1" attrs="{'invisible': True}"/>
-                            <field name="division_id" attrs="{'invisible': [('divisional', '=',False)]}"/>
-                        </group>
-                        <group col="4">
-                            <field name="subject_id"/>
-                            <field name="paper"/>
-                            <!--<field name="total_hours"/>-->
+                            <group>
+
+                                <field name="academic_year" required="1"/>
+                                <field name="class_id" required="1"/>
+                                <field name="divisional" required="1" attrs="{'invisible': [('has_group', '=',0)]}"/>
+                                 <field name="has_group" required="1" attrs="{'invisible': True}"/>
+                                <field name="division_id" attrs="{'invisible': [('divisional', '=',False)]}"/>
+                                <field name="subject_id" required="1"/>
+                                <field name="paper"/>
+                                <field name="subject_type"/>
+                                <field name="selection_type"/>
+                                <field name="evaluation_type"/>
+                                <field name="description"/>
+                                <!--<field name="total_hours"/>-->
+                            </group>
+                            <group>
+                                <field name="name" attrs="{'invisible': ['|',('academic_year', '=', False),('class_id', '=',False)]}" />
+                                <field name="code"/>
+                                <field name="display"/>
+                            </group>
                         </group>
 
-                    <group col="4">
 
-                        <field name="subject_type"/>
-                        <field name="selection_type"/>
-                        <field name="evaluation_type"/>
-                        <field name="description"/>
-                    </group>
                     <group col="4"  string="Mark Distribution">
                         <group col="4">
                             <label string="Exam Type"/>

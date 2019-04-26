@@ -71,10 +71,10 @@ class EducationExamResultsNew(models.Model):
     # working_days=fields.Integer('Working Days')
     attendance=fields.Integer('Attendance')
     percentage_of_attendance=fields.Float("Percentage of Attendance")
-    behavior=fields.Selection([('Average', 'Average'), ('Good', 'Good'), ('Excellent', 'Excellent')], default='Good',string="Behavior",required="True")
-    sports=fields.Selection([('Average', 'Average'), ('Active', 'Active'), ('Excellent', 'Excellent')], default='Active',string="Sports",required="True")
-    uniform=fields.Selection([('Average', 'Average'), ('Good', 'Good'), ('Excellent', 'Excellent')], default='Good',string="Uniform",required="True")
-    cultural=fields.Selection([('Average', 'Average'), ('Active', 'Active'), ('Excellent', 'Excellent')], default='Active',string="Cultural",required="True")
+    behavior=fields.Many2one("student.behavior","Behavior",default='3')
+    sports=fields.Many2one("student.sports","Sports" ,default='3')
+    uniform=fields.Many2one("student.uniform","Uniform",default='3')
+    cultural=fields.Many2one("student.cultural","Cultural",default='3')
     state=fields.Selection([('draft',"Draft"),('done',"Done")],"State",default='draft')
 
     show_tut=fields.Boolean('Show Tutorial')
@@ -342,3 +342,23 @@ class result_paper_line(models.Model):
             if rec.passed==True:
                 rec.gp=self.env['education.result.grading'].get_grade_point(rec.pass_rule_id.paper_marks,rec.paper_obt)
                 rec.lg=self.env['education.result.grading'].get_letter_grade(rec.pass_rule_id.paper_marks,rec.paper_obt)
+class StudentBehavior(models.Model):
+    _name="student.behavior"
+    _discription="This data to be printed on academic Transcript as student Behavior"
+    name=fields.Char('Behaviour')
+    note=fields.Char("Note")
+class StudentSports(models.Model):
+    _name="student.sports"
+    _discription="This data to be printed on academic Transcript as student Sports"
+    name=fields.Char('Sports')
+    note=fields.Char("Note")
+class StudentCultural(models.Model):
+    _name="student.cultural"
+    _discription="This data to be printed on academic Transcript as student Cultural"
+    name=fields.Char('Cultural')
+    note=fields.Char("Note")
+class StudentUniform(models.Model):
+    _name="student.uniform"
+    _discription="This data to be printed on academic Transcript as student Uniform"
+    name=fields.Char('Uniform')
+    note=fields.Char("Note")

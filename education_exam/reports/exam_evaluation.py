@@ -146,6 +146,29 @@ class examEvaluation(models.AbstractModel):
         for grade in grading:
             grades.extend(grade)
         return grades
+    def hide_paper(self,obj):
+        paper_hide=obj.hide_paper
+        return paper_hide
+    def hide_tut(self,obj):
+        paper_hide=obj.hide_tut
+        return paper_hide
+    def hide_obj(self,obj):
+        paper_hide=obj.hide_objective
+        return paper_hide
+    def hide_prac(self,obj):
+        paper_hide=obj.hide_prac
+        return paper_hide
+    def get_convert_resue(self,subject):
+        ratio=subject.subject_id
+        return ratio
+
+
+    def get_converted_report(self,obj):
+        if obj.report_type=='2' :
+            converted_report=True
+        else:
+            converted_report=False
+        return converted_report
 
 
     def get_date(self, date):
@@ -154,7 +177,7 @@ class examEvaluation(models.AbstractModel):
 
     @api.model
     def get_report_values(self, docids, data=None):
-        docs = self.env['academic.transcript'].browse(docids)
+        docs = self.env['education.exam.result.wizard'].browse(docids)
 
         return {
             'doc_model': 'education.exam.results',
@@ -168,8 +191,14 @@ class examEvaluation(models.AbstractModel):
             'get_sections': self.get_sections,
             'get_marks': self.get_marks,
             'get_gpa': self.get_gpa,
+            'hide_paper': self.hide_paper,
+            'hide_tut': self.hide_tut,
+            'hide_obj': self.hide_obj,
+            'hide_prac': self.hide_prac,
+            'get_converted_report': self.get_converted_report,
             'get_lg': self.get_lg,
             'get_exam_obtained_total': self.get_exam_obtained_total,
             'check_optional': self.check_optional,
             'get_results': self.get_results,
+            'half_round_up': self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up,
         }

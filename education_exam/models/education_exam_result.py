@@ -32,9 +32,12 @@ class EducationExamResultsNew(models.Model):
                                  default=lambda self: self.env['res.company']._company_default_get())
     total_pass_mark = fields.Float(string='Total Pass Mark')
     total_max_mark = fields.Float(string='Total Max Mark')
+    total_max_mark_converted = fields.Float(string='Total Converte Mark')
 
     general_full_mark=fields.Float("Full Mark")
+    general_full_mark_converted=fields.Float("Converted Full Mark")
     general_obtained=fields.Integer("General_total")
+    general_obtained_converted=fields.Integer("Converted General total")
     general_count=fields.Integer("General Subject Count")
     general_row_count=fields.Integer("General Paper Count")
     general_fail_count = fields.Integer("Genera Fail")
@@ -42,7 +45,9 @@ class EducationExamResultsNew(models.Model):
     general_gpa = fields.Float("general GPA")
 
     extra_Full=fields.Integer("extra Full mark")
+    extra_Full_converted=fields.Integer("converted extra Full mark")
     extra_obtained=fields.Integer("extra Obtained")
+    extra_obtained_converted=fields.Integer("Converted Extra Obtained")
     extra_count=fields.Integer("extra Count")
     extra_row_count=fields.Integer("extra Row Count")
     extra_fail_count=fields.Integer("Extra Fail")
@@ -50,7 +55,9 @@ class EducationExamResultsNew(models.Model):
     extra_gpa = fields.Float("Extra GPA")
 
     optional_full=fields.Integer("Optional full")
+    optional_full_converted=fields.Integer("Converted Optional full")
     optional_obtained=fields.Integer("Optional obtained")
+    optional_obtained_converted=fields.Integer("Converted Optional obtained")
     optional_count=fields.Integer("optional Count")
     optional_row_count=fields.Integer("optional Row Count")
     optional_fail_count=fields.Integer("optional Fail Count")
@@ -58,8 +65,10 @@ class EducationExamResultsNew(models.Model):
     optional_gpa = fields.Float("Optional GPA")
     optional_gpa_above_2 = fields.Float("Optional GPA Above 2")
     optional_obtained_above_40_perc=fields.Integer("Aditional marks from optionals")
+    optional_obtained_above_40_perc_converted=fields.Integer("Converted Aditional marks from optionals")
 
     net_obtained = fields.Integer(string='Total Marks Scored')
+    net_obtained_converted = fields.Integer(string='Total Marks Scored')
     net_pass = fields.Boolean(string='Overall Pass/Fail')
     net_lg=fields.Char("Letter Grade")
     net_gp = fields.Float("Net GP")
@@ -176,7 +185,6 @@ class EducationExamResultsNew(models.Model):
                 rec.general_gpa=rec.general_gp/rec.general_count
             else:
                 rec.general_gpa=0
-
             if rec.optional_count>0:
                 if rec.optional_fail_count<1:
                     rec.optional_gpa=rec.optional_gp/rec.optional_count
@@ -300,10 +308,12 @@ class ResultsSubjectLineNew(models.Model):
     obj_obt = fields.Integer(string='Objective')
     prac_obt = fields.Integer(string='Practical')
     subject_obt = fields.Float(string='Mark Scored')
+    subject_obt_converted = fields.Float(string='Mark Scored')
     paper_count=fields.Integer('Paper Count')
     letter_grade=fields.Char('Grade')
     grade_point=fields.Float('GP')
     subject_highest = fields.Float(string='Max Mark')
+    subject_highest_converted = fields.Float(string='Max Mark')
     pass_mark = fields.Float(string='Pass Mark')
     pass_or_fail = fields.Boolean(string='Pass/Fail')
     company_id = fields.Many2one('res.company', string='Company',
@@ -331,6 +341,7 @@ class result_paper_line(models.Model):
     obj_pr = fields.Boolean(string='P',default=True)
     tut_pr = fields.Boolean(string='P',default=True)
     paper_obt=fields.Float("Paper obtained Mark")
+    paper_obt_converted=fields.Float("Paper obtained Mark")
     passed=fields.Boolean("Passed?" )
     paper_marks=fields.Float("Paper Full Mark")
     lg=fields.Char("letter Grade")

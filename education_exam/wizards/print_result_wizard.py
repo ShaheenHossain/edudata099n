@@ -15,12 +15,26 @@ class educationExamResultWizard(models.TransientModel):
     section=fields.Many2one('education.class.division')
     specific_student=fields.Boolean('For a specific Student')
     student=fields.Many2one('education.student','Student')
+    report_type=fields.Selection([('1','Regular'),('2','Converted')],string="Report Type",default='1',required='True')
     state=fields.Selection([('draft','Draft'),('done','Done')],compute='calculate_state')
+    hide_paper=fields.Boolean("Hide Papers")
+    hide_tut=fields.Boolean("Hide Monthly")
+    hide_subjective=fields.Boolean("Hide Subjective")
+    hide_objective=fields.Boolean("Hide objective")
+    hide_prac=fields.Boolean("Hide Practical")
+    hide_total=fields.Boolean("Hide Total")
     @api.multi
     def del_generated_results(self):
         for exam in self.exams:
             records=self.env['education.exam.results.new'].search([('exam_id','=',exam.id)]).unlink()
-
+    @api.multi
+    def print_marksheet(self):
+        res = {
+            'type': 'ir.actions.client',
+            'name': 'action_exam_evaluation',
+            'tag': 'results.result',
+        }
+        return res
     @api.multi
     def calculate_state(self):
         results=self.env[('education.exam.results')].search([('academic_year','=',self.academic_year.id),('class_id','=','level')])
@@ -206,44 +220,54 @@ class educationExamResultWizard(models.TransientModel):
         student_lines = self.env['education.exam.results.new'].search([('exam_id', '=', exam.id)])
         for student in student_lines:
             obtained_general = 0
+            obtained_general_converted = 0
             count_general_subjects = 0
             count_general_paper = 0
             count_general_fail = 0
-            student.general_fail_count=0
-            full_general_mark=0
+            student.general_fail_count = 0
+            full_general_mark = 0
+            full_general_mark_converted = 0
             gp_general = 0
             obtained_optional = 0
+            obtained_optional_converted = 0
             count_optional_subjects = 0
             count_optional_paper = 0
             count_optional_fail = 0
             optional_full_mark = 0
+            optional_full_mark_converted = 0
             gp_optional = 0
             obtained_extra = 0
+            obtained_extra_converted = 0
             count_extra_subjects = 0
             count_extra_paper = 0
             count_extra_fail = 0
             extra_full_mark = 0
+            extra_full_mark_converted = 0
             gp_extra = 0
-            res_type_count=0
+            res_type_count = 0
             for subject in student.subject_line:
                 paper_count = 0
                 PassFail = True
                 optional = False
                 extra = False
-                obt_tut=0
-                obt_prac=0
-                obt_subj=0
-                obt_obj=0
-                mark_tut=0
-                mark_prac=0
-                mark_subj=0
-                mark_obj=0
-                subject_obtained=0
-                subject_full=0
-                count_fail=0
+                obt_tut = 0
+                obt_prac = 0
+                obt_subj = 0
+                obt_obj = 0
+                mark_tut = 0
+                mark_prac = 0
+                mark_subj = 0
+                mark_obj = 0
+                subject_obtained = 0
+                subject_obtained_converted = 0
+                subject_full = 0
+                subject_full_converted = 0
+                count_fail = 0
                 for paper in subject.paper_ids:
-                    paper_obtained=0
-                    paper_full=0
+                    paper_obtained = 0
+                    paper_obtained_converted = 0
+                    paper_full = 0
+                    paper_full_converted = 0
                     paper_count = paper_count + 1
                     if paper.paper_id in student.student_history.optional_subjects:
                         optional = True
@@ -251,13 +275,13 @@ class educationExamResultWizard(models.TransientModel):
                         extra = True
                     if paper.pass_rule_id.tut_mark > 0:
                         student.show_tut = True
-                        if paper.tut_pr==True:
-                            paper_obtained=paper_obtained+paper.tut_obt
-                            obt_tut=obt_tut+paper.tut_obt
-                            paper_full=paper_full+paper.pass_rule_id.tut_mark
-                            mark_tut=mark_tut+paper.pass_rule_id.tut_mark
+                        if paper.tut_pr == True:
+                            paper_obtained = paper_obtained + paper.tut_obt
+                            obt_tut = obt_tut + paper.tut_obt
+                            paper_full = paper_full + paper.pass_rule_id.tut_mark
+                            mark_tut = mark_tut + paper.pass_rule_id.tut_mark
                         else:
-                            PassFail=False
+                            PassFail = False
                     if paper.pass_rule_id.subj_mark > 0:
                         student.show_subj = True
                         if paper.subj_pr == True:
@@ -268,23 +292,23 @@ class educationExamResultWizard(models.TransientModel):
                         else:
                             PassFail = False
                     if paper.pass_rule_id.obj_mark > 0:
-                        student.show_obj =True
-                        if paper.obj_pr==True:
+                        student.show_obj = True
+                        if paper.obj_pr == True:
                             paper_obtained = paper_obtained + paper.obj_obt
                             paper_full = paper_full + paper.pass_rule_id.obj_mark
                             obt_obj = obt_obj + paper.obj_obt
                             mark_obj = mark_obj + paper.pass_rule_id.obj_mark
                         else:
-                            PassFail=False
+                            PassFail = False
                     if paper.pass_rule_id.prac_mark > 0:
                         student.show_prac = True
-                        if paper.prac_pr==True:
+                        if paper.prac_pr == True:
                             paper_obtained = paper_obtained + paper.prac_obt
                             paper_full = paper_full + paper.pass_rule_id.prac_mark
                             obt_prac = obt_prac + paper.prac_obt
                             mark_prac = mark_prac + paper.pass_rule_id.prac_mark
                         else:
-                            PassFail=False
+                            PassFail = False
 
                     if paper.pass_rule_id.tut_pass > paper.tut_obt:
                         PassFail = False
@@ -295,17 +319,27 @@ class educationExamResultWizard(models.TransientModel):
                     elif paper.pass_rule_id.prac_pass > paper.prac_obt:
                         PassFail = False
 
-                    paper.paper_obt=paper_obtained
-                    paper.passed=PassFail
-                    paper.paper_marks=paper_full
-                    subject_obtained=subject_obtained+paper.paper_obt
-                    subject_full=subject_full+paper_full
-                subject.obj_obt=obt_obj
-                subject.tut_obt=obt_tut
-                subject.subj_obt=obt_subj
-                subject.prac_obt=obt_prac
-                subject.subject_obt=subject_obtained
-                subject.subject_marks=subject_full
+                    paper.paper_obt = paper_obtained
+                    paper.passed = PassFail
+                    paper.paper_marks = paper_full
+                    if paper_full >= 100:
+                        paper.paper_marks_converted = 100
+                    else:
+                        paper.paper_marks_converted = 50
+                    paper.paper_obt_converted = self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up(
+                        (paper_obtained / paper_full) * paper.paper_marks_converted)
+                    subject_obtained = subject_obtained + paper.paper_obt
+                    subject_obtained_converted = subject_obtained_converted + paper.paper_obt_converted
+                    subject_full = subject_full + paper_full
+                    subject_full_converted = subject_full_converted + paper.paper_marks_converted
+                subject.obj_obt = obt_obj
+                subject.tut_obt = obt_tut
+                subject.subj_obt = obt_subj
+                subject.prac_obt = obt_prac
+                subject.subject_obt = subject_obtained
+                subject.subject_obt_converted = subject_obtained_converted
+                subject.subject_marks = subject_full
+                subject.subject_marks_converted = subject_full_converted
                 if subject.pass_rule_id.tut_pass > subject.tut_obt:
                     PassFail = False
                 elif subject.pass_rule_id.subj_pass > subject.subj_obt:
@@ -314,76 +348,88 @@ class educationExamResultWizard(models.TransientModel):
                     PassFail = False
                 elif subject.pass_rule_id.prac_pass > subject.prac_obt:
                     PassFail = False
-                subject.pass_or_fail=PassFail
-                if PassFail==False:
-                    count_fail=1
-                    subject_grade_point=0
-                    subject_letter_grade='F'
+                subject.pass_or_fail = PassFail
+                if PassFail == False:
+                    count_fail = 1
+                    subject_grade_point = 0
+                    subject_letter_grade = 'F'
                 else:
                     count_fail = 0
                     subject_grade_point = self.env['education.result.grading'].get_grade_point(
-                            subject_full,subject_obtained)
+                        subject_full, subject_obtained)
                     subject_letter_grade = self.env['education.result.grading'].get_letter_grade(
                         subject_full, subject_obtained)
-                if subject_letter_grade=='F':
-                    count_fail=1
-                subject.grade_point=subject_grade_point
-                subject.letter_grade=subject_letter_grade
+                if subject_letter_grade == 'F':
+                    count_fail = 1
+                subject.grade_point = subject_grade_point
+                subject.letter_grade = subject_letter_grade
                 if extra == True:
                     subject.extra_for = student.id
-                    obtained_extra = obtained_extra+subject.subject_obt
-                    count_extra_subjects =count_extra_subjects+1
-                    count_extra_paper = count_extra_paper+paper_count
-                    extra_full_mark = extra_full_mark+subject_full
+                    obtained_extra = obtained_extra + subject.subject_obt
+                    obtained_extra_converted = obtained_extra_converted + subject.subject_obt_converted
+                    count_extra_subjects = count_extra_subjects + 1
+                    count_extra_paper = count_extra_paper + paper_count
+                    extra_full_mark = extra_full_mark + subject_full
+                    extra_full_mark_converted = extra_full_mark_converted + subject_full_converted
                     gp_extra = gp_extra + subject_grade_point
                     count_extra_fail = count_extra_fail + count_fail
                 elif optional == True:
                     subject.optional_for = student.id
                     obtained_optional = obtained_optional + subject.subject_obt
+                    obtained_optional_converted = obtained_optional_converted + subject.subject_obt_converted
                     count_optional_subjects = count_optional_subjects + 1
                     count_optional_paper = count_optional_paper + paper_count
                     optional_full_mark = optional_full_mark + subject.pass_rule_id.subject_marks
+                    optional_full_mark_converted = optional_full_mark_converted + subject.pass_rule_id.subject_marks_converted
                     gp_optional = gp_optional + subject_grade_point
                     count_optional_fail = count_optional_fail + count_fail
                 else:
                     full_general_mark = full_general_mark + subject_full
+                    full_general_mark_converted = full_general_mark_converted + subject_full_converted
                     subject.general_for = student.id
                     count_general_subjects = count_general_subjects + 1
-                    obtained_general=obtained_general+ subject.subject_obt
+                    obtained_general = obtained_general + subject.subject_obt
+                    obtained_general_converted = obtained_general_converted + subject.subject_obt_converted
                     count_general_paper = count_general_paper + paper_count
                     gp_general = gp_general + subject_grade_point
-                    count_general_fail =count_general_fail + count_fail
-                subject.paper_count= paper_count
+                    count_general_fail = count_general_fail + count_fail
+                subject.paper_count = paper_count
                 if paper_count > 1:
                     student.show_paper = True
-            if student.show_tut==True:
-                res_type_count=res_type_count+1
-            if student.show_subj==True:
-                res_type_count=res_type_count+1
-            if student.show_obj==True:
-                res_type_count=res_type_count+1
-            if student.show_prac==True:
-                res_type_count=res_type_count+1
-            student.result_type_count=res_type_count
+            if student.show_tut == True:
+                res_type_count = res_type_count + 1
+            if student.show_subj == True:
+                res_type_count = res_type_count + 1
+            if student.show_obj == True:
+                res_type_count = res_type_count + 1
+            if student.show_prac == True:
+                res_type_count = res_type_count + 1
+            student.result_type_count = res_type_count
             student.extra_row_count = count_extra_paper
             student.extra_count = count_extra_subjects
             student.extra_obtained = obtained_extra
-            student.extra_fail_count=count_extra_fail
-            student.extra_full_mark=extra_full_mark
+            student.extra_obtained_converted = obtained_extra_converted
+            student.extra_fail_count = count_extra_fail
+            student.extra_full_mark = extra_full_mark
+            student.extra_full_mark_converted = extra_full_mark_converted
 
             student.general_row_count = count_general_paper
             student.general_count = count_general_subjects
             student.general_obtained = obtained_general
-            student.general_fail_count=count_general_fail
-            student.general_gp=gp_general
+            student.general_obtained_converted = obtained_general_converted
+            student.general_fail_count = count_general_fail
+            student.general_gp = gp_general
             student.general_full_mark = full_general_mark
+            student.general_full_mark_converted = full_general_mark_converted
 
             student.optional_row_count = count_optional_paper
             student.optional_count = count_optional_subjects
             student.optional_obtained = obtained_optional
-            student.optional_fail_count=count_optional_fail
+            student.optional_obtained_converted = obtained_optional_converted
+            student.optional_fail_count = count_optional_fail
             student.optional_gp = gp_optional
             student.optional_full_mark = optional_full_mark
+            student.optional_full_mark_converted = optional_full_mark_converted
             if student.general_count > 0:
                 student.general_gpa = student.general_gp / student.general_count
             else:
@@ -397,15 +443,19 @@ class educationExamResultWizard(models.TransientModel):
                     student.optional_gpa = 0
             if student.optional_gpa > 0:
                 optional_40_perc = student.optional_full_mark * 40 / 100
+                optional_40_perc_converted = student.optional_full_mark_converted * 40 / 100
                 student.optional_obtained_above_40_perc = student.optional_obtained - optional_40_perc
+                student.optional_obtained_above_40_perc_converted = student.optional_obtained_converted - optional_40_perc_converted
             student.net_obtained = student.general_obtained + student.optional_obtained_above_40_perc
+            student.net_obtained_converted = student.general_obtained_converted + student.optional_obtained_above_40_perc_converted
             if student.general_count > 0:
                 if student.optional_gpa_above_2 < 0:
                     student.optional_gpa_above_2 = 0
-                netGPA=student.general_gpa + (student.optional_gpa_above_2 / student.general_count)
-                if netGPA<5:
-                    student.net_gpa = round(netGPA,2)
-                else:student.net_gpa=5
+                netGPA = student.general_gpa + (student.optional_gpa_above_2 / student.general_count)
+                if netGPA < 5:
+                    student.net_gpa = round(netGPA, 2)
+                else:
+                    student.net_gpa = 5
                 student.net_lg = self.env['education.result.grading'].get_lg(student.net_gpa)
             if student.extra_count > 0:
                 if student.extra_fail_count < 1:
@@ -417,18 +467,17 @@ class educationExamResultWizard(models.TransientModel):
 
         # ############# TODO get subject Highest
 
-        subject_rule_lines=self.env['exam.subject.pass.rules'].search([('exam_id','=',exam.id)])
+        subject_rule_lines = self.env['exam.subject.pass.rules'].search([('exam_id', '=', exam.id)])
         for subject_rule_line in subject_rule_lines:
-            subject_result_lines=self.env['results.subject.line.new'].search([('pass_rule_id','=',subject_rule_line.id)], limit=1, order='subject_obt DESC')
-            subject_rule_line.subject_highest=subject_result_lines.subject_obt
+            subject_result_lines = self.env['results.subject.line.new'].search(
+                [('pass_rule_id', '=', subject_rule_line.id)], limit=1, order='subject_obt DESC')
+            subject_rule_line.subject_highest = subject_result_lines.subject_obt
             for paper_rule_line in subject_rule_line.paper_ids:
-                paper_result_line=self.env['results.paper.line'].search([('pass_rule_id','=',paper_rule_line.id)], limit=1, order='paper_obt DESC')
-                paper_rule_line.paper_highest=paper_result_line.paper_obt
+                paper_result_line = self.env['results.paper.line'].search([('pass_rule_id', '=', paper_rule_line.id)],
+                                                                          limit=1, order='paper_obt DESC')
+                paper_rule_line.paper_highest = paper_result_line.paper_obt
 
-
-
-
-        # subjectLines=self.env['results.subject.line.new'].search([('result_id.exam_id','=',exam.id)])
+    # subjectLines=self.env['results.subject.line.new'].search([('result_id.exam_id','=',exam.id)])
         # ##### distinct values search
         # subject=subjectLines.mapped('subject_id')
         # for value in set(subject):

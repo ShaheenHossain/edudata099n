@@ -46,39 +46,56 @@
                          <div class="page">
                             <div class="oe_structure">
                                 <div class="row" align="center" padding-bottom="10px">
-                                    <t t-foreach="exam_list" t-as="exam">
-                                        <t t-if="exam_first">
-                                            <t t-esc="'Merit List For '+exam.name"/>
-                                        </t>
-                                        <t t-else="">
-
-                                            <t t-if="exam_last">
-                                                <t t-esc="' and '+exam.name"/>
+                                    <h4>
+                                        <t t-foreach="exam_list" t-as="exam">
+                                            <t t-if="exam_first">
+                                                <t t-esc="'Merit List of '+exam.name"/>
                                             </t>
                                             <t t-else="">
-                                                <t t-esc="','+exam.name"/>
+
+                                                <t t-if="exam_last">
+                                                    <t t-esc="' and '+exam.name + ' ' + exam.academic_year"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="','+exam.name"/>
+                                                </t>
                                             </t>
                                         </t>
-                                    </t>
+                                    </h4>
 
                                 </div>
                                 <div class="row">
 
-                                        <div class="col" style="width: 25%;float: left;">
-                                            <t t-esc="'Merit List ('+ str(student_count) + ')'"/>
+                                        <div class="col" style="width: 25%;float: left;padding-left:25px;">
+                                            <h5>
+                                                <t t-esc="'Merit List ('+ str(student_count) + ')'"/>
+                                            </h5>
                                         </div>
                                         <div class="col" style="width: 25%;float: left;">
-                                            Class: <t t-esc="section.class_id.name"/>
+                                            <h5>
+                                                Class: <t t-esc="section.class_id.code"/>
+                                            </h5>
                                         </div>
                                         <div class="col" style="width: 25%;float: left;">
-                                            Section: <t t-esc="section.display"/>
+                                            <h5>
+                                                Section: <t t-esc="section.display"/>
+                                            </h5>
                                         </div>
-                                        <div class="col" style="width: 25%;float: left;text-align:right;">
-                                            Group: <t t-esc="section.division_id.name"/>
+                                        <div class="col" style="width: 25%;float: left;text-align:right; padding-right:20px;">
+                                            <h5>
+                                                Group:
+                                                <t t-if="section.division_id">
+                                                    <t t-esc="section.division_id.name"/>
+                                                </t>
+                                                <t t-else="">
+                                                    N/A
+                                                </t>
+                                            </h5>
                                         </div>
                                 </div>
                             <div class="row">
                                 <table width="100%">
+                                    <t t-set="converted_report" t-value="get_converted_report(docs)"/>
 
                                         <tr class="dont_split"><td rowspan="2">Roll</td><td rowspan="2">ID</td>
                                             <td rowspan="2" style="text-align : center;">Name</td>
@@ -87,19 +104,22 @@
                                                 <t t-foreach="exam_list" t-as="exam">
                                                     <td colspan="3"><t t-esc="exam.exam_type.name"/></td>
                                                 </t>
-                                                <td colspan="3">Total</td><p>&lt;/tr&gt;</p><p>&lt;tr&gt;</p>
+                                                <td colspan="3">
+                                                    Total</td><p>&lt;/tr&gt;</p><p>&lt;tr&gt;</p>
                                                 <t t-foreach="exam_list" t-as="exam">
-                                                    <td rowspan="2" style="text-align : center;">GPA <p font-size="10">(without 4th subjects)</p></td>
-                                                    <td rowspan="2" style="text-align : center;">GPA <p font-size="8">(with 4th subjects)</p>
-                                                </td><td >Score</td><td >Position In Section</td><td class="rotate">Position In Class</td>
+                                                    <td rowspan="2" style="text-align : center;">GPA </td>
+                                                    <!--<td rowspan="2" style="text-align : center;">GPA <p font-size="8">(with 4th subjects)</p>-->
+                                                <td >Score</td><td >Position In Section</td><td class="rotate">Position In Class</td>
                                                 </t>
                                                 <td >Score</td><td >Position In Section</td><td >Position In Class</td>
                                             </t>
 
                                         <t t-else="">
-                                            <td rowspan="2" style="text-align : center;">GPA <p font-size="10">(Without 4th sub)</p></td>
-                                            <td rowspan="2" style="text-align : center;">GPA <p font-size="10">(With 4th sub)</p>
-                                                </td><td  rowspan="2" style="text-align : center;">Total Marks</td>
+                                            <td rowspan="2" style="text-align : center;">GPA</td>
+                                            <td  rowspan="2" style="text-align : center;">Converted Marks</td>
+                                            <t t-if="converted_report">
+                                                <td  rowspan="2" style="text-align : center;">Total Marks</td>
+                                            </t>
                                             <td rowspan="2" style="text-align : center;">Position In Section</td>
                                             <td rowspan="2" style="text-align : center;">Position In Class</td>
                                             <p>&lt;/tr&gt;</p>
@@ -110,7 +130,7 @@
                                             <t t-set="result_lines" t-value="get_result_line(exam,section)"/>
                                             <t t-foreach="result_lines" t-as="result_line">
                                                 <tr class="dont_split">
-                                                    <td><t t-esc="result_line.roll_no"/></td>
+                                                    <td><t t-esc='"{:02d}".format(result_line.roll_no)'/></td>
                                                     <td><t t-esc="result_line.student_id.student_id"/></td>
 
                                                     <td><t t-esc="result_line.student_name"/></td>
@@ -124,24 +144,27 @@
                                                             <t t-esc="'('+str(fail_count)+'F)' "/>
                                                         </t>
                                                     </td>
-                                                    <td style="text-align : center;">
-                                                        <t t-set="NETGPA" t-value="result_line.net_gpa"/>
-                                                        <t t-if="5>NETGPA">
-                                                            <t t-if="NETGPA==0">
-                                                                0
-                                                            </t>
-                                                            <t t-else="">
-                                                                <t t-esc="round(NETGPA,2)"/>
-                                                            </t>
-                                                        </t>
-                                                        <t t-else="">
-                                                            5
-                                                        </t>
+                                                    <!--<td style="text-align : center;">-->
+                                                        <!--<t t-set="NETGPA" t-value="result_line.net_gpa"/>-->
+                                                        <!--<t t-if="5>NETGPA">-->
+                                                            <!--<t t-if="NETGPA==0">-->
+                                                                <!--0-->
+                                                            <!--</t>-->
+                                                            <!--<t t-else="">-->
+                                                                <!--<t t-esc="round(NETGPA,2)"/>-->
+                                                            <!--</t>-->
+                                                        <!--</t>-->
+                                                        <!--<t t-else="">-->
+                                                            <!--5-->
+                                                        <!--</t>-->
 
-                                                        <t t-if="fail_count>0">
-                                                            <t t-esc="'('+str(fail_count)+'F)'"/>
-                                                        </t>
-                                                    </td>
+                                                        <!--<t t-if="fail_count>0">-->
+                                                            <!--<t t-esc="'('+str(fail_count)+'F)'"/>-->
+                                                        <!--</t>-->
+                                                    <!--</td>-->
+                                                    <t t-if="converted_report">
+                                                        <td style="text-align : center;"><t t-esc="result_line.net_obtained_converted"/></td>
+                                                    </t>
                                                     <td style="text-align : center;"><t t-esc="result_line.net_obtained"/></td>
                                                     <td style="text-align : center;"><t t-esc="result_line.merit_section"/></td>
                                                     <td style="text-align : center;"><t t-esc="result_line.merit_class"/></td>

@@ -19,6 +19,13 @@ class examEvaluation(models.AbstractModel):
             df.loc[index,'student'] = self.env['education.class.history'].search([('student_id.id', '=', int(row['student']))])
 
         return df
+    def get_converted_report(self,obj):
+        if obj.report_type=='2' :
+            converted_report=True
+        else:
+            converted_report=False
+        return converted_report
+
 
 
 
@@ -104,7 +111,7 @@ class examEvaluation(models.AbstractModel):
 
     @api.model
     def get_report_values(self, docids, data=None):
-        docs = self.env['academic.transcript'].browse(docids)
+        docs = self.env['education.exam.result.wizard'].browse(docids)
 
         return {
             'doc_model': 'education.exam.results',
@@ -121,4 +128,5 @@ class examEvaluation(models.AbstractModel):
             'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
             'get_student_count': self.get_student_count,
             'get_result_line': self.get_result_line,
+            'get_converted_report': self.get_converted_report,
         }

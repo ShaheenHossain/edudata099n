@@ -206,23 +206,29 @@ class academicTranscript(models.Model):
         student_lines = self.env['education.exam.results.new'].search([('exam_id', '=', exam.id)])
         for student in student_lines:
             obtained_general = 0
+            obtained_general_converted = 0
             count_general_subjects = 0
             count_general_paper = 0
             count_general_fail = 0
             student.general_fail_count=0
             full_general_mark=0
+            full_general_mark_converted=0
             gp_general = 0
             obtained_optional = 0
+            obtained_optional_converted = 0
             count_optional_subjects = 0
             count_optional_paper = 0
             count_optional_fail = 0
             optional_full_mark = 0
+            optional_full_mark_converted = 0
             gp_optional = 0
             obtained_extra = 0
+            obtained_extra_converted = 0
             count_extra_subjects = 0
             count_extra_paper = 0
             count_extra_fail = 0
             extra_full_mark = 0
+            extra_full_mark_converted = 0
             gp_extra = 0
             res_type_count=0
             for subject in student.subject_line:
@@ -239,11 +245,15 @@ class academicTranscript(models.Model):
                 mark_subj=0
                 mark_obj=0
                 subject_obtained=0
+                subject_obtained_converted=0
                 subject_full=0
+                subject_full_converted=0
                 count_fail=0
                 for paper in subject.paper_ids:
                     paper_obtained=0
+                    paper_obtained_converted=0
                     paper_full=0
+                    paper_full_converted=0
                     paper_count = paper_count + 1
                     if paper.paper_id in student.student_history.optional_subjects:
                         optional = True
@@ -298,14 +308,23 @@ class academicTranscript(models.Model):
                     paper.paper_obt=paper_obtained
                     paper.passed=PassFail
                     paper.paper_marks=paper_full
+                    if paper_full>=100:
+                        paper.paper_marks_converted=100
+                    else:
+                        paper.paper_marks_converted = 50
+                    paper.paper_obt_converted=self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up((paper_obtained/paper_full)*paper.paper_marks_converted)
                     subject_obtained=subject_obtained+paper.paper_obt
+                    subject_obtained_converted=subject_obtained_converted+paper.paper_obt_converted
                     subject_full=subject_full+paper_full
+                    subject_full_converted=subject_full_converted+paper.paper_marks_converted
                 subject.obj_obt=obt_obj
                 subject.tut_obt=obt_tut
                 subject.subj_obt=obt_subj
                 subject.prac_obt=obt_prac
                 subject.subject_obt=subject_obtained
+                subject.subject_obt_converted=subject_obtained_converted
                 subject.subject_marks=subject_full
+                subject.subject_marks_converted=subject_full_converted
                 if subject.pass_rule_id.tut_pass > subject.tut_obt:
                     PassFail = False
                 elif subject.pass_rule_id.subj_pass > subject.subj_obt:
@@ -332,24 +351,30 @@ class academicTranscript(models.Model):
                 if extra == True:
                     subject.extra_for = student.id
                     obtained_extra = obtained_extra+subject.subject_obt
+                    obtained_extra_converted = obtained_extra_converted+subject.subject_obt_converted
                     count_extra_subjects =count_extra_subjects+1
                     count_extra_paper = count_extra_paper+paper_count
                     extra_full_mark = extra_full_mark+subject_full
+                    extra_full_mark_converted = extra_full_mark_converted+subject_full_converted
                     gp_extra = gp_extra + subject_grade_point
                     count_extra_fail = count_extra_fail + count_fail
                 elif optional == True:
                     subject.optional_for = student.id
                     obtained_optional = obtained_optional + subject.subject_obt
+                    obtained_optional_converted = obtained_optional_converted + subject.subject_obt_converted
                     count_optional_subjects = count_optional_subjects + 1
                     count_optional_paper = count_optional_paper + paper_count
                     optional_full_mark = optional_full_mark + subject.pass_rule_id.subject_marks
+                    optional_full_mark_converted = optional_full_mark_converted + subject.pass_rule_id.subject_marks_converted
                     gp_optional = gp_optional + subject_grade_point
                     count_optional_fail = count_optional_fail + count_fail
                 else:
                     full_general_mark = full_general_mark + subject_full
+                    full_general_mark_converted = full_general_mark_converted + subject_full_converted
                     subject.general_for = student.id
                     count_general_subjects = count_general_subjects + 1
                     obtained_general=obtained_general+ subject.subject_obt
+                    obtained_general_converted=obtained_general_converted+ subject.subject_obt_converted
                     count_general_paper = count_general_paper + paper_count
                     gp_general = gp_general + subject_grade_point
                     count_general_fail =count_general_fail + count_fail
@@ -368,22 +393,28 @@ class academicTranscript(models.Model):
             student.extra_row_count = count_extra_paper
             student.extra_count = count_extra_subjects
             student.extra_obtained = obtained_extra
+            student.extra_obtained_converted = obtained_extra_converted
             student.extra_fail_count=count_extra_fail
             student.extra_full_mark=extra_full_mark
+            student.extra_full_mark_converted=extra_full_mark_converted
 
             student.general_row_count = count_general_paper
             student.general_count = count_general_subjects
             student.general_obtained = obtained_general
+            student.general_obtained_converted = obtained_general_converted
             student.general_fail_count=count_general_fail
             student.general_gp=gp_general
             student.general_full_mark = full_general_mark
+            student.general_full_mark_converted = full_general_mark_converted
 
             student.optional_row_count = count_optional_paper
             student.optional_count = count_optional_subjects
             student.optional_obtained = obtained_optional
+            student.optional_obtained_converted = obtained_optional_converted
             student.optional_fail_count=count_optional_fail
             student.optional_gp = gp_optional
             student.optional_full_mark = optional_full_mark
+            student.optional_full_mark_converted = optional_full_mark_converted
             if student.general_count > 0:
                 student.general_gpa = student.general_gp / student.general_count
             else:
@@ -397,8 +428,11 @@ class academicTranscript(models.Model):
                     student.optional_gpa = 0
             if student.optional_gpa > 0:
                 optional_40_perc = student.optional_full_mark * 40 / 100
+                optional_40_perc_converted = student.optional_full_mark_converted * 40 / 100
                 student.optional_obtained_above_40_perc = student.optional_obtained - optional_40_perc
+                student.optional_obtained_above_40_perc_converted = student.optional_obtained_converted - optional_40_perc_converted
             student.net_obtained = student.general_obtained + student.optional_obtained_above_40_perc
+            student.net_obtained_converted = student.general_obtained_converted + student.optional_obtained_above_40_perc_converted
             if student.general_count > 0:
                 if student.optional_gpa_above_2 < 0:
                     student.optional_gpa_above_2 = 0

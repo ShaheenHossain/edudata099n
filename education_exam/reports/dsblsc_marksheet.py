@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-import time
+import time, math
 from odoo import fields, models,api
 import pandas as pd
 import numpy
@@ -135,6 +135,13 @@ class acdemicTranscripts(models.AbstractModel):
             grades.extend(grade)
         return grades
 
+
+    def half_round_up(self,val):
+        if (float(val) % 1) >= 0.5:
+            x = math.ceil(val)
+        else:
+            x = round(val)
+        return x
     def num2serial(self,numb):
         if numb < 20:  # determining suffix for < 20
             if numb == 1:
@@ -185,6 +192,7 @@ class acdemicTranscripts(models.AbstractModel):
             'get_sections': self.get_sections,
             'get_student_no': self.get_student_no,
             'get_student_in_section': self.get_student_in_section,
+            'half_round_up': self.half_round_up,
         }
 
 class acdemicTranscripts(models.AbstractModel):
@@ -207,6 +215,7 @@ class acdemicTranscripts(models.AbstractModel):
             'get_sections': self.env['report.education_exam.report_dsblsc_marksheet'].get_sections,
             'get_student_no': self.env['report.education_exam.report_dsblsc_marksheet'].get_student_no,
             'get_student_in_section': self.env['report.education_exam.report_dsblsc_marksheet'].get_student_in_section,
+            'half_round_up': self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up,
         }
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_evaluation'

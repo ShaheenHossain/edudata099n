@@ -82,7 +82,7 @@
 
         <report
             id="action_exam_evaluation"
-            model="academic.transcript"
+            model="education.exam.result.wizard"
             string="Exam Evaluation"
             report_type="qweb-html"
             paperformat="legal_landscape"
@@ -136,7 +136,7 @@
         />
         <report
             id="action_merit_list"
-            model="academic.transcript"
+            model="education.exam.result.wizard"
             string="Merit List"
             report_type="qweb-html"
             paperformat="A4_portrait"

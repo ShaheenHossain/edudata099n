@@ -177,7 +177,7 @@
                                 <div class="row" width="100%">
                                     <div class="right_top">
                                         <table>
-                                            <tr><td colspan="2">Information</td><td colspan="2">Co-curricular activities </td></tr>
+                                            <tr><td colspan="2">Informations</td><td colspan="2">Co-curricular activities </td></tr>
                                             <tr><td> Number of students</td>
                                                 <td ><t t-esc="get_student_in_section(student)" /> </td>
                                                 <td> Behaviour</td><td >
@@ -269,7 +269,7 @@
                                                   <t t-if="results[exam.id][student.id]['result'].show_paper">
                                                       <th rowspan="3">Papers</th>
                                                   </t>
-                                                  <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count*2+1" rowspan="2">Full marks</th>
+                                                  <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count*2+1" rowspan="2">Full Marks</th>
                                                   <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count+fourth_subject+5">
                                                       <t t-esc="exam.name"/>
                                                   </th>
@@ -279,7 +279,7 @@
                                     <tr>
                                         <t t-foreach="exams" t-as="exam">
                                             <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count+1">Marks obtained</th>
-                                            <th rowspan="2">Highest marks</th>
+                                            <th rowspan="2">Highest Marks</th>
                                             <th rowspan="2">LG</th>
                                             <th rowspan="2">GP</th>
                                             <t t-if="fourth_subject==1">
@@ -309,7 +309,7 @@
                                             </t>
                                             <t t-if="results[exam.id][student.id]['result'].show_prac">
                                                 <td>Prac</td>
-                                                <td>pass</td>
+                                                <td>Pass</td>
                                             </t>
                                             <td>Total</td>
                                         </t>
@@ -325,7 +325,7 @@
                                         <t t-if="results[exam.id][student.id]['result'].show_prac">
                                             <td>Prac</td>
                                         </t>
-                                        <td>Total marks</td>
+                                        <td>Total Marks</td>
                                         <t t-if="exam_last">
                                                 <!--here I input </tr>-->
                                             <p>&lt;/tr&gt;</p>
@@ -929,18 +929,18 @@
 <!--fourth subject ends-->
 <!--extra subjects-->
 <t t-if="len(subjects['extra'])>0">
-    <tr><td colspan="100%">Continuous assessment </td> </tr>
+    <tr><td colspan="100%">Continuous Assessment </td> </tr>
                                     <t t-foreach="subjects['extra']" t-as="subject">
                                         <tr>
                                             <t t-foreach="exams" t-as="exam">
                                                 <t t-set="result_line" t-value="results[exam.id][student.id][subject.id]"/>
                                                 <t t-if="exam_first">
-                                                    <td t-att-rowspan="result_line.paper_count">
+                                                    <td style=" text-align:left;" t-att-rowspan="result_line.paper_count">
                                                         <t t-esc="result_line.subject_id.name"/>
                                                     </td>
                                                     <t t-foreach="result_line.paper_ids" t-as="paper_name">
                                                         <t t-if="results[exam.id][student.id]['result'].show_paper">
-                                                            <td>
+                                                            <td >
                                                                 <t t-esc="paper_name.paper_id.paper"/>
                                                             </td>
                                                         </t>
@@ -1146,14 +1146,6 @@
                                            <t t-esc="num2serial(results[exam.id][student.id]['result'].merit_section)"/>
                                        </t>
                                        </div>
-
-                                   <!--<div class="col-xs-4" style="font-size:16px;"> Date of return : <t t-esc="get_date(docs)" /></div>-->
-                                    <!--<div class="col-xs-4">Percentage of marks:  -->
-                                        <!--<t t-if="exam_total!=0">-->
-                                            <!--<t t-esc="round(exam_obtained_total/exam_total*100,2)"/> %-->
-                                        <!--</t>-->
-                                        <!--<t t-else="">0%</t>-->
-                                    <!--</div>-->
                                 </div>
                                 <div class="row">
                                    <div class="col-xs-4" style="font-size:16px;">Position in Class:
@@ -1245,7 +1237,7 @@
                                 <div class="row" width="100%">
                                     <div class="right_top">
                                         <table>
-                                            <tr><td colspan="2">Information</td><td colspan="2">Co-curricular activities </td></tr>
+                                            <tr><td colspan="2">Informations</td><td colspan="2">Co-curricular activities </td></tr>
                                             <tr><td style="text-align:left;"> Number of students</td>
                                                 <td  ><t t-esc="get_student_in_section(student)" /> </td>
                                                 <td style="text-align:left;"> Behaviour</td><td >
@@ -1291,13 +1283,6 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                        <!--<table>-->
-                                            <!--<tr><td colspan="2">Information</td><td colspan="2">Co-curricular activities </td></tr>-->
-                                            <!--<tr><td> Number of students</td><td width="40px"> </td><td> Behaviour</td><td width="40px"/></tr>-->
-                                            <!--<tr><td> Total working days</td><td/><td> Sports program</td><td/></tr>-->
-                                            <!--<tr><td> Attendance</td><td/><td> Uniform</td><td/></tr>-->
-                                            <!--<tr><td> Percentage of attendance</td><td/><td> Cultural activities</td><td/></tr>-->
-                                        <!--</table>-->
                                     </div>
                                     <div class="left_top">
                                         <table>
@@ -1346,7 +1331,7 @@
                                                   <t t-if="results[exam.id][student.id]['result'].show_paper">
                                                       <th rowspan="3">Papers</th>
                                                   </t>
-                                                  <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count*2+1" rowspan="2">Full marks</th>
+                                                  <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count*2+1" rowspan="2">Full Marks</th>
                                                   <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count+fourth_subject+6">
                                                       <t t-esc="exam.name"/>
                                                   </th>
@@ -1356,8 +1341,8 @@
                                     <tr>
                                         <t t-foreach="exams" t-as="exam">
                                             <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count+1">Marks obtained</th>
-                                            <th rowspan="2">Converted marks</th>
-                                            <th rowspan="2">Highest marks</th>
+                                            <th rowspan="2">Converted Marks</th>
+                                            <th rowspan="2">Highest Marks</th>
                                             <th rowspan="2">LG</th>
                                             <th rowspan="2">GP</th>
                                             <t t-if="fourth_subject==1">
@@ -1375,11 +1360,11 @@
                                             <p>&lt;tr&gt;</p>
                                             <t t-if="results[exam.id][student.id]['result'].show_tut">
                                                 <td>Mth</td>
-                                                <td>Pass Mark</td>
+                                                <td>Pass</td>
                                             </t>
                                             <t t-if="results[exam.id][student.id]['result'].show_subj">
                                                 <td>Sub</td>
-                                                <td>pass</td>
+                                                <td>Pass</td>
                                             </t>
                                             <t t-if="results[exam.id][student.id]['result'].show_obj">
                                                 <td>Obj</td>
@@ -1387,7 +1372,7 @@
                                             </t>
                                             <t t-if="results[exam.id][student.id]['result'].show_prac">
                                                 <td>Prac</td>
-                                                <td>pass</td>
+                                                <td>Pass</td>
                                             </t>
                                             <td>Total</td>
                                         </t>
@@ -1610,7 +1595,7 @@
                                                                 <t t-else="">
                                                                     <t t-set="converter" t-value="50"/>
                                                                 </t>
-                                                                <t t-set="converted_number" t-value="round(result_line.subject_obt/result_line.subject_marks*converter*result_line.paper_count)"/>
+                                                                <t t-set="converted_number" t-value="half_round_up(result_line.subject_obt/result_line.subject_marks*converter*result_line.paper_count)"/>
                                                                 <t t-set="convert_obtained" t-value="convert_obtained+converted_number"/>
                                                                 <t t-set="convert_total" t-value="convert_total+converter"/>
                                                                 <t t-esc="converted_number"/>
@@ -2035,7 +2020,7 @@
 <!--extra subjects-->
                                         <t t-set="converted_extra" t-value="0"/>
 <t t-if="len(subjects['extra'])>0">
-    <tr><td colspan="100%">Continuous assessment </td> </tr>
+    <tr><td colspan="100%">Continuous Assessment </td> </tr>
                                     <t t-foreach="subjects['extra']" t-as="subject">
                                         <tr>
                                             <t t-foreach="exams" t-as="exam">
@@ -2252,16 +2237,28 @@
                                 <div class="row"><br/></div>
                                 <div class="row">
 
-                                   <div class="col-xs-4" style="font-size:16px;">
-                                       <table style="border:0;">
+                                       <table width="100%" style="border:0;">
                                        <tr>
-                                           <td style="border:0; text-align:left;">Position in Section</td>
-                                           <td style="border:0;">:</td>
-                                           <td style="border:0;">
+                                           <td width="15%" style="border:0; text-align:left;">Position in Section</td>
+                                           <td width="2%" style="border:0;">:</td>
+                                           <td width="5%" style="border:0;">
                                                <t t-foreach="exams" t-as="exam">
                                                    <t t-esc="num2serial(results[exam.id][student.id]['result'].merit_section)"/>
                                                </t>
                                            </td>
+                                           <td width="20%" style="border:0;">
+                                               Date of return
+                                           </td>
+                                           <td width="2%" style="border:0;">
+                                               :
+                                           </td>
+                                           <td style="border:0; text-align:left;">
+                                               <t t-foreach="exams" t-as="exam">
+                                                       <!--<t t-esc="exam.return_date.strftime('%d %b %Y')"/>-->
+                                                       <span t-field="exam.return_date" t-options='{"format": "dd MMM yyyy"}'/>
+                                                   </t>
+                                           </td>
+
                                        </tr>
                                        <tr>
                                            <td style="border:0; text-align: left;">Position in Class</td>
@@ -2273,21 +2270,6 @@
                                            </td>
                                        </tr>
                                        </table>
-                                   </div>
-
-                                   <div class="col-xs-4" style="font-size:16px;">
-                                       Date of return :
-                                       <t t-foreach="exams" t-as="exam">
-                                           <!--<t t-esc="exam.return_date.strftime('%d %b %Y')"/>-->
-                                           <span t-field="exam.return_date" t-options='{"format": "dd MMM yyyy"}'/>
-                                       </t>
-                                   </div>
-                                    <!--<div class="col-xs-4">Percentage of marks:  -->
-                                        <!--<t t-if="exam_total!=0">-->
-                                            <!--<t t-esc="round(exam_obtained_total/exam_total*100,2)"/> %-->
-                                        <!--</t>-->
-                                        <!--<t t-else="">0%</t>-->
-                                    <!--</div>-->
                                 </div>
                                 <div class="row">
                                 <br/>

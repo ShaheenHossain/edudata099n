@@ -22,8 +22,11 @@ class ExamSubjectPassRules(models.Model):
     obj_pass=fields.Float("Obj. Pass")
     prac_mark=fields.Float("Practical")
     prac_pass=fields.Float("Prac. Pass")
-    subject_marks = fields.Float(string='Total Mark')
+    subject_marks = fields.Float(string='full Mark')
+    subject_marks_converted = fields.Float(string='full Mark Converted')
+
     subject_highest=fields.Float('Highest')
+    subject_highest_converted=fields.Float('Highest Converted')
     subject_pass_marks = fields.Float(string='Total Pass Mark')
     state = fields.Selection([('draft',"Draft"), ('done', "Done")], "State", default='draft')
 
@@ -47,6 +50,8 @@ class ExamPaperPassRules(models.Model):
     prac_mark=fields.Float("Practical")
     prac_pass=fields.Float("Prac. Pass")
     paper_marks = fields.Float(string='Total Mark')
+    paper_marks_converted = fields.Float(string='Total Converted Mark')
     paper_highest=fields.Float('Highest')
+    paper_highest_converted=fields.Float('Highest Converted')
     paper_pass_marks = fields.Float(string='Total Pass Mark')
     state=fields.Selection([('draft',"Draft"),('done',"Done")],"State",default='draft')

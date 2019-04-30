@@ -198,6 +198,7 @@ class acdemicTranscripts(models.AbstractModel):
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_marksheet_converted'
 
+
     @api.model
     def get_report_values(self, docids, data=None):
         docs = self.env['education.exam.result.wizard'].browse(docids)
@@ -216,6 +217,7 @@ class acdemicTranscripts(models.AbstractModel):
             'get_student_no': self.env['report.education_exam.report_dsblsc_marksheet'].get_student_no,
             'get_student_in_section': self.env['report.education_exam.report_dsblsc_marksheet'].get_student_in_section,
             'half_round_up': self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up,
+            'get_converted_report': self.env['report.education_exam.report_exam_evaluation'].get_converted_report,
         }
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_evaluation'

@@ -31,7 +31,7 @@ class educationExamResultWizard(models.TransientModel):
     def render_html(self, docids, data=None):
         return {
             'type': 'ir.actions.report',
-            'report_name': 'education_exam.report_dsblsc_marksheet_converted',
+            'report_name': 'education_exam.report_exam_marksheet',
             'model': 'education.exam.result.wizard',
             'report_type': "qweb-pdf"
         }
@@ -72,6 +72,13 @@ class educationExamResultWizard(models.TransientModel):
             if rec.specific_section==False:
                 rec.specific_student=False
                 rec.section=False
+                rec.student = False
+    @api.multi
+    @api.onchange('specific_student')
+    def onchange_specific_student(self):
+        for rec in self:
+            if rec.specific_student==False:
+                rec.student=False
     @api.multi
     def generate_results(self):
         for rec in self:

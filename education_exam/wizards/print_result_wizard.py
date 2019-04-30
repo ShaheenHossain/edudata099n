@@ -27,14 +27,14 @@ class educationExamResultWizard(models.TransientModel):
     def del_generated_results(self):
         for exam in self.exams:
             records=self.env['education.exam.results.new'].search([('exam_id','=',exam.id)]).unlink()
-    @api.multi
-    def print_marksheet(self):
-        res = {
-            'type': 'ir.actions.client',
-            'name': 'action_exam_evaluation',
-            'tag': 'results.result',
+    @api.model
+    def render_html(self, docids, data=None):
+        return {
+            'type': 'ir.actions.report',
+            'report_name': 'education_exam.report_dsblsc_marksheet_converted',
+            'model': 'education.exam.result.wizard',
+            'report_type': "qweb-pdf"
         }
-        return res
     @api.multi
     def calculate_state(self):
         results=self.env[('education.exam.results')].search([('academic_year','=',self.academic_year.id),('class_id','=','level')])

@@ -37,6 +37,7 @@
         'reports/report.xml',
         'reports/new_result.xml',
         'reports/dsblsc_marksheet.xml',
+        'reports/exam_marksheet.xml',
         'wizards/academic_transcript_wizard.xml',
         'wizards/print_result_wizerd.xml',
     ],

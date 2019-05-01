@@ -1256,7 +1256,7 @@
                         <t t-set="convert_total" t-value="0"/>
                         <t t-set="results" t-value="get_results(docs)"/>
                         <t t-set="subjects" t-value="get_subjects(student)"/>
-
+                        <t t-set="converted_report" t-value="get_converted_report(docs)"/>
 
 
                         <style>
@@ -1316,7 +1316,7 @@
                                 <div class="row">
                                     <t t-set="fourth_subject" t-value="0"/>
                                     <t t-set="convert_obtained" t-value="0"/>
-                                    <t t-set="convert_total" t-value="0"/>
+                                    <!--<t t-set="convert_total" t-value="0"/>-->
 
                                     <table width="100%">
                                      <tr>
@@ -1345,7 +1345,9 @@
                                     <tr>
                                         <t t-foreach="exams" t-as="exam">
                                             <th t-att-colspan="results[exam.id][student.id]['result'].result_type_count+1">Marks obtained</th>
-                                            <th rowspan="2">Converted Marks</th>
+                                            <t t-if="converted_report==1">
+                                                <th rowspan="2">Converted Marks</th>
+                                            </t>
                                             <th rowspan="2">Highest Marks</th>
                                             <th rowspan="2">LG</th>
                                             <th rowspan="2">GP</th>
@@ -1470,9 +1472,6 @@
                                                                     <t t-if="paper_name.pass_rule_id.subj_pass>0">
                                                                         <t t-esc="round(paper_name.pass_rule_id.subj_pass)"/>
                                                                     </t>
-                                                                    <t t-else="">
-
-                                                                    </t>
                                                                 </td>
                                                             </t>
         <!--end-->                                                        </t>
@@ -1480,9 +1479,6 @@
                                                             <td>
                                                                 <t t-if="paper_name.pass_rule_id.obj_mark>0">
                                                                     <t t-esc="round(paper_name.pass_rule_id.obj_mark)"/>
-                                                                </t>
-                                                                <t t-else="">
-
                                                                 </t>
                                                             </td>
         <!-- if obj_mark in subject rule is set
@@ -1591,26 +1587,35 @@
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="round(result_line.subject_obt)"/>
                                                             </td>
-                                                            <td t-att-rowspan="result_line.paper_count">
-                                                                <!--here to calculate converted marks-->
-                                                                <t t-if="result_line.subject_marks>=100">
-                                                                    <t t-set="converter" t-value="100"/>
-                                                                </t>
-                                                                <t t-else="">
-                                                                    <t t-set="converter" t-value="50"/>
-                                                                </t>
-                                                                <t t-set="converted_number" t-value="half_round_up(result_line.subject_obt/result_line.subject_marks*converter*result_line.paper_count)"/>
-                                                                <t t-set="convert_obtained" t-value="convert_obtained+converted_number"/>
-                                                                <t t-set="convert_total" t-value="convert_total+converter"/>
-                                                                <t t-esc="converted_number"/>
-                                                            </td>
-                                                            <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-if="result_line.pass_rule_id.subject_highest>0">
-                                                                    <t t-set="converted_number" t-value="round(result_line.pass_rule_id.subject_highest/result_line.subject_marks*100*result_line.paper_count)"/>
+                                                            <t t-if="converted_report==1">
+                                                                <td t-att-rowspan="result_line.paper_count">
+                                                                    <!--here to calculate converted marks-->
+                                                                    <t t-if="result_line.subject_marks>=100">
+                                                                        <t t-set="converter" t-value="100"/>
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        <t t-set="converter" t-value="50"/>
+                                                                    </t>
+                                                                    <t t-set="converted_number" t-value="half_round_up(result_line.subject_obt/result_line.subject_marks*converter*result_line.paper_count)"/>
+                                                                    <t t-set="convert_obtained" t-value="convert_obtained+converted_number"/>
+                                                                    <t t-set="convert_total" t-value="convert_total+converter"/>
                                                                     <t t-esc="converted_number"/>
-                                                                </t>
+                                                                </td>
+                                                                <td t-att-rowspan="result_line.paper_count">
 
-                                                            </td>
+                                                                    <t t-if="result_line.pass_rule_id.subject_highest>0">
+                                                                        <t t-set="converted_number" t-value="round(result_line.pass_rule_id.subject_highest/result_line.subject_marks*converter*result_line.paper_count)"/>
+                                                                        <t t-esc="converted_number"/>
+                                                                    </t>
+                                                                </td>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <td t-att-rowspan="result_line.paper_count">
+                                                                    <t t-if="result_line.pass_rule_id.subject_highest>0">
+                                                                        <t t-esc="half_round_up(result_line.pass_rule_id.subject_highest)"/>
+                                                                    </t>
+                                                                </td>
+                                                            </t>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="result_line.letter_grade"/>
                                                             </td>
@@ -1674,7 +1679,7 @@
                                                         </td>
                                                     </t>
                                                     <td  >
-                                                        <t t-esc="round(results[exam.id][student.id]['result'].general_full_mark)"/>
+                                                        <t t-esc="half_round_up(results[exam.id][student.id]['result'].general_full_mark)"/>
                                                     </td>
                                                     <td t-att-colspan="results[exam.id][student.id]['result'].result_type_count+1">
                                                                 Obtained :
@@ -1937,7 +1942,13 @@
                                                                 <t t-esc="round(result_line.subject_obt)"/>
                                                             </td>
                                                             <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-set="converted_number" t-value="round(result_line.subject_obt/result_line.subject_marks*100*result_line.paper_count)"/>
+                                                                <t t-if="result_line.subject_marks>=100">
+                                                                    <t t-set="converter" t-value="100"/>
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <t t-set="converter" t-value="50"/>
+                                                                </t>
+                                                                <t t-set="converted_number" t-value="round(result_line.subject_obt/result_line.subject_marks*converter*result_line.paper_count)"/>
                                                                 <t t-esc="converted_number"/>
                                                                 <t t-set="converted_number" t-value="converted_number-(40*result_line.paper_count)"/>
                                                                 <t t-set="convert_obtained" t-value="convert_obtained+converted_number"/>
@@ -2012,7 +2023,7 @@
                                                                         </td>
                                                                     </t>
                                                                     <td >
-                                                                            <t t-esc="round((convert_obtained/convert_total)*100,2)"/>
+                                                                            <!--<t t-esc="round((convert_obtained/convert_total)*100,2)"/>-->
                                                                     %</td>
                                                                     <td></td>
                                                                     <td t-att-colspan="4" >
@@ -2206,14 +2217,35 @@
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="round(result_line.subject_obt)"/>
                                                             </td>
-                                                            <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-set="converted_number" t-value="round(result_line.subject_obt/result_line.subject_marks*100*result_line.paper_count)"/>
-                                                                <t t-set="converted_extra" t-value="converted_extra+converted_number"/>
-                                                                <t t-esc="converted_number"/>
-                                                            </td>
-                                                            <td t-att-rowspan="result_line.paper_count">
-                                                                <t t-esc="round(result_line.pass_rule_id.subject_highest)"/>
-                                                            </td>
+                                                            <t t-if="converted_report==1">
+                                                                <td t-att-rowspan="result_line.paper_count">
+                                                                    <!--here to calculate converted marks-->
+                                                                    <t t-if="result_line.subject_marks>=100">
+                                                                        <t t-set="converter" t-value="100"/>
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        <t t-set="converter" t-value="50"/>
+                                                                    </t>
+                                                                    <t t-set="converted_number" t-value="half_round_up(result_line.subject_obt/result_line.subject_marks*converter*result_line.paper_count)"/>
+                                                                    <t t-set="convert_obtained" t-value="convert_obtained+converted_number"/>
+                                                                    <!--<t t-set="convert_total" t-value="convert_total+converter"/>-->
+                                                                    <t t-esc="converted_number"/>
+                                                                </td>
+                                                                <td t-att-rowspan="result_line.paper_count">
+
+                                                                    <t t-if="result_line.pass_rule_id.subject_highest>0">
+                                                                        <t t-set="converted_number" t-value="round(result_line.pass_rule_id.subject_highest/result_line.subject_marks*converter*result_line.paper_count)"/>
+                                                                        <t t-esc="converted_number"/>
+                                                                    </t>
+                                                                </td>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <td t-att-rowspan="result_line.paper_count">
+                                                                    <t t-if="result_line.pass_rule_id.subject_highest>0">
+                                                                        <t t-esc="round(result_line.pass_rule_id.subject_highest)"/>
+                                                                    </t>
+                                                                </td>
+                                                            </t>
                                                             <td t-att-rowspan="result_line.paper_count">
                                                                 <t t-esc="result_line.letter_grade"/>
                                                             </td>
@@ -2292,7 +2324,7 @@
                             </div>
                             <div class="footer">
                                 <div >
-                                    "Powered By Eagle.ERP"
+                                    <!--"Powered By Eagle.ERP"-->
                                 </div>
                             </div>
                         </div>

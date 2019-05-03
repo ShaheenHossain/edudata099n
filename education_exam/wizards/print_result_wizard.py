@@ -17,12 +17,12 @@ class educationExamResultWizard(models.TransientModel):
     student=fields.Many2one('education.student','Student')
     report_type=fields.Selection([('1','Regular'),('2','Converted')],string="Report Type",default='1',required='True')
     state=fields.Selection([('draft','Draft'),('done','Done')],compute='calculate_state')
-    hide_paper=fields.Boolean("Hide Papers")
-    hide_tut=fields.Boolean("Hide Monthly")
-    hide_subjective=fields.Boolean("Hide Subjective")
-    hide_objective=fields.Boolean("Hide objective")
-    hide_prac=fields.Boolean("Hide Practical")
-    hide_total=fields.Boolean("Hide Total")
+    show_paper=fields.Boolean("Show Papers")
+    show_tut=fields.Boolean("Show Monthly")
+    show_subjective=fields.Boolean("Show Subjective")
+    show_objective=fields.Boolean("show objective")
+    show_prac=fields.Boolean("Show Practical")
+    show_total=fields.Boolean("Show Total")
     @api.multi
     def del_generated_results(self):
         for exam in self.exams:
@@ -252,6 +252,11 @@ class educationExamResultWizard(models.TransientModel):
             extra_full_mark_converted = 0
             gp_extra = 0
             res_type_count = 0
+            hide_tut=True
+            hide_subj=True
+            hide_obj=True
+            hide_prac=True
+            hide_paper=True
             for subject in student.subject_line:
                 paper_count = 0
                 PassFail = True
@@ -281,7 +286,7 @@ class educationExamResultWizard(models.TransientModel):
                     elif paper.paper_id.evaluation_type == 'extra':
                         extra = True
                     if paper.pass_rule_id.tut_mark > 0:
-                        student.show_tut = True
+                        hide_tut = False
                         if paper.tut_pr == True:
                             paper_obtained = paper_obtained + paper.tut_obt
                             obt_tut = obt_tut + paper.tut_obt
@@ -290,7 +295,7 @@ class educationExamResultWizard(models.TransientModel):
                         else:
                             PassFail = False
                     if paper.pass_rule_id.subj_mark > 0:
-                        student.show_subj = True
+                        hide_subj = False
                         if paper.subj_pr == True:
                             paper_obtained = paper_obtained + paper.subj_obt
                             paper_full = paper_full + paper.pass_rule_id.subj_mark
@@ -299,7 +304,7 @@ class educationExamResultWizard(models.TransientModel):
                         else:
                             PassFail = False
                     if paper.pass_rule_id.obj_mark > 0:
-                        student.show_obj = True
+                        hide_obj = False
                         if paper.obj_pr == True:
                             paper_obtained = paper_obtained + paper.obj_obt
                             paper_full = paper_full + paper.pass_rule_id.obj_mark
@@ -308,7 +313,7 @@ class educationExamResultWizard(models.TransientModel):
                         else:
                             PassFail = False
                     if paper.pass_rule_id.prac_mark > 0:
-                        student.show_prac = True
+                        hide_prac = False
                         if paper.prac_pr == True:
                             paper_obtained = paper_obtained + paper.prac_obt
                             paper_full = paper_full + paper.pass_rule_id.prac_mark
@@ -402,7 +407,28 @@ class educationExamResultWizard(models.TransientModel):
                     count_general_fail = count_general_fail + count_fail
                 subject.paper_count = paper_count
                 if paper_count > 1:
-                    student.show_paper = True
+                    hide_paper = False
+            if hide_tut==True:
+                student.show_tut=False
+            else:
+                student.show_tut=True
+            if hide_subj==True:
+                student.show_subj=False
+            else:
+                student.show_subj=True
+            if hide_obj==True:
+                student.show_obj=False
+            else:
+                student.show_obj=True
+            if hide_prac==True:
+                student.show_prac=False
+            else:
+                student.show_prac=True
+            if hide_paper==True:
+                student.show_paper=False
+            else:
+                student.show_paper=True
+
             if student.show_tut == True:
                 res_type_count = res_type_count + 1
             if student.show_subj == True:

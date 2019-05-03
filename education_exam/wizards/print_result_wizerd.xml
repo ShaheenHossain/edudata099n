@@ -26,12 +26,12 @@
                                     <field name="report_type" />
                                 </group>
                                 <group col="4">
-                                    <field name="hide_paper"/>
-                                    <field name="hide_tut"/>
-                                    <field name="hide_subjective"/>
-                                    <field name="hide_objective"/>
-                                    <field name="hide_prac"/>
-                                    <field name="hide_total" attrs="{'invisible': [('report_type', '!=', '2')]}"/>
+                                    <field name="show_paper"/>
+                                    <field name="show_tut"/>
+                                    <field name="show_subjective"/>
+                                    <field name="show_objective"/>
+                                    <field name="show_prac"/>
+                                    <field name="show_total" attrs="{'invisible': [('report_type', '!=', '2')]}"/>
                                 </group>
                                 <group col="4">
                                     <button name="generate_results" type="object" string="Calculate Result" attrs="{'invisible': [('state', '=', 'done')]}"/>

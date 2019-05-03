@@ -33,7 +33,7 @@ class educationExamResultWizard(models.TransientModel):
             'type': 'ir.actions.report',
             'report_name': 'education_exam.report_exam_marksheet',
             'model': 'education.exam.result.wizard',
-            'report_type': "qweb-pdf"
+            'report_type': "qweb-html"
         }
     @api.multi
     def calculate_state(self):

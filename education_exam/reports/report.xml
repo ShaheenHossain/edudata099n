@@ -83,8 +83,8 @@
             id="action_exam_marksheet"
             model="education.exam.result.wizard"
             string="Marksheet"
-            report_type="qweb-pdf"
-            paperformat="A4_portrait"
+            report_type="qweb-html"
+            paperformat="legal_landscape"
             name="education_exam.report_exam_marksheet"
             file="education_exam.report_exam_marksheet"
         />

@@ -117,7 +117,7 @@
                                                     </t>
                                                 </t>
                                                 <t t-else="">
-                                                    --
+                                                    ..
                                                 </t>
                                             </td>
                                             <t t-if="show_obj_column==1">
@@ -146,7 +146,7 @@
                                                         </t>
                                                     </t>
                                                     <t t-else="">
-                                                        --p
+                                                        ...
                                                     </t>
                                                 </td>
                                             </t>
@@ -233,10 +233,10 @@
 
                                         </tr>
                                         <t t-foreach="get_students(section)" t-as="student">
-                                            <t t-set="show_paper_column" t-value="hide_paper(docs)"/>
-                                            <t t-set="show_tut_column" t-value="hide_tut(docs)"/>
-                                            <t t-set="show_obj_column" t-value="hide_obj(docs)"/>
-                                            <t t-set="show_prac_column" t-value="hide_prac(docs)"/>
+                                            <t t-set="show_paper_column" t-value="show_paper(docs)"/>
+                                            <t t-set="show_tut_column" t-value="show_tut(docs)"/>
+                                            <t t-set="show_obj_column" t-value="show_obj(docs)"/>
+                                            <t t-set="show_prac_column" t-value="show_prac(docs)"/>
                                         <tbody style="page-break-inside:avoide !important;">
                                             <tr>
                                                 <td style="vertical-align:middle;pading-right:3px;pading-left:3px;">

@@ -146,18 +146,18 @@ class examEvaluation(models.AbstractModel):
         for grade in grading:
             grades.extend(grade)
         return grades
-    def hide_paper(self,obj):
-        paper_hide=obj.hide_paper
-        return paper_hide
-    def hide_tut(self,obj):
-        paper_hide=obj.hide_tut
-        return paper_hide
-    def hide_obj(self,obj):
-        paper_hide=obj.hide_objective
-        return paper_hide
-    def hide_prac(self,obj):
-        paper_hide=obj.hide_prac
-        return paper_hide
+    def show_paper(self,obj):
+        paper_show=obj.show_paper
+        return paper_show
+    def show_tut(self,obj):
+        paper_show=obj.show_tut
+        return paper_show
+    def show_obj(self,obj):
+        paper_show=obj.show_objective
+        return paper_show
+    def show_prac(self,obj):
+        paper_show=obj.show_prac
+        return paper_show
     def get_convert_resue(self,subject):
         ratio=subject.subject_id
         return ratio
@@ -191,10 +191,10 @@ class examEvaluation(models.AbstractModel):
             'get_sections': self.get_sections,
             'get_marks': self.get_marks,
             'get_gpa': self.get_gpa,
-            'hide_paper': self.hide_paper,
-            'hide_tut': self.hide_tut,
-            'hide_obj': self.hide_obj,
-            'hide_prac': self.hide_prac,
+            'show_paper': self.show_paper,
+            'show_tut': self.show_tut,
+            'show_obj': self.show_obj,
+            'show_prac': self.show_prac,
             'get_converted_report': self.get_converted_report,
             'get_lg': self.get_lg,
             'get_exam_obtained_total': self.get_exam_obtained_total,

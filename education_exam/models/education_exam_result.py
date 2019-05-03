@@ -294,12 +294,14 @@ class EducationExamResultsNew(models.Model):
 
 class ResultsSubjectLineNew(models.Model):
     _name = 'results.subject.line.new'
+    _order="serial asc"
     name = fields.Char(string='Name',related='subject_id.name')
     result_id = fields.Many2one('education.exam.results.new', string='Result Id', ondelete="cascade")
     general_for = fields.Many2one('education.exam.results.new', string='General', ondelete="cascade")
     optional_for = fields.Many2one('education.exam.results.new', string='optional', ondelete="cascade")
     extra_for = fields.Many2one('education.exam.results.new', string='Extra', ondelete="cascade")
     pass_rule_id=fields.Many2one('exam.subject.pass.rules',"Pass Rule",ondelete="cascade")
+    serial=fields.Integer("marksheet serial",related="pass_rule_id.sl")
     subject_id = fields.Many2one('education.subject', string='Subject')
     paper_ids=fields.One2many('results.paper.line','subject_line','Papers')
 

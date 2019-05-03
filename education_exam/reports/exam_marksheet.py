@@ -41,11 +41,11 @@ class exam_marksheet(models.AbstractModel):
                             results[student]['compulsory'][subject.subject_id]={}
                         if subject.subject_id not in results[student]['subjects']:
                             results[student]['subjects'][subject.subject_id]={}
+                        if exam not in  results[student]['subjects'][subject.subject_id]:
                             results[student]['subjects'][subject.subject_id][exam]={}
                         results[student]['compulsory'][subject.subject_id][exam]=subject_line
                         results[student][exam]['subjects'][subject.subject_id]=subject_line
                         results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
-
                 for subject in student.optional_subjects:
                     if subject.subject_id not in results[student][exam]['subjects']:
                         subject_line=self.env['results.subject.line.new'].search([('result_id','=',result_line.id),('subject_id','=',subject.subject_id.id)])
@@ -53,7 +53,8 @@ class exam_marksheet(models.AbstractModel):
                             results[student]['optional'][subject.subject_id]={}
                         if subject.subject_id not in results[student]['subjects']:
                             results[student]['subjects'][subject.subject_id]={}
-                            results[student]['subjects'][subject.subject_id][exam]={}
+                        if exam not in results[student]['subjects'][subject.subject_id]:
+                            results[student]['subjects'][subject.subject_id][exam] = {}
                         results[student]['optional'][subject.subject_id][exam]=subject_line
                         results[student][exam]['subjects'][subject.subject_id]=subject_line
                         results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
@@ -65,6 +66,7 @@ class exam_marksheet(models.AbstractModel):
                             results[student]['selective'][subject.subject_id]={}
                         if subject.subject_id not in results[student]['subjects']:
                             results[student]['subjects'][subject.subject_id]={}
+                        if exam not in results[student]['subjects'][subject.subject_id]:
                             results[student]['subjects'][subject.subject_id][exam]={}
                         results[student]['selective'][subject.subject_id][exam]=subject_line
                         results[student][exam]['subjects'][subject.subject_id]=subject_line

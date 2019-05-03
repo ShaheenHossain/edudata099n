@@ -8,6 +8,13 @@ from odoo import fields, models,api
 class exam_marksheet(models.AbstractModel):
     _name = 'report.education_exam.report_exam_marksheet'
 
+    def get_exams(self, objects):
+        exams = []
+        for exam in objects.exams:
+           exams.extend(exam)
+
+        return exams
+
     def get_results(self,object,students,exams):
 
         results={}
@@ -62,7 +69,6 @@ class exam_marksheet(models.AbstractModel):
                         results[student]['selective'][subject.subject_id][exam]=subject_line
                         results[student][exam]['subjects'][subject.subject_id]=subject_line
                         results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
-
         return results
 
     def get_sections(self,object):
@@ -71,7 +77,6 @@ class exam_marksheet(models.AbstractModel):
         elif object.level:
             section=self.env['education.class.division'].search([('class_id','=',object.level.id),('academic_year_id','=',object.academic_year.id)])
             return section
-
     def get_students(self,objects):
         sections=self.get_sections(objects)
         student=[]
@@ -88,36 +93,54 @@ class exam_marksheet(models.AbstractModel):
                                                                        ('academic_year_id.id', '=', objects.academic_year.id)])
             for stu in student_list:
                 student.extend(stu)
-
         return student
+
     def get_students_in_section(self,section):
         student_list = self.env['education.class.history'].search([('class_id.id', '=', section.id)])
         return student_list
+
+
+
     def get_students_in_student_section(self,student):
         student_list = self.env['education.class.history'].search([('class_id.id', '=', student.section.id)])
         return student_list
 
+    def get_subjects(self,student):
+        subjs = {}
+        subjs['general']=[]
+        subjs['optional']=[]
+        subjs['extra']=[]
+        gen_row_count=0
+        op_row_count=0
+        ex_row_count=0
+        for subj in student.compulsory_subjects:
+            if subj.evaluation_type=='general' :
+                gen_row_count=gen_row_count+1
+                if subj.subject_id not in subjs['general']:
+                    subjs['general'].append(subj.subject_id)
+            elif subj.evaluation_type=='extra' :
+                ex_row_count=ex_row_count+1
+                if subj.subject_id not in subjs['extra']:
+                    subjs['extra'].append(subj.subject_id)
+        for subj in student.optional_subjects:
+            op_row_count=op_row_count+1
+            if subj.subject_id not in subjs['optional']:
+                subjs['optional'].append(subj.subject_id)
+        for subj in student.selective_subjects:
+            if subj.subject_id not in subjs['optional']:
+                if subj.evaluation_type=='general':
+                    gen_row_count = gen_row_count + 1
+                    if subj.subject_id not in subjs['general']:
+                        subjs['general'].append(subj.subject_id)
+                if subj.evaluation_type=='extra':
+                    ex_row_count = ex_row_count + 1
+                    if subj.subject_id not in subjs['extra']:
+                        subjs['extra'].append(subj.subject_id)
+        subjs['gen_row_count']=gen_row_count
+        subjs['op_row_count']=op_row_count
+        subjs['ex_row_count']=ex_row_count
+        return subjs
 
-
-    def get_exams(self, objects):
-        exams = []
-        for exam in objects.exams:
-           exams.extend(exam)
-
-        return exams
-
-    def get_subjects(self, section,obj):
-        subjs=self.env['education.syllabus'].search([('class_id','=',section.class_id.id),('academic_year','=',obj.academic_year.id)])
-        subject_list=[]
-        for subj in subjs:
-            if len(subj.compulsory_for)>0:
-                subject_list.append(subj)
-            elif len(subj.optional_for)>0:
-                subject_list.append(subj)
-            elif len(subj.optional_for)>0:
-                subject_list.append(subj)
-
-        return subject_list
     def check_optional(self,subject,student,exam):
         is_optional=0
         student_history = self.env['education.class.history'].search(
@@ -164,18 +187,18 @@ class exam_marksheet(models.AbstractModel):
         for grade in grading:
             grades.extend(grade)
         return grades
-    def hide_paper(self,obj):
-        paper_hide=obj.hide_paper
-        return paper_hide
-    def hide_tut(self,obj):
-        paper_hide=obj.hide_tut
-        return paper_hide
-    def hide_obj(self,obj):
-        paper_hide=obj.hide_objective
-        return paper_hide
-    def hide_prac(self,obj):
-        paper_hide=obj.hide_prac
-        return paper_hide
+    def show_paper(self,obj):
+        paper_show=obj.show_paper
+        return paper_show
+    def show_tut(self,obj):
+        paper_show=obj.show_tut
+        return paper_show
+    def show_obj(self,obj):
+        paper_show=obj.show_objective
+        return paper_show
+    def show_prac(self,obj):
+        paper_show=obj.show_prac
+        return paper_show
     def get_convert_resue(self,subject):
         ratio=subject.subject_id
         return ratio
@@ -215,10 +238,10 @@ class exam_marksheet(models.AbstractModel):
             'get_sections': self.get_sections,
             'get_marks': self.get_marks,
             'get_gpa': self.get_gpa,
-            'hide_paper': self.hide_paper,
-            'hide_tut': self.hide_tut,
-            'hide_obj': self.hide_obj,
-            'hide_prac': self.hide_prac,
+            'show_paper': self.show_paper,
+            'show_tut': self.show_tut,
+            'show_obj': self.show_obj,
+            'show_prac': self.show_prac,
             'get_converted_report': self.get_converted_report,
             'get_lg': self.get_lg,
             'get_exam_obtained_total': self.get_exam_obtained_total,

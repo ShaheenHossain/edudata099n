@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bcac989f-0042-483e-bff0-ad2eeca973d2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/education_exam/models/education_exam_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/models/education_exam_result.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/reports/exam_evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/reports/exam_evaluation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/reports/exam_evaluation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/reports/exam_evaluation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/reports/merit_list.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/reports/merit_list.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/reports/merit_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/reports/merit_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/reports/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/reports/report.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/views/education_exam_results.xml" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/views/education_exam_results.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/wizards/academic_transcript_wizard.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/wizards/academic_transcript_wizard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/education_exam/wizards/print_result_wizerd.xml" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/wizards/print_result_wizerd.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +24,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="csv" value="88" />
+          <entry key="gitignore" value="1" />
           <entry key="py" value="1865" />
           <entry key="txt" value="83" />
           <entry key="xml" value="1064" />
@@ -43,7 +33,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSV" value="88" />
-          <entry key="PLAIN_TEXT" value="83" />
+          <entry key="PLAIN_TEXT" value="84" />
           <entry key="Python" value="1865" />
           <entry key="XML" value="1064" />
         </counts>
@@ -51,14 +41,16 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="csv" value="5" />
-          <entry key="py" value="16" />
+          <entry key="gitignore" value="1" />
+          <entry key="py" value="17" />
           <entry key="xml" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CSV" value="5" />
-          <entry key="Python" value="16" />
+          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="Python" value="17" />
           <entry key="XML" value="12" />
         </counts>
       </usages-collector>
@@ -75,16 +67,122 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="1597" column="114" selection-start-line="1597" selection-start-column="114" selection-end-line="1597" selection-end-column="114" />
+            <state relative-caret-position="231">
+              <caret line="1239" column="38" lean-forward="true" selection-start-line="1211" selection-start-column="32" selection-end-line="1239" selection-end-column="38" />
               <folding>
-                <element signature="n#template#0;n#data#0;n#odoo#0;n#!!top" />
                 <element signature="n#style#0;n#template#0;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="e#4129#4134#0" expanded="true" />
                 <element signature="n#template#1;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#div#5;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#2;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#table#0;n#template#1;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#2;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#table#0;n#template#2;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#1;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#2;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#table#0;n#td#0;n#t#0;n#t#9;n#t#0;n#t#1;n#t#0;n#tr#0;n#t#0;n#t#3;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#3;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#4;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#5;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#6;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="e#97276#97280#0" expanded="true" />
+                <element signature="e#97282#97286#0" expanded="true" />
+                <element signature="e#99548#99552#0" expanded="true" />
+                <element signature="e#99555#99559#0" expanded="true" />
+                <element signature="e#100904#100908#0" expanded="true" />
+                <element signature="e#100911#100915#0" expanded="true" />
+                <element signature="n#t#0;n#t#3;n#t#0;n#t#1;n#t#0;n#tr#0;n#t#1;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#4;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="e#122040#122044#0" expanded="true" />
+                <element signature="e#122048#122052#0" expanded="true" />
+                <element signature="e#147874#147878#0" expanded="true" />
+                <element signature="e#147881#147885#0" expanded="true" />
+                <element signature="e#147885#147889#0" expanded="true" />
+                <element signature="e#147891#147895#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/education_exam/models/education_exam_result.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="94">
+              <caret line="88" column="11" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="11" />
+              <folding>
+                <element signature="e#5243#5306#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="245">
+              <caret line="214" column="37" selection-start-line="214" selection-start-column="37" selection-end-line="214" selection-end-column="37" />
+              <folding>
+                <element signature="n#div#0;n#template#0;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#3;n#div#0;n#template#0;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#1;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="e#11255#11259#0" expanded="true" />
+                <element signature="e#11262#11266#0" expanded="true" />
+                <element signature="e#11266#11270#0" expanded="true" />
+                <element signature="e#11272#11276#0" expanded="true" />
+                <element signature="n#t#1;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#3;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#4;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#6;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#td#0;n#t#7;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#8;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#9;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#0;n#td#0;n#t#9;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#10;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#4;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#5;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#4;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#style#0;n#template#5;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#table#0;n#div#1;n#div#0;n#div#0;n#template#7;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#tr#0;n#table#0;n#div#1;n#div#0;n#div#0;n#template#5;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#1;n#table#0;n#div#1;n#div#0;n#div#0;n#template#5;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#tr#0;n#t#6;n#table#0;n#div#1;n#div#0;n#div#0;n#template#7;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#tr#1;n#t#6;n#table#0;n#div#1;n#div#0;n#div#0;n#template#7;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="e#46157#46161#0" expanded="true" />
+                <element signature="e#46175#46179#0" expanded="true" />
+                <element signature="e#46338#46342#0" expanded="true" />
+                <element signature="e#46344#46348#0" expanded="true" />
+                <element signature="e#46731#46735#0" expanded="true" />
+                <element signature="e#46738#46742#0" expanded="true" />
+                <element signature="n#t#6;n#table#0;n#div#1;n#div#0;n#div#0;n#template#7;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#2;n#table#0;n#div#1;n#div#0;n#div#0;n#template#5;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#tr#1;n#t#6;n#table#0;n#div#1;n#div#0;n#div#0;n#template#7;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="e#51021#51025#0" expanded="true" />
+                <element signature="e#51039#51043#0" expanded="true" />
+                <element signature="e#51202#51206#0" expanded="true" />
+                <element signature="e#51208#51212#0" expanded="true" />
+                <element signature="e#51481#51485#0" expanded="true" />
+                <element signature="e#51488#51492#0" expanded="true" />
+                <element signature="n#div#3;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#4;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#5;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="128">
+              <caret line="107" column="20" selection-start-line="107" selection-start-column="8" selection-end-line="107" selection-end-column="20" />
+              <folding>
+                <element signature="e#5191#5561#0" />
               </folding>
             </state>
           </provider>
@@ -93,11 +191,50 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="217" column="86" selection-start-line="217" selection-start-column="86" selection-end-line="217" selection-end-column="86" />
+            <state relative-caret-position="19">
+              <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
               <folding>
                 <element signature="e#25#54#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_evaluation.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="94">
+              <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
+              <folding>
+                <element signature="n#template#0;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#div#1;n#template#0;n#data#0;n#odoo#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="429" column="37" lean-forward="true" selection-start-line="429" selection-start-column="37" selection-end-line="429" selection-end-column="37" />
+              <folding>
+                <marker date="1556877530648" expanded="true" signature="1393:1685" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/education_exam/models/exam_level_data.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="174">
+              <caret line="41" selection-start-line="41" selection-end-line="41" />
             </state>
           </provider>
         </entry>
@@ -106,8 +243,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>beha</find>
-      <find>behavi</find>
       <find>education.exam.results.new</find>
       <find>results</find>
       <find>education.exam.results.new'</find>
@@ -136,12 +271,15 @@
       <find>half_round_up</find>
       <find>merit_list</find>
       <find>get_results</find>
+      <find>hide</find>
+      <find>pyc</find>
     </findStrings>
     <replaceStrings>
       <replace>convert_obtained</replace>
       <replace>cultural</replace>
       <replace>sports</replace>
       <replace>uniform</replace>
+      <replace>show_papers</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -166,6 +304,7 @@
         <option value="$PROJECT_DIR$/education_exam/models/education_exam_result.py" />
         <option value="$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.py" />
         <option value="$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -185,29 +324,6 @@
             <path>
               <item name="edudata099" type="b2602c69:ProjectViewProjectNode" />
               <item name="edudata099" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="edudata099" type="b2602c69:ProjectViewProjectNode" />
-              <item name="edudata099" type="462c0819:PsiDirectoryNode" />
-              <item name="education_exam" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="edudata099" type="b2602c69:ProjectViewProjectNode" />
-              <item name="edudata099" type="462c0819:PsiDirectoryNode" />
-              <item name="education_exam" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="edudata099" type="b2602c69:ProjectViewProjectNode" />
-              <item name="edudata099" type="462c0819:PsiDirectoryNode" />
-              <item name="education_exam" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="edudata099" type="b2602c69:ProjectViewProjectNode" />
-              <item name="edudata099" type="462c0819:PsiDirectoryNode" />
-              <item name="education_exam" type="462c0819:PsiDirectoryNode" />
-              <item name="reports" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -291,13 +407,13 @@
     <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2200957" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2200957" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32852563" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4070513" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.4070513" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -401,40 +517,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="177" column="116" selection-start-line="177" selection-start-column="116" selection-end-line="177" selection-end-column="116" />
-          <folding>
-            <element signature="e#4129#4134#0" expanded="true" />
-            <element signature="e#18924#18928#0" expanded="true" />
-            <element signature="e#18930#18934#0" expanded="true" />
-            <element signature="e#21196#21200#0" expanded="true" />
-            <element signature="e#21203#21207#0" expanded="true" />
-            <element signature="e#22527#22531#0" expanded="true" />
-            <element signature="e#22534#22538#0" expanded="true" />
-            <element signature="e#41352#41356#0" expanded="true" />
-            <element signature="e#41360#41364#0" expanded="true" />
-            <element signature="e#65384#65388#0" expanded="true" />
-            <element signature="e#65391#65395#0" expanded="true" />
-            <element signature="e#65395#65399#0" expanded="true" />
-            <element signature="e#65401#65405#0" expanded="true" />
-            <element signature="e#95898#95902#0" expanded="true" />
-            <element signature="e#95904#95908#0" expanded="true" />
-            <element signature="e#98175#98179#0" expanded="true" />
-            <element signature="e#98182#98186#0" expanded="true" />
-            <element signature="e#99506#99510#0" expanded="true" />
-            <element signature="e#99513#99517#0" expanded="true" />
-            <element signature="e#119287#119291#0" expanded="true" />
-            <element signature="e#119295#119299#0" expanded="true" />
-            <element signature="e#144845#144849#0" expanded="true" />
-            <element signature="e#144852#144856#0" expanded="true" />
-            <element signature="e#144856#144860#0" expanded="true" />
-            <element signature="e#144862#144866#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="36" column="24" lean-forward="true" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
+        <state relative-caret-position="226">
+          <caret line="429" column="37" lean-forward="true" selection-start-line="429" selection-start-column="37" selection-end-line="429" selection-end-column="37" />
+          <folding>
+            <marker date="1556877530648" expanded="true" signature="1393:1685" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -541,21 +633,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/education_exam/models/education_exam_result.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="144" column="9" lean-forward="true" selection-start-line="144" selection-start-column="9" selection-end-line="144" selection-end-column="9" />
+        <state relative-caret-position="94">
+          <caret line="88" column="11" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="11" />
           <folding>
             <element signature="e#5243#5306#0" />
-            <element signature="e#8575#9735#0" />
-            <element signature="e#9822#10054#0" />
-            <element signature="e#10117#13897#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="217" column="86" selection-start-line="217" selection-start-column="86" selection-end-line="217" selection-end-column="86" />
+        <state relative-caret-position="19">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
           <folding>
             <element signature="e#25#54#0" expanded="true" />
           </folding>
@@ -564,14 +653,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="1597" column="114" selection-start-line="1597" selection-start-column="114" selection-end-line="1597" selection-end-column="114" />
+        <state relative-caret-position="231">
+          <caret line="1239" column="38" lean-forward="true" selection-start-line="1211" selection-start-column="32" selection-end-line="1239" selection-end-column="38" />
           <folding>
-            <element signature="n#template#0;n#data#0;n#odoo#0;n#!!top" />
             <element signature="n#style#0;n#template#0;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="e#4129#4134#0" expanded="true" />
             <element signature="n#template#1;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#div#5;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#2;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#table#0;n#template#1;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#template#2;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#table#0;n#template#2;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#t#1;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#t#2;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#table#0;n#td#0;n#t#0;n#t#9;n#t#0;n#t#1;n#t#0;n#tr#0;n#t#0;n#t#3;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#div#3;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#div#4;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#div#5;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#div#6;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="e#97276#97280#0" expanded="true" />
+            <element signature="e#97282#97286#0" expanded="true" />
+            <element signature="e#99548#99552#0" expanded="true" />
+            <element signature="e#99555#99559#0" expanded="true" />
+            <element signature="e#100904#100908#0" expanded="true" />
+            <element signature="e#100911#100915#0" expanded="true" />
+            <element signature="n#t#0;n#t#3;n#t#0;n#t#1;n#t#0;n#tr#0;n#t#1;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#t#2;n#t#0;n#t#0;n#template#4;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="e#122040#122044#0" expanded="true" />
+            <element signature="e#122048#122052#0" expanded="true" />
+            <element signature="e#147874#147878#0" expanded="true" />
+            <element signature="e#147881#147885#0" expanded="true" />
+            <element signature="e#147885#147889#0" expanded="true" />
+            <element signature="e#147891#147895#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/models/exam_level_data.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
         </state>
       </provider>
     </entry>

@@ -38,7 +38,5 @@ setup/win32/static/postgresql*.exe
 /man/
 /share/
 /src/
-*.pyc
 /__pycache__/
 *.pyc
-education_exam/models/__pycache__/exam_grading.cpython-35.pyc

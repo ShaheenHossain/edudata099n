@@ -11,8 +11,8 @@ class educationExamResultWizard(models.TransientModel):
     academic_year=fields.Many2one('education.academic.year',"Academic Year")
     level=fields.Many2one('education.class',"Level")
     exams=fields.Many2many('education.exam')
-    specific_section = fields.Boolean('For a specific section')
-    section=fields.Many2one('education.class.division')
+    specific_section = fields.Boolean('For a specific section' ,default="True")
+    section=fields.Many2one('education.class.division', required="True")
     specific_student=fields.Boolean('For a specific Student')
     student=fields.Many2one('education.student','Student')
     report_type=fields.Selection([('1','Regular'),('2','Converted')],string="Report Type",default='1',required='True')
@@ -33,7 +33,8 @@ class educationExamResultWizard(models.TransientModel):
             'type': 'ir.actions.report',
             'report_name': 'education_exam.report_exam_marksheet',
             'model': 'education.exam.result.wizard',
-            'report_type': "qweb-html"
+            'report_type': "qweb-pdf",
+            'paperformat': "legal_landscape",
         }
     @api.multi
     def calculate_state(self):

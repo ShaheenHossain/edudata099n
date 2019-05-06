@@ -30,27 +30,33 @@
 </style>
 
         <div class="header" style="width:100%">
-            <div style="width: 15%;float: left;">
-                <img src='/web/binary/company_logo' style="width:100%"/>
-            </div>
-            <div style="width: 69%;float: left; padding-left:10px">
-                <h4 style="text-transform: uppercase;  text-align: center;" t-if="res_company.name"><span t-field="res_company.name"/></h4>
-                <h5 style=" text-align: center;"><t t-if="res_company.street"><span t-field="res_company.street"/></t><t t-if="res_company.street2"><span t-field="res_company.street2"/> </t><t t-if="res_company.country_id"><span t-field="res_company.country_id"/></t></h5>
-            </div>
-            <div style="width: 15%;float: left;">
-
-
-                <table >
-                     <style>
-                            table, th, td {
-                                     border: 1px solid black;
-                                    padding-bottom:3px;
-                                    padding-left:3px;
-                                    padding-top:3px;
-                                    padding-right:3px;
-                                    align:center;
-                                    text-align: center;
-                                    }
+            <div class="row" width="100%">
+                 <table width="100%" style="border:none">
+                     <tr>
+                         <td rowspan="2" style="width:90px; border:0">
+                             <div style="width: 100%;">
+                                 <img src='/web/binary/company_logo' style="width:100%"/>
+                             </div>
+                         </td>
+                         <td colspan="12">
+                             <div style="width:100%">
+                                <h4 style="text-transform: uppercase;  text-align: center;" t-if="res_company.name"><span t-field="res_company.name"/></h4>
+                                <h5 style=" text-align: center;"><t t-if="res_company.street"><span t-field="res_company.street"/></t><t t-if="res_company.street2"><span t-field="res_company.street2"/> </t><t t-if="res_company.country_id"><span t-field="res_company.country_id"/></t></h5>
+                             </div>
+                         </td>
+                         <td rowspan="2" style="width: 150px;">
+                             <div>
+                                <table >
+                         <style>
+                                table, th, td {
+                                         border: 1px solid black;
+                                        padding-bottom:3px;
+                                        padding-left:3px;
+                                        padding-top:3px;
+                                        padding-right:3px;
+                                        align:center;
+                                        text-align: center;
+                                        }
                         </style>
                     <tr ><td>Letter <br></br> Grade </td><td>Grade <br></br>interval </td><td>Grade <br></br>point</td></tr>
 
@@ -62,47 +68,45 @@
                         </t>
 
                 </table>
-            </div>
- <div class="row" text-align="center" width="100%">
-                                        <div  style="position: absolute;
-                                            left: 0;
-                                            top: 90px;
-                                            width: 100%;
-                                            text-align: center;
-                                            font-size: 18px;">
-                                                <h3>Academic Transcript</h3>
-                                            <h5>
-                                                <t t-set="exams" t-value="get_exams(docs)"/>
-                                                <t t-foreach="exams" t-as="exam">
-                                                    <t t-if="exam_last">
-                                                        <t t-if="len(exams)>1">
-                                                        <span> &amp; </span>
-                                                        </t>
-                                                        <t t-esc="exam.name "/>
-                                                        <span> Exam - </span>
-                                                        <t t-esc="exam.academic_year.name"/>
-                                                    </t>
-                                                    <t t-else="">
-                                                        <t t-if="exam_first"></t>
-                                                        <t t-else="">, </t>
-                                                        <t t-esc="exam.name"/>
+                            </div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td colspan="12">
+                             <h3>Academic Transcript</h3>
+                             <h5>
+                                <t t-set="exams" t-value="get_exams(docs)"/>
+                                <t t-foreach="exams" t-as="exam">
+                                    <t t-if="exam_last">
+                                        <t t-if="len(exams)>1">
+                                        <span> &amp; </span>
+                                        </t>
+                                        <t t-esc="exam.name "/>
+                                        <span> Exam - </span>
+                                        <t t-esc="exam.academic_year.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-if="exam_first"></t>
+                                        <t t-else="">, </t>
+                                        <t t-esc="exam.name"/>
 
 
-                                                    </t>
-                                                </t>
-                                            </h5>
-                                            <h3>Class -
-                                                <t t-foreach="exams" t-as="exam">
-                                                    <t t-if="exam_first">
-                                                        <t t-esc="exam.class_id.code"/>
-                                                    </t>
-                                                </t>
-                                            </h3>
-                                        </div>
-                                    </div>
+                                    </t>
+                                </t>
+                            </h5>
+                            <h3>Class -
+                                <t t-foreach="exams" t-as="exam">
+                                    <t t-if="exam_first">
+                                        <t t-esc="exam.class_id.code"/>
+                                    </t>
+                                </t>
+                            </h3>
+                         </td>
+                     </tr>
+                 </table>
+                    </div>
 
         </div>
-
         <div class="article">
           <t t-raw="0" />
         </div>
@@ -110,6 +114,28 @@
 
             </div>
     </template>
+        <template id="marksheet_student_information_table_new">
+           <table>
+                <tr><td style="border-right:0px solid transparent; text-align:right;"> ID -</td><td style="border-left:0px solid transparent; text-align:left;" width="50px"><span t-field="student.student_id.student_id"/></td>
+                    <td colspan="2" style="width:100px;"> Roll -<span t-field="student.student_id.roll_no"/></td>
+                    <td colspan="2" style="width:100px;">Section -<span t-field="student.student_id.class_id.section_id"/></td>
+                    <td colspan="2" style="width:100px;">Category -<t t-if="student.student_id.student_category=='I'">I</t>
+                                            <t t-else="">E</t> </td>
+                </tr>
+                <tr>
+                    <td style="border-right:0px solid transparent; "><div style=" text-align:right;font-size: 90%;">Name :</div></td><td colspan="7" style="border-left:0px solid transparent; text-align:center;"><span t-field="student.student_id.name"/></td>
+
+                </tr>
+                 <tr>
+                    <td colspan="3" style="text-align:left;">Father's Name </td><td colspan="5"><span t-field="student.student_id.father_name.name"/></td>
+
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;">Mother's Name </td><td colspan="5"><span t-field="student.student_id.mother_name.name"/></td>
+
+                </tr>
+            </table>
+        </template>
 
         <template id="marksheet_student_performance_table_new">
             <table>
@@ -246,7 +272,7 @@
 
 
                 <t t-if="show_papers==1">
-                    <td ><t t-esc="paper.paper_id.name"/></td>
+                    <td ><t t-esc="paper.pass_rule_id.name"/></td>
                 </t>
                 <t t-if="results[student][exam]['result'].show_tut">
                     <td><t t-esc="half_round_up(paper.pass_rule_id.tut_mark)"/></td>
@@ -309,16 +335,17 @@
                     </t>
                 </t>
                 <t t-if="paper_first">
-                <td t-att-rowspan="no_of_paper">
+                    <td t-att-rowspan="no_of_paper">
                     <t t-esc="round(results[student]['subjects'][subject][exam]['res'].subject_marks)"/>
                 </td>
+                </t>
             </t>
-            </t>
+
             <t t-if="results[student][exam]['result'].show_tut">
                 <td>
                     <t t-if="paper.pass_rule_id.tut_mark>0">
                         <t t-if="paper.tut_pr==True">
-                            <t t-esc="round(paper.tut_obt)"/>
+                            <t t-esc="round(results[student]['papers'][paper.paper_id][exam].tut_obt)"/>
                         </t>
                         <t t-else="">
                             A
@@ -333,7 +360,7 @@
                 <td>
                     <t t-if="paper.pass_rule_id.subj_mark>0">
                         <t t-if="paper.subj_pr==True">
-                            <t t-esc="half_round_up(paper.subj_obt)"/>
+                            <t t-esc="half_round_up(results[student]['papers'][paper.paper_id][exam].subj_obt)"/>
                         </t>
                         <t t-else="">
                             A
@@ -348,7 +375,7 @@
                 <td>
                     <t t-if="paper.pass_rule_id.obj_mark>0">
                         <t t-if="paper.obj_pr==True">
-                            <t t-esc="round(paper.obj_obt)"/>
+                            <t t-esc="round(results[student]['papers'][paper.paper_id][exam].obj_obt)"/>
                         </t>
                         <t t-else="">
                             A
@@ -360,20 +387,20 @@
                 </td>
             </t>
             <t t-if="results[student][exam]['result'].show_prac">
-                        <td>
-                            <t t-if="paper.pass_rule_id.prac_mark>0">
-                                <t t-if="paper.prac_pr==True">
-                                    <t t-esc="round(paper.prac_obt)"/>
-                                </t>
-                                <t t-else="">
-                                    A
-                                </t>
-                            </t>
-                            <t t-else="">
-                                ..
-                            </t>
-                        </td>
+                <td>
+                    <t t-if="paper.pass_rule_id.prac_mark>0">
+                        <t t-if="paper.prac_pr==True">
+                            <t t-esc="round(results[student]['papers'][paper.paper_id][exam].prac_obt)"/>
+                        </t>
+                        <t t-else="">
+                            A
+                        </t>
                     </t>
+                    <t t-else="">
+                        ..
+                    </t>
+                </td>
+            </t>
         </template>
         <template id="marksheet_general_subject_line">
             <t t-foreach="exams" t-as="exa">
@@ -421,53 +448,59 @@
             </t>
         </template>
         <template id="marksheet_optional_subject_line">
-            <t t-foreach="exams" t-as="exam">
-                <t t-set="no_of_paper" t-value="len(results[student]['subjects'][subject][exam]['res'].paper_ids)"/>
-                <t t-foreach="results[student]['subjects'][subject][exam]['res'].paper_ids" t-as="paper">
-                    <t t-call="education_exam.marks_display_template"/>
-                    <t t-if="paper_first">
-                        <td t-att-rowspan="no_of_paper">
-                            <t t-esc="round(results[student]['subjects'][subject][exam]['res'].subject_obt)"/>
-                        </td>
+            <t t-foreach="exams" t-as="exa">
+                <t t-if="exa_first">
+                    <t t-set="no_of_paper" t-value="len(results[student]['subjects'][subject][exa]['res'].paper_ids)"/>
+                    <t t-foreach="results[student]['subjects'][subject][exa]['res'].paper_ids" t-as="paper">
+                        <tr>
+                            <t t-foreach="exams" t-as="exam">
 
-                        <t t-if="converted_report==1">
-                            <td t-att-rowspan="no_of_paper">
-                                <t t-esc="round(results[student]['subjects'][subject][exam]['res'].subject_obt_converted)"/>
-                            </td>
-                        </t>
-                        <td t-att-rowspan="no_of_paper">
-                            <t t-esc="round(results[student]['subjects'][subject][exam]['res'].subject_highest)"/>
-                        </td>
-                        <td t-att-rowspan="no_of_paper">
-                            <t t-esc="results[student]['subjects'][subject][exam]['res'].letter_grade"/>
-                        </td>
-                        <td t-att-rowspan="no_of_paper">
-                            <t t-esc="results[student]['subjects'][subject][exam]['res'].grade_point"/>
-                        </td>
-                        <t t-if="subject_first">
-                            <td t-att-rowspan="results[student][exam]['result'].optional_row_count" colspan="2">
-                                <table width="100%" style="border-collapse: collapse; border-style:hidden;">
-                                                                       <tr>
-                                                                           <td width="100%">
-                                                                               GPA above 2.0
-                                                                           </td>
-                                                                       </tr>
-                                                                       <tr>
-                                                                           <td>
-                                                                               <t t-if="results[student][exam]['result'].optional_fail_count>0">
-                                                                                   0
-                                                                               </t>
-                                                                               <t t-else="">
-                                                                                   <t t-esc="results[student][exam]['result'].optional_gpa_above_2"/>
-                                                                               </t>
-                                                                           </td>
-                                                                       </tr>
-                                                                   </table>
-                            </td>
-                        </t>
+                                <t t-call="education_exam.marks_display_template"/>
+                                <t t-if="paper_first">
+                                    <td t-att-rowspan="no_of_paper">
+                                        <t t-esc="round(results[student]['subjects'][subject][exam]['res'].subject_obt)"/>
+                                    </td>
+
+                                    <t t-if="converted_report==1">
+                                        <td t-att-rowspan="no_of_paper">
+                                            <t t-esc="round(results[student]['subjects'][subject][exam]['res'].subject_obt_converted)"/>
+                                        </td>
+                                    </t>
+                                    <td t-att-rowspan="no_of_paper">
+                                        <t t-esc="round(results[student]['subjects'][subject][exam]['res'].subject_highest)"/>
+                                    </td>
+                                    <td t-att-rowspan="no_of_paper">
+                                        <t t-esc="results[student]['subjects'][subject][exam]['res'].letter_grade"/>
+                                    </td>
+                                    <td t-att-rowspan="no_of_paper">
+                                        <t t-esc="results[student]['subjects'][subject][exam]['res'].grade_point"/>
+                                    </td>
+                                    <t t-if="subject_first">
+                                        <td t-att-rowspan="results[student][exam]['result'].optional_row_count" colspan="2">
+                                            <table width="100%" style="border-collapse: collapse; border-style:hidden;">
+                                               <tr>
+                                                   <td width="100%">
+                                                       GPA above 2.0
+                                                   </td>
+                                               </tr>
+                                               <tr>
+                                                   <td>
+                                                       <t t-if="results[student][exam]['result'].optional_fail_count>0">
+                                                           0
+                                                       </t>
+                                                       <t t-else="">
+                                                           <t t-esc="results[student][exam]['result'].optional_gpa_above_2"/>
+                                                       </t>
+                                                   </td>
+                                               </tr>
+                                            </table>
+                                        </td>
+                                    </t>
+                                </t>
+                            </t>
+                        </tr>
                     </t>
                 </t>
-
             </t>
         </template>
 
@@ -511,28 +544,6 @@
             </t>
         </template>
 
-        <template id="marksheet_student_information_table_new">
-           <table>
-                                            <tr><td style="border-right:0px solid transparent; text-align:right;"> ID -</td><td style="border-left:0px solid transparent; text-align:left;" width="50px"><span t-field="student.student_id.student_id"/></td>
-                                                <td colspan="2" style="width:100px;"> Roll -<span t-field="student.student_id.roll_no"/></td>
-                                                <td colspan="2" style="width:100px;">Section -<span t-field="student.student_id.class_id.section_id"/></td>
-                                                <td colspan="2" style="width:100px;">Category -<t t-if="student.student_id.student_category=='I'">I</t>
-                                                                        <t t-else="">E</t> </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="border-right:0px solid transparent; "><div style=" text-align:right;font-size: 90%;">Name :</div></td><td colspan="7" style="border-left:0px solid transparent; text-align:center;"><span t-field="student.student_id.name"/></td>
-
-                                            </tr>
-                                             <tr>
-                                                <td colspan="3" style="text-align:left;">Father's Name </td><td colspan="5"><span t-field="student.student_id.father_name.name"/></td>
-
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" style="text-align:left;">Mother's Name </td><td colspan="5"><span t-field="student.student_id.mother_name.name"/></td>
-
-                                            </tr>
-                                        </table>
-        </template>
 
         <template id="marksheet_body">
             <style>
@@ -583,13 +594,19 @@
                         </style>
             <div class="page" >
                 <div class="oe_structure">
-                    <div class="row" width="100%">
-                        <div class="right_top">
-                            <t t-call="education_exam.marksheet_student_performance_table_new"/>
-                        </div>
-                        <div class="left_top">
-                            <t t-call="education_exam.marksheet_student_information_table_new"/>
-                        </div>
+                    <div class="row" style="padding-top:160px" width="100%">
+                        <table width="100%">
+                            <tr>
+                                <td >
+                                    <t t-call="education_exam.marksheet_student_information_table_new"/>
+                                </td>
+                                <td align="right">
+                                    <div align="right" width="100%">
+                                        <t t-call="education_exam.marksheet_student_performance_table_new"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="row">
                         <table width="100%">
@@ -623,45 +640,46 @@
                                                 Total Marks:
                                             </t>
                                             </td>
+                                            <td ><t t-esc="results[student][exam]['result'].general_full_mark"/></td>
                                         </t>
-                                        <td ><t t-esc="results[student][exam]['result'].general_full_mark"/></td>
                                         <td t-att-colspan="results[student][exam]['result'].result_type_count" >Obtained : </td>
                                         <td ><t t-esc="results[student][exam]['result'].general_obtained"/></td>
                                         <t t-if="converted_report==1">
                                             <td ><t t-esc="results[student][exam]['result'].general_obtained_converted" /></td>
                                         </t>
-                                        <td t-att-colspan="4+fourth_subject+results[student][exam]['result'].result_type_count"></td>
+                                        <td t-att-colspan="4+fourth_subject"></td>
                                     </t>
                                 </tr>
                             <tr>
-                                    <t t-foreach="exams" t-as="exam">
-                                        <t t-if="exam_first">
-                                            <td t-att-colspan="(results[student][exam]['result'].result_type_count*3)+show_papers+2">
-                                                <t t-if="fourth_subject==1">
-                                                    Percentage of total marks without 4th Subject:
-                                                </t>
-                                                <t t-else="">
-                                                    Percentage of Total Marks:
-                                                </t>
-                                            </td>
-                                        </t>
-                                        <t t-if="converted_report==1">
-                                            <span> &lt;td colspan="2"&gt; </span>
-                                        </t>
-                                        <t t-else="">
-                                            <span> &lt;td&gt;  </span>
-                                        </t>
-                                        <t t-esc="round(results[student][exam]['result'].general_obtained/results[student][exam]['result'].general_full_mark*100,2)"/>%
-                                        <span>&lt;/td&gt;</span>
-                                        <td t-att-colspan="4+fourth_subject+results[student][exam]['result'].result_type_count"></td>
+                                <t t-foreach="exams" t-as="exam">
+                                    <t t-if="exam_first">
+                                        <td t-att-colspan="(results[student][exam]['result'].result_type_count*3)+show_papers+2">
+                                            <t t-if="fourth_subject==1">
+                                                Percentage of total marks without 4th Subject:
+                                            </t>
+                                            <t t-else="">
+                                                Percentage of Total Marks:
+                                            </t>
+                                        </td>
                                     </t>
-                                </tr>
+                                    <t t-else="">
+                                        <td t-att-colspan="results[student][exam]['result'].result_type_count"/>
+                                    </t>
+                                    <t t-if="converted_report==1">
+                                        <span> &lt;td colspan="2"&gt; </span>
+                                    </t>
+                                    <t t-else="">
+                                        <span> &lt;td&gt;  </span>
+                                    </t>
+                                        <t t-esc="round(results[student][exam]['result'].general_obtained/results[student][exam]['result'].general_full_mark*100,2)"/>%
+                                    <span>&lt;/td&gt;</span>
+                                    <td t-att-colspan="4+fourth_subject"></td>
+                                </t>
+                            </tr>
                             <t t-if="fourth_subject==1">
                                 <tr><td colspan="100%">4Th Subjects</td> </tr>
                                 <t t-foreach="subject_list['optional']" t-as="subject">
-                                    <tr>
-                                        <t t-call="education_exam.marksheet_optional_subject_line"/>
-                                    </tr>
+                                    <t t-call="education_exam.marksheet_optional_subject_line"/>
 
                                 </t>
                                 <tr>
@@ -671,11 +689,16 @@
                                                 Total Marks with 4th Subject:
                                             </td>
                                         </t>
+                                        <t t-else="">
+
+                                            <td t-att-colspan="results[student][exam]['result'].result_type_count"/>
+                                        </t>
                                         <td ><t t-esc="results[student][exam]['result'].net_obtained"/></td>
                                         <t t-if="converted_report==1">
                                             <td ><t t-esc="results[student][exam]['result'].net_obtained_converted" /></td>
                                         </t>
-                                        <td t-att-colspan="3+fourth_subject+results[student][exam]['result'].result_type_count"></td>
+                                        <td t-att-colspan="4+fourth_subject"></td>
+
                                     </t>
                                 </tr>
                                 <tr>
@@ -685,6 +708,9 @@
                                                     Percentage of total marks with 4th Subject:
                                             </td>
                                         </t>
+                                        <t t-else="">
+                                            <td t-att-colspan="results[student][exam]['result'].result_type_count"/>
+                                        </t>
                                         <t t-if="converted_report==1">
                                             <span> &lt;td colspan="2"&gt; </span>
                                         </t>
@@ -693,7 +719,8 @@
                                         </t>
                                         <t t-esc="round(results[student][exam]['result'].net_obtained/results[student][exam]['result'].general_full_mark*100,2)"/>%
                                         <span>&lt;/td&gt;</span>
-                                        <td t-att-colspan="4+fourth_subject+results[student][exam]['result'].result_type_count"></td>
+                                        <td t-att-colspan="4+fourth_subject"></td>
+                                        <!--<td t-att-colspan="results[student][exam]['result'].result_type_count"></td>-->
                                     </t>
                                 </tr>
                             </t>
@@ -707,8 +734,12 @@
                                 </t>
 
                             </t>
+
                         </table>
+
                     </div>
+
+                    <div class="row"><t t-esc="exams"/> </div>
                     <div class="row"><br/></div>
                                 <div class="row">
 

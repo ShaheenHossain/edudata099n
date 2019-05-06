@@ -7,7 +7,7 @@ import pandas as pd
 import numpy
 
 
-class acdemicTranscripts(models.AbstractModel):
+class report_dsblsc_marksheet(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_marksheet'
 
     def get_student_no(self,object):
@@ -46,6 +46,12 @@ class acdemicTranscripts(models.AbstractModel):
         elif object.level:
             section=self.env['education.class.division'].search([('class_id','=',object.level.id),('academic_year_id','=',object.academic_year.id)])
             return section
+    def get_merit_class_display(self,object):
+        if object.show_merit_class==True:
+            return 1
+    def get_merit_group_display(self,object):
+        if object.show_merit_group==True:
+            return 1
 
     def get_subjects(self,student):
         subjs = {}
@@ -193,9 +199,11 @@ class acdemicTranscripts(models.AbstractModel):
             'get_student_no': self.get_student_no,
             'get_student_in_section': self.get_student_in_section,
             'half_round_up': self.half_round_up,
+            'get_merit_group_display': self.get_merit_group_display,
+            'get_merit_class_display': self.get_merit_class_display,
         }
 
-class acdemicTranscripts(models.AbstractModel):
+class report_dsblsc_marksheet_converted(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_marksheet_converted'
 
 
@@ -218,6 +226,8 @@ class acdemicTranscripts(models.AbstractModel):
             'get_student_in_section': self.env['report.education_exam.report_dsblsc_marksheet'].get_student_in_section,
             'half_round_up': self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up,
             'get_converted_report': self.env['report.education_exam.report_exam_evaluation'].get_converted_report,
+            'get_merit_group_display': self.env['report.education_exam.report_dsblsc_marksheet'].get_merit_group_display,
+            'get_merit_class_display': self.env['report.education_exam.report_dsblsc_marksheet'].get_merit_class_display,
         }
 class acdemicTranscripts(models.AbstractModel):
     _name = 'report.education_exam.report_dsblsc_evaluation'

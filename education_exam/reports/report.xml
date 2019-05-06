@@ -53,13 +53,13 @@
             file="education_exam.report_dsblsc_marksheet"
         />
         <report
-            id="action_test_marksheet"
+            id="action_responsive_marksheet"
             model="education.exam.result.wizard"
             string="Marksheet"
             report_type="qweb-pdf"
             paperformat="A4_portrait"
-            name="education_exam.report_dsblsc_marksheet"
-            file="education_exam.report_dsblsc_marksheet"
+            name="education_exam.report_exam_responsive_marksheet"
+            file="education_exam.report_exam_responsive_marksheet"
         />
         <report
             id="action_marksheet_converted"

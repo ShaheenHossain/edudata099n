@@ -24,6 +24,7 @@ class exam_marksheet(models.AbstractModel):
             results[student]['optional']={}
             results[student]['selective']={}
             results[student]['subjects']={}
+            results[student]['papers']={}
             comp_results = {}
             op_results = {}
             sel_results = {}
@@ -46,6 +47,12 @@ class exam_marksheet(models.AbstractModel):
                         results[student]['compulsory'][subject.subject_id][exam]=subject_line
                         results[student][exam]['subjects'][subject.subject_id]=subject_line
                         results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
+
+                        for paper in subject_line.paper_ids:
+                            if paper.paper_id not in results[student]['papers']:
+                                results[student]['papers'][paper.paper_id]={}
+                            results[student]['papers'][paper.paper_id][exam]=paper
+
                 for subject in student.optional_subjects:
                     if subject.subject_id not in results[student][exam]['subjects']:
                         subject_line=self.env['results.subject.line.new'].search([('result_id','=',result_line.id),('subject_id','=',subject.subject_id.id)])
@@ -58,6 +65,10 @@ class exam_marksheet(models.AbstractModel):
                         results[student]['optional'][subject.subject_id][exam]=subject_line
                         results[student][exam]['subjects'][subject.subject_id]=subject_line
                         results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
+                        for paper  in subject_line.paper_ids:
+                            if paper.paper_id not in results[student]['papers']:
+                                results[student]['papers'][paper.paper_id]={}
+                            results[student]['papers'][paper.paper_id][exam]=paper
 
                 for subject in student.selective_subjects:
                     if subject.subject_id not in results[student][exam]['subjects']:
@@ -71,6 +82,10 @@ class exam_marksheet(models.AbstractModel):
                         results[student]['selective'][subject.subject_id][exam]=subject_line
                         results[student][exam]['subjects'][subject.subject_id]=subject_line
                         results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
+                        for paper in subject_line.paper_ids:
+                            if paper.paper_id not in results[student]['papers']:
+                                results[student]['papers'][paper.paper_id]={}
+                            results[student]['papers'][paper.paper_id][exam]=paper
         return results
 
     def get_sections(self,object):

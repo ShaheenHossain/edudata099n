@@ -171,9 +171,9 @@
         <template id="marksheet_student_information_table">
            <table>
                                             <tr><td style="border-right:0px solid transparent; text-align:right;"> ID -</td><td style="border-left:0px solid transparent; text-align:left;" width="50px"><span t-field="student.student_id.student_id"/></td>
-                                                <td colspan="2" style="width:100px;"> Roll -<span t-field="student.student_id.roll_no"/></td>
-                                                <td colspan="2" style="width:100px;">Section -<span t-field="student.student_id.class_id.section_id"/></td>
-                                                <td colspan="2" style="width:100px;">Category -<t t-if="student.student_id.student_category=='I'">I</t>
+                                                <td colspan="2" style="width:100px;"> Roll - <span t-field="student.student_id.roll_no"/></td>
+                                                <td colspan="2" style="width:100px;">Section - <span t-field="student.student_id.class_id.section_id"/></td>
+                                                <td colspan="2" style="width:100px;">Category - <t t-if="student.student_id.student_category=='I'">I</t>
                                                                         <t t-else="">E</t> </td>
                                             </tr>
                                             <tr>
@@ -197,7 +197,8 @@
                 <t t-call="education_exam.external_layout_mark_sheet_dsblsc">
                     <t t-set="exams" t-value="get_exams(docs)"/>
                     <t t-set="working_days" t-value="get_total_working_days(exams)"/>
-                    <t t-foreach="get_students(docs)" t-as="student">
+                    <t t-set="student_list" tvalue="get_students(docs)"/>
+                    <t t-foreach="student_list" t-as="student">
                         <t t-set="results" t-value="get_results(docs)"/>
                         <t t-set="subjects" t-value="get_subjects(student)"/>
                         <style>
@@ -2319,7 +2320,12 @@
                                            </td>
 
                                        </tr>
-                                       <tr>
+
+                                           <t t-set="show_merit_class" t-value="get_merit_class_display(docs)"/>
+                                           <t t-set="show_merit_group" t-value="get_merit_group_display(docs)"/>
+
+                                       <t t-if="show_merit_class==1">
+                                           <tr>
                                            <td style="border:0; text-align: left;">Position in Class</td>
                                            <td style="border:0;">:</td>
                                            <td style="border:0;">
@@ -2328,6 +2334,19 @@
                                                </t>
                                            </td>
                                        </tr>
+                                       </t>
+                                       <t t-if="show_merit_group==1">
+                                           <tr>
+                                           <td style="border:0; text-align: left;">Position in Group</td>
+                                           <td style="border:0;">:</td>
+                                           <td style="border:0;">
+                                               <t t-foreach="exams" t-as="exam">
+                                                   <t t-esc="num2serial(results[exam.id][student.id]['result'].merit_group)"/>
+                                               </t>
+                                           </td>
+                                       </tr>
+                                       </t>
+
                                        </table>
                                 </div>
                                 <div class="row">

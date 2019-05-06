@@ -16,7 +16,7 @@ class EducationExamResultsNew(models.Model):
     level_id=fields.Many2one('education.class',string='Level',compute='_get_level',store='True')
     # todo here to change class_id to level
     # todo group for merit list of group
-    group=fields.Integer('group')
+    group=fields.Many2one('education.division',string='Group', related="class_id.division_id")
     division_id = fields.Many2one('education.class.division', string='Division')
     section_id = fields.Many2one('education.class.section', string='Section')
     roll_no = fields.Integer('Roll', related='student_history.roll_no')
@@ -75,7 +75,8 @@ class EducationExamResultsNew(models.Model):
     net_gpa=fields.Float("GPA")
 
     merit_class=fields.Integer("Position In Class")
-    merit_section=fields.Integer("Position In section")
+    merit_section=fields.Integer("Position In Section")
+    merit_group=fields.Integer("Position In Group")
 
     # working_days=fields.Integer('Working Days')
     attendance=fields.Integer('Attendance')
@@ -158,7 +159,7 @@ class EducationExamResultsNew(models.Model):
             # df_section_sorted.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df_section_'+str(name.id) +'.csv')
         grouped = df.groupby('group')
         for name, group in grouped:
-            df_section = df[(df['section'] == name)]
+            df_section = df[(df['group'] == name)]
             df_section_sorted = df_section.sort_index()
             df_section_indexed = df_section_sorted.reset_index(drop=True)
             for index, row in df_section_indexed.iterrows():

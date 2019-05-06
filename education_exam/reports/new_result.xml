@@ -114,7 +114,7 @@
     </template>
 
 
-        <template id="report_dsblsc_marksheet">
+        <template id="report_marksheet">
             <t t-call="web.html_container">
                 <t t-call="education_exam.external_layout_mark_sheet_dsblsc">
                     <t t-set="exams" t-value="get_exams(docs)"/>
@@ -1176,7 +1176,7 @@
             </t>
         </template>
 
-        <template id="report_dsblsc_marksheet_converted">
+        <template id="report_marksheet_converted">
             <t t-call="web.html_container">
                 <t t-call="education_exam.external_layout_mark_sheet_dsblsc">
                     <t t-set="exams" t-value="get_exams(docs)"/>
@@ -2227,7 +2227,7 @@
             </t>
         </template>
 
-        <template id="report_dsblsc_evaluation">
+        <template id="report_evaluation">
             <t t-call="web.html_container">
                 <t t-call="education_exam.external_layout_evaluation">
                     <t t-set="exams" t-value="get_exams(docs)"/>

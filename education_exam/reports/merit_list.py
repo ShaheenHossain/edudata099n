@@ -89,8 +89,12 @@ class examEvaluation(models.AbstractModel):
             elif  mark_line.subject_id.prac_mark>0:
                 marks.append(mark_line.prac_mark)
         return marks
-
-
+    def get_merit_class_display(self,object):
+        if object.show_merit_class==True:
+            return 1
+    def get_merit_group_display(self,object):
+        if object.show_merit_group==True:
+            return 1
 
 
 
@@ -129,4 +133,6 @@ class examEvaluation(models.AbstractModel):
             'get_student_count': self.get_student_count,
             'get_result_line': self.get_result_line,
             'get_converted_report': self.get_converted_report,
+            'get_merit_group_display': self.get_merit_group_display,
+            'get_merit_class_display': self.get_merit_class_display,
         }

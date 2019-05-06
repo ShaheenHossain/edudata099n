@@ -69,7 +69,8 @@
 
                                     </div>
                                     <div class="col-xs-12" style="text-align:center;">
-                                        <h5><t t-esc="'Class - '+ level.code"/> </h5>
+                                        <h4><t t-esc="'Class - '+ level.code"/>
+                                        <p>Merit List</p></h4>
                                     </div>
 
                                 </div>
@@ -94,6 +95,10 @@
                             <div class="row">
                                 <table width="100%">
                                     <t t-set="converted_report" t-value="get_converted_report(docs)"/>
+                                    <t t-set="show_merit_class" t-value="get_merit_class_display(docs)"/>
+                                    <t t-set="show_merit_group" t-value="get_merit_group_display(docs)"/>
+                                    <THEAD>
+
 
                                         <tr class="dont_split"><td rowspan="2">Roll</td><td rowspan="2">ID</td>
                                             <td rowspan="2" style="text-align : center;">Name</td>
@@ -120,17 +125,26 @@
                                                 <td  rowspan="2" style="text-align : center;">Converted Marks</td>
                                             </t>
                                             <td rowspan="2" style="text-align : center;">Position In Section</td>
-                                            <td rowspan="2" style="text-align : center;">Position In Class</td>
+
+                                            <t t-if="show_merit_group==1">
+                                                <td rowspan="2" style="text-align : center;">Position In Group</td>
+                                            </t>
+                                            <t t-if="show_merit_class==1">
+                                                <td rowspan="2" style="text-align : center;">Position In Class</td>
+                                            </t>
+
                                             <p>&lt;/tr&gt;</p>
                                             &lt;tr&gt;
                                         </t>
                                         </tr>
+                                    </THEAD>
                                         <t t-foreach="exam_list" t-as="exam">
                                             <t t-set="result_lines" t-value="get_result_line(exam,section)"/>
                                             <t t-foreach="result_lines" t-as="result_line">
                                                 <tr class="dont_split">
                                                     <td><t t-esc='"{:02d}".format(result_line.roll_no)'/></td>
-                                                    <td><t t-esc="result_line.student_id.student_id"/></td>
+                                                    <td><t t-esc='"{:05d}".format(int(result_line.student_id.student_id))'/></td>
+                                                    <!--<td><t t-esc="result_line.student_id.student_id"/></td>-->
 
                                                     <td><t t-esc="result_line.student_name"/></td>
 
@@ -150,30 +164,18 @@
                                                             <t t-esc="'('+str(fail_count)+'F)' "/>
                                                         </t>
                                                     </td>
-                                                    <!--<td style="text-align : center;">-->
-                                                        <!--<t t-set="NETGPA" t-value="result_line.net_gpa"/>-->
-                                                        <!--<t t-if="5>NETGPA">-->
-                                                            <!--<t t-if="NETGPA==0">-->
-                                                                <!--0-->
-                                                            <!--</t>-->
-                                                            <!--<t t-else="">-->
-                                                                <!--<t t-esc="round(NETGPA,2)"/>-->
-                                                            <!--</t>-->
-                                                        <!--</t>-->
-                                                        <!--<t t-else="">-->
-                                                            <!--5-->
-                                                        <!--</t>-->
-
-                                                        <!--<t t-if="fail_count>0">-->
-                                                            <!--<t t-esc="'('+str(fail_count)+'F)'"/>-->
-                                                        <!--</t>-->
-                                                    <!--</td>-->
                                                     <t t-if="converted_report">
                                                         <td style="text-align : center;"><t t-esc="result_line.net_obtained_converted"/></td>
                                                     </t>
                                                     <td style="text-align : center;"><t t-esc="result_line.net_obtained"/></td>
                                                     <td style="text-align : center;"><t t-esc="result_line.merit_section"/></td>
-                                                    <td style="text-align : center;"><t t-esc="result_line.merit_class"/></td>
+                                                    <t t-if="show_merit_group==1">
+                                                        <td style="text-align : center;"><t t-esc="result_line.merit_group"/></td>
+                                                    </t>
+                                                    <t t-if="show_merit_class==1">
+                                                        <td style="text-align : center;"><t t-esc="result_line.merit_class"/></td>
+                                                    </t>
+
                                                 </tr>
                                             </t>
                                     </t>

@@ -20,6 +20,8 @@ class educationExamResultWizard(models.TransientModel):
     show_paper=fields.Boolean("Show Papers")
     show_tut=fields.Boolean("Show Monthly")
     show_subjective=fields.Boolean("Show Subjective")
+    show_merit_class=fields.Boolean("Show Merit Class Position",default="True")
+    show_merit_group=fields.Boolean("Show Merit Group Position")
     show_objective=fields.Boolean("show objective")
     show_prac=fields.Boolean("Show Practical")
     show_total=fields.Boolean("Show Total")

@@ -45,12 +45,13 @@ class EducationClass(models.Model):
         }
 class EducationDivision(models.Model):
     _name = 'education.division'
-    _description = "Standard Division"
+    _description = "Group"
+    _help="Science, Arts, Comerce Etc"
 
     name = fields.Char(string='Name', required=True, help="Enter the Name of the Division")
     code = fields.Char(string='Code', required=True, help="Enter the Code of the Division")
-    strength = fields.Integer(string='Max Student No',default='100', help="Total strength of the class")
-    faculty_id = fields.Many2one('education.faculty', string='Class Faculty', help="Class teacher/Faculty")
+    # strength = fields.Integer(string='Max Student No',default='100', help="Total strength of the class")
+    # faculty_id = fields.Many2one('education.faculty', string='Class Faculty', help="Class teacher/Faculty")
     classes_ids = fields.Many2many('education.class','class_dev_rel','classes_ids','division_ids', string='Class')
 
 class EducationClassDivision(models.Model):

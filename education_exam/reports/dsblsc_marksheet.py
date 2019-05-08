@@ -142,12 +142,9 @@ class report_dsblsc_marksheet(models.AbstractModel):
         return grades
 
 
-    def half_round_up(self,val):
-        if (float(val) % 1) >= 0.5:
-            x = math.ceil(val)
-        else:
-            x = round(val)
-        return x
+    def half_round_up(self,n, decimals=0):
+        multiplier = 10 ** decimals
+        return math.floor(n * multiplier + 0.5) / multiplier
     def num2serial(self,numb):
         if numb < 20:  # determining suffix for < 20
             if numb == 1:

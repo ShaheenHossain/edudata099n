@@ -352,7 +352,7 @@ class educationExamResultWizard(models.TransientModel):
                 subject.subj_obt = obt_subj
                 subject.prac_obt = obt_prac
                 subject.subject_obt = subject_obtained
-                subject.subject_obt_converted = subject_obtained_converted
+                subject.subject_obt_converted = self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up((subject_obtained/subject_full)*subject_full_converted)#subject_obtained_converted
                 subject.subject_marks = subject_full
                 subject.subject_marks_converted = subject_full_converted
                 if subject.pass_rule_id.tut_pass > subject.tut_obt:
@@ -395,7 +395,7 @@ class educationExamResultWizard(models.TransientModel):
                     count_optional_subjects = count_optional_subjects + 1
                     count_optional_paper = count_optional_paper + paper_count
                     optional_full_mark = optional_full_mark + subject.pass_rule_id.subject_marks
-                    optional_full_mark_converted = optional_full_mark_converted + subject.pass_rule_id.subject_marks_converted
+                    optional_full_mark_converted = optional_full_mark_converted + subject_full_converted
                     gp_optional = gp_optional + subject_grade_point
                     count_optional_fail = count_optional_fail + count_fail
                 else:
@@ -465,7 +465,7 @@ class educationExamResultWizard(models.TransientModel):
             student.optional_fail_count = count_optional_fail
             student.optional_gp = gp_optional
             student.optional_full_mark = optional_full_mark
-            student.optional_full_mark_converted = optional_full_mark_converted
+            student.optional_full_converted = optional_full_mark_converted
             if student.general_count > 0:
                 student.general_gpa = student.general_gp / student.general_count
             else:
@@ -479,7 +479,7 @@ class educationExamResultWizard(models.TransientModel):
                     student.optional_gpa = 0
             if student.optional_gpa > 0:
                 optional_40_perc = student.optional_full_mark * 40 / 100
-                optional_40_perc_converted = student.optional_full_mark_converted * 40 / 100
+                optional_40_perc_converted = student.optional_full_converted * 40 / 100
                 student.optional_obtained_above_40_perc = student.optional_obtained - optional_40_perc
                 student.optional_obtained_above_40_perc_converted = student.optional_obtained_converted - optional_40_perc_converted
             student.net_obtained = student.general_obtained + student.optional_obtained_above_40_perc

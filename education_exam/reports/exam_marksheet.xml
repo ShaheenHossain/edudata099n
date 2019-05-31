@@ -31,29 +31,29 @@
 
         <div class="header" style="width:100%">
             <div class="row" width="100%">
-                 <table width="100%" style="border:none">
+                 <table width="100%" style="border:none;">
                      <tr>
-                         <td rowspan="2" style="width:90px; border:0">
+                         <td rowspan="2" style="width:110px; border:0;">
                              <div style="width: 100%;">
                                  <img src='/web/binary/company_logo' style="width:100%"/>
                              </div>
                          </td>
-                         <td colspan="12">
+                         <td colspan="12" style=" border:0;">
                              <div style="width:100%">
                                 <h4 style="text-transform: uppercase;  text-align: center;" t-if="res_company.name"><span t-field="res_company.name"/></h4>
                                 <h5 style=" text-align: center;"><t t-if="res_company.street"><span t-field="res_company.street"/></t><t t-if="res_company.street2"><span t-field="res_company.street2"/> </t><t t-if="res_company.country_id"><span t-field="res_company.country_id"/></t></h5>
                              </div>
                          </td>
-                         <td rowspan="2" style="width: 150px;">
+                         <td rowspan="2" style="width: 150px;border:0;">
                              <div>
                                 <table >
                          <style>
                                 table, th, td {
                                          border: 1px solid black;
-                                        padding-bottom:3px;
-                                        padding-left:3px;
-                                        padding-top:3px;
-                                        padding-right:3px;
+                                        padding-bottom:0px;
+                                        padding-left:0px;
+                                        padding-top:0px;
+                                        padding-right:0px;
                                         align:center;
                                         text-align: center;
                                         }
@@ -72,7 +72,7 @@
                          </td>
                      </tr>
                      <tr>
-                         <td colspan="12">
+                         <td colspan="12" style=" border:0;">
                              <h3>Academic Transcript</h3>
                              <h5>
                                 <t t-set="exams" t-value="get_exams(docs)"/>
@@ -111,7 +111,11 @@
           <t t-raw="0" />
         </div>
            <div class="footer">
-
+                <div class="row">
+                                       <div class="col-xs-4" style="font-size:16px;">Signature of Class Teacher</div>
+                                       <div class="col-xs-4" style="font-size:16px;">Signature of The Principal</div>
+                                       <div class="col-xs-4" style="font-size:16px;">Signature of Guardian</div>
+                                </div>
             </div>
     </template>
         <template id="marksheet_student_information_table_new">
@@ -212,7 +216,9 @@
                 <t t-if="converted_report==1">
                     <th class="rotate" rowspan="2"><div><span>Converted Marks</span></div></th>
                 </t>
-                <th class="rotate" rowspan="2"><div><span>Highest Marks</span></div></th>
+                <th class="rotate" rowspan="2"><div style="width: 22px;">
+                                 <img src='/education_exam/static/src/img/highest_mark.png' style="width:100%"/>
+                             </div></th>
                 <th rowspan="2">LG</th>
                 <th rowspan="2">GP</th>
                 <t t-if="fourth_subject==1">
@@ -551,11 +557,11 @@
                                      border: 1px solid black;
                                     vertical-align: middle;
                                     align:center;
-                                    font-size:16px;
-                                    padding-top:2px;
-                                    padding-right:2px;
-                                    padding-left:2px;
-                                    padding-bottom:2px;
+                                    font-size:14px;
+                                    padding-top:1px;
+                                    padding-right:1px;
+                                    padding-left:1px;
+                                    padding-bottom:1px;
                                     text-align: center;
                                     }
                             .right_top{
@@ -573,34 +579,35 @@
                             padding-right:10px;
                             padding-bottom:10px;
                             }
-                            th.rotate {
-                              /* Something you can count on */
-                              height: 140px;
-                              white-space: nowrap;
-                            }
+                            <!--th.rotate {-->
+                              <!--/* Something you can count on */-->
+                              <!--height: 140px;-->
+                              <!--white-space: nowrap;-->
+                            <!--}-->
 
-                            th.rotate > div {
-                              transform:
-                                /* Magic Numbers */
-                                translate(0px, 45px)
-                                /* 45 is really 360 - 45 */
-                                rotate(-90deg);
-                              width: 40px;
-                            }
-                            th.rotate > div > span {
-                              border-bottom: 1px solid #ccc;
-                              padding: 5px 0px 5px 0px;
-                            }
+                            <!--th.rotate > div {-->
+                              <!--transform:-->
+                                <!--/* Magic Numbers */-->
+                                <!--translate(0px, 45px)-->
+                                <!--/* 45 is really 360 - 45 */-->
+                                <!--rotate(-90deg);-->
+                              <!--width: 40px;-->
+                            <!--}-->
+                            <!--th.rotate > div > span {-->
+                              <!--border-bottom: 1px solid #ccc;-->
+                              <!--padding: 5px 0px 5px 0px;-->
+                            <!--}-->
                         </style>
             <div class="page" >
                 <div class="oe_structure">
-                    <div class="row" style="padding-top:160px" width="100%">
-                        <table width="100%">
-                            <tr>
-                                <td >
+
+                    <div class="row" style="page-break-before:always;">
+                        <table width="100%" style=" border:0;">
+                            <tr style=" border:0;">
+                                <td style=" border:0;">
                                     <t t-call="education_exam.marksheet_student_information_table_new"/>
                                 </td>
-                                <td align="right">
+                                <td align="right" style=" border:0;">
                                     <div align="right" width="100%">
                                         <t t-call="education_exam.marksheet_student_performance_table_new"/>
                                     </div>
@@ -754,19 +761,8 @@
                                        </div>
                                 </div>
 
-                                <div class="row">
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                </div>
 
 
-                                <div class="row">
-                                       <div class="col-xs-4" style="font-size:16px;">Signature of Class Teacher</div>
-                                       <div class="col-xs-4" style="font-size:16px;">Signature of The Principal</div>
-                                       <div class="col-xs-4" style="font-size:16px;">Signature of Guardian</div>
-                                </div>
                 </div>
             </div>
         </template>

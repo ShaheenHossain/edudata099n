@@ -7,6 +7,7 @@ class ExamSubjectPassRules(models.Model):
     _order = 'sl asc'
     sl=fields.Integer("Serial")
     name = fields.Char(string='Name'  )
+    result_exam_line=fields.Many2one('education.exam.result.exam.line',required=True,string='Result Exam Line',ondelete="cascade")
     exam_id = fields.Many2one('education.exam', string='Exam')
     class_id = fields.Many2one('education.class', string='Class')
     subject_id = fields.Many2one('education.subject', string='Subjects')
@@ -29,6 +30,21 @@ class ExamSubjectPassRules(models.Model):
     subject_highest_converted=fields.Float('Highest Converted')
     subject_pass_marks = fields.Float(string='Total Pass Mark')
     state = fields.Selection([('draft',"Draft"), ('done', "Done")], "State", default='draft')
+
+    @api.model
+    def calculate_subject_marks(self):
+        for rec in self:
+            rec.tut_mark=0
+            rec.subj_mark =0
+            rec.obj_mark =0
+            rec.prac_mark=0
+            for paper in rec.paper_ids:
+                rec.tut_mark = rec.tut_mark+paper.tut_mark
+                rec.subj_mark = rec.subj_mark+paper.subj_mark
+                rec.obj_mark = rec.obj_mark+ paper.obj_mark
+                rec.prac_mark = rec.prac_mark+paper.prac_mark
+
+            rec.subject_marks=rec.tut_mark+rec.subj_mark+rec.obj_mark+rec.prac_mark
 
 class ExamPaperPassRules(models.Model):
     _name = 'exam.paper.pass.rules'
@@ -55,3 +71,9 @@ class ExamPaperPassRules(models.Model):
     paper_highest_converted=fields.Float('Highest Converted')
     paper_pass_marks = fields.Float(string='Total Pass Mark')
     state=fields.Selection([('draft',"Draft"),('done',"Done")],"State",default='draft')
+
+    @api.model
+    @api.onchange('subj_mark','tut_mark','obj_mark','prac_mark')
+    def calculate_paper_marks(self):
+        for rec in self:
+            rec.paper_marks=rec.tut_mark+rec.subj_mark+rec.obj_mark+rec.prac_mark

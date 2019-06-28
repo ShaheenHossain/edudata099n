@@ -2,10 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bcac989f-0042-483e-bff0-ad2eeca973d2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/education_exam/static/src/img/converted_mark.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/education_exam/static/src/img/gpawith4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/education_exam/static/src/img/gpawithout4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/education_exam/static/src/img/highest_mark - Copy.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/education_exam/models/education_exam_result.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/models/education_exam_result.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/education_exam/models/exam_pass_rule.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/models/exam_pass_rule.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/education_exam/reports/exam_marksheet.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/reports/exam_marksheet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/education_exam/reports/exam_marksheet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/reports/exam_marksheet.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/education_exam/wizards/print_result_wizerd.xml" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/wizards/print_result_wizerd.xml" afterDir="false" />
     </list>
+    <ignored path="E:\eagle11.0.01\edudata099\.idea\shelf/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,35 +34,36 @@
     <session id="1486531713">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+          <entry key="Python Console" value="168" />
           <entry key="csv" value="88" />
           <entry key="gitignore" value="1" />
-          <entry key="py" value="1916" />
+          <entry key="py" value="5139" />
           <entry key="txt" value="83" />
-          <entry key="xml" value="1074" />
+          <entry key="xml" value="1963" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSV" value="88" />
           <entry key="PLAIN_TEXT" value="84" />
-          <entry key="Python" value="1916" />
-          <entry key="XML" value="1074" />
+          <entry key="Python" value="5307" />
+          <entry key="XML" value="1963" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="csv" value="5" />
           <entry key="gitignore" value="1" />
-          <entry key="py" value="20" />
-          <entry key="xml" value="14" />
+          <entry key="py" value="42" />
+          <entry key="xml" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CSV" value="5" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="20" />
-          <entry key="XML" value="14" />
+          <entry key="Python" value="42" />
+          <entry key="XML" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
@@ -62,83 +72,79 @@
           <entry key="project.open.time.106" value="1" />
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.84" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.open.time.90" value="1" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
     </session>
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="edudata099" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/education_exam/models/education_exam_result.py">
+        <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="17" column="31" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="31" />
+            <state relative-caret-position="274">
+              <caret line="334" column="36" selection-start-line="334" selection-start-column="36" selection-end-line="334" selection-end-column="36" />
               <folding>
-                <element signature="e#5243#5306#0" />
+                <element signature="e#25#54#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py">
+        <entry file="file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="59" selection-start-line="59" selection-end-line="59" />
+            <state relative-caret-position="274">
+              <caret line="24" column="57" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="57" />
+              <folding>
+                <element signature="e#26#65#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.xml">
+        <entry file="file://$PROJECT_DIR$/education_exam/wizards/print_result_wizerd.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="648" column="64" selection-start-line="648" selection-start-column="64" selection-end-line="648" selection-end-column="64" />
+            <state relative-caret-position="95">
+              <caret line="38" column="67" selection-start-line="38" selection-start-column="67" selection-end-line="38" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/education_exam/models/education_exam_result.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="278">
+              <caret line="878" column="27" lean-forward="true" selection-start-line="878" selection-start-column="27" selection-end-line="878" selection-end-column="27" />
               <folding>
-                <element signature="n#div#0;n#template#0;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#div#3;n#div#0;n#template#0;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#template#1;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#t#1;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#t#3;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#t#4;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#t#6;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#td#0;n#t#7;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#t#8;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#t#9;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#t#0;n#td#0;n#t#9;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#t#10;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#template#4;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#template#5;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#template#7;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#style#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#div#3;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#div#4;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
-                <element signature="n#div#5;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="e#1#37#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py">
+        <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+            <state relative-caret-position="19">
+              <caret line="690" lean-forward="true" selection-start-line="690" selection-end-line="690" />
               <folding>
-                <marker date="1556891123946" expanded="true" signature="1393:1731" ph="..." />
+                <element signature="n#template#1;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#3;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#4;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#0;n#template#4;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#0;n#template#5;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#t#1;n#template#5;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#5;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#6;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#template#7;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#style#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/education_exam/reports/report.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="56">
-              <caret line="65" column="21" lean-forward="true" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -147,36 +153,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>left;</find>
-      <find>data</find>
-      <find>behavior</find>
-      <find>cultural</find>
-      <find>unifor</find>
-      <find>sports</find>
-      <find>c</find>
-      <find>class :</find>
-      <find>get_pdf</find>
-      <find>border</find>
-      <find>result_id</find>
-      <find>round</find>
-      <find>convert</find>
-      <find>half</find>
-      <find>half_round_up</find>
-      <find>pyc</find>
-      <find>hide</find>
-      <find>px</find>
-      <find>genera</find>
-      <find>show_tu</find>
-      <find>foreach=&quot;subject</find>
-      <find>merit_list</find>
-      <find>merit list</find>
-      <find>get_results</find>
-      <find>get_exams</find>
-      <find>round(results[student][exam]['result'].general_obtained/results[student][exam]['result'].general_full_mark*</find>
-      <find>results[student][exam]</find>
-      <find>results[student]['subjects'][subject.subject_id][exam]</find>
-      <find>paper_si</find>
-      <find>paperformat</find>
+      <find>calculate_subjects_results</find>
+      <find>marksheet_general_subject_line</find>
+      <find>general_row</find>
+      <find>exam_result_lines</find>
+      <find>subject_list</find>
+      <find>4th</find>
+      <find>converted_report</find>
+      <find>percentage of total marks witho</find>
+      <find>working_days</find>
+      <find>marksheet_body</find>
+      <find>marksheet_student_performance_table_new</find>
+      <find>education.exam.result.exam.line</find>
+      <find>division_id</find>
+      <find>calculate_subject_rules</find>
+      <find>exam</find>
+      <find>src</find>
+      <find>exams</find>
+      <find>render</find>
+      <find>results</find>
+      <find>exam_no</find>
+      <find>report_exam_marksheet</find>
+      <find>get_exam_result_lines</find>
+      <find>position</find>
+      <find>perce</find>
+      <find>positio</find>
+      <find>percentage</find>
+      <find>percen</find>
+      <find>merit</find>
+      <find>&quot;student_name&quot;: result.student_name,</find>
+      <find>marksheet_student_information_table_new</find>
     </findStrings>
     <replaceStrings>
       <replace>convert_obtained</replace>
@@ -185,7 +191,11 @@
       <replace>uniform</replace>
       <replace>show</replace>
       <replace>show_papers</replace>
+      <replace>subject</replace>
     </replaceStrings>
+    <dirStrings>
+      <dir>E:\eagle11.0.01\edudata099\education_exam</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -206,26 +216,29 @@
         <option value="$PROJECT_DIR$/education_exam/data/student.sports.csv" />
         <option value="$PROJECT_DIR$/education_exam/data/student.uniform.csv" />
         <option value="$PROJECT_DIR$/education_exam/__manifest__.py" />
-        <option value="$PROJECT_DIR$/education_exam/models/education_exam_result.py" />
         <option value="$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.py" />
         <option value="$PROJECT_DIR$/education_exam/reports/dsblsc_marksheet.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/education_exam/reports/exam_marksheet.xml" />
-        <option value="$PROJECT_DIR$/education_exam/reports/exam_marksheet.py" />
+        <option value="$PROJECT_DIR$/education_exam/models/exam_pass_rule.py" />
+        <option value="$PROJECT_DIR$/education_exam/models/education_exam_result.py" />
+        <option value="$PROJECT_DIR$/education_exam/wizards/print_result_wizerd.xml" />
         <option value="$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py" />
+        <option value="$PROJECT_DIR$/education_exam/reports/exam_marksheet.py" />
+        <option value="$PROJECT_DIR$/education_exam/reports/exam_marksheet.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="width" value="160" />
-    <option name="height" value="39" />
+    <option name="x" value="78" />
+    <option name="y" value="78" />
+    <option name="width" value="1046" />
+    <option name="height" value="526" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -242,22 +255,45 @@
               <item name="edudata099" type="b2602c69:ProjectViewProjectNode" />
               <item name="edudata099" type="462c0819:PsiDirectoryNode" />
               <item name="education_exam" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="edudata099" type="b2602c69:ProjectViewProjectNode" />
+              <item name="edudata099" type="462c0819:PsiDirectoryNode" />
+              <item name="education_exam" type="462c0819:PsiDirectoryNode" />
               <item name="reports" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="edudata099" type="b2602c69:ProjectViewProjectNode" />
               <item name="edudata099" type="462c0819:PsiDirectoryNode" />
               <item name="education_exam" type="462c0819:PsiDirectoryNode" />
-              <item name="wizards" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="edudata099" type="b2602c69:ProjectViewProjectNode" />
+              <item name="edudata099" type="462c0819:PsiDirectoryNode" />
+              <item name="education_exam" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="edudata099" type="b2602c69:ProjectViewProjectNode" />
+              <item name="edudata099" type="462c0819:PsiDirectoryNode" />
+              <item name="education_exam" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../eagle-exe" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://E:/eagle11.0.01/edudata099/education_exam/reports/exam_marksheet.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/education_exam" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -291,7 +327,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../eagle-exe" />
-      <option name="PARAMETERS" value="-r odoo -w odoo --addons-path addons,edudata099 -d 0304dsb -u education_exam" />
+      <option name="PARAMETERS" value="-r odoo -w odoo --addons-path addons,edudata099 -d 0622dsb -u education_exam" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -332,32 +368,32 @@
     <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17304625" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18819776" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32852563" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.32371795" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.35416666" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Python Console" order="9" />
+      <window_info anchor="bottom" id="Python Console" order="9" weight="0.32852563" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2200957" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.18819776" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32852563" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4070513" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.35416666" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -392,17 +428,112 @@
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py</url>
+          <line>272</line>
+          <option name="timeStamp" value="310" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py</url>
+          <line>158</line>
+          <option name="timeStamp" value="313" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py</url>
+          <line>458</line>
+          <option name="timeStamp" value="314" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py</url>
+          <line>502</line>
+          <option name="timeStamp" value="315" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py</url>
+          <line>565</line>
+          <option name="timeStamp" value="316" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py</url>
+          <line>436</line>
+          <option name="timeStamp" value="317" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py</url>
+          <line>61</line>
+          <option name="timeStamp" value="320" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py</url>
+          <line>32</line>
+          <option name="timeStamp" value="323" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py</url>
+          <line>191</line>
+          <option name="timeStamp" value="329" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py</url>
+          <line>202</line>
+          <option name="timeStamp" value="330" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py</url>
+          <line>206</line>
+          <option name="timeStamp" value="331" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py</url>
+          <line>209</line>
+          <option name="timeStamp" value="332" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py</url>
+          <line>216</line>
+          <option name="timeStamp" value="333" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py</url>
+          <line>220</line>
+          <option name="timeStamp" value="334" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py</url>
+          <line>223</line>
+          <option name="timeStamp" value="335" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py</url>
+          <line>237</line>
+          <option name="timeStamp" value="337" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/education_exam/models/education_exam_result.py</url>
-          <line>103</line>
-          <option name="timeStamp" value="24" />
+          <line>558</line>
+          <option name="timeStamp" value="405" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/models/education_exam_result.py</url>
+          <line>80</line>
+          <option name="timeStamp" value="466" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/models/education_exam_result.py</url>
+          <line>274</line>
+          <option name="timeStamp" value="478" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/models/education_exam_result.py</url>
+          <line>273</line>
+          <option name="timeStamp" value="479" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/education_exam/models/exam_valuation.py</url>
+          <line>71</line>
+          <option name="timeStamp" value="492" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="exam" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/education_core/models/education_class_wizard.py">
@@ -440,34 +571,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
           <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/education_exam/reports/new_result.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="177" column="116" selection-start-line="177" selection-start-column="116" selection-end-line="177" selection-end-column="116" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/education_exam/wizards/print_result_wizerd.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="12" column="62" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/education_exam/reports/new_result.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/education_core/models/education_class_division.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="143" column="14" selection-start-line="143" selection-start-column="14" selection-end-line="143" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -524,13 +627,6 @@
     <entry file="file://$PROJECT_DIR$/education_core/demo/education_data.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/education_exam/wizards/academic_transcript_wizard.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="64" column="30" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/education_exam/security/ir.model.access.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -538,9 +634,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1001">
           <caret line="80" column="46" selection-start-line="80" selection-start-column="46" selection-end-line="80" selection-end-column="46" />
-          <folding>
-            <element signature="e#11408#12042#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -569,9 +662,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
           <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
-          <folding>
-            <element signature="e#25#54#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -614,66 +704,148 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/reports/report.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="90" selection-start-line="90" selection-end-line="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../odoo/service/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="116" selection-start-line="116" selection-end-line="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../odoo/http.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="334" selection-start-line="334" selection-end-line="334" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../addons/web/controllers/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="933" selection-start-line="933" selection-end-line="933" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/reports/new_result.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="2229" column="27" selection-start-line="2229" selection-start-column="27" selection-end-line="2229" selection-end-column="27" />
+          <folding>
+            <element signature="n#template#0;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#template#1;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#template#2;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#template#3;n#data#0;n#odoo#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/wizards/academic_transcript_wizard.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="168" lean-forward="true" selection-start-line="168" selection-end-line="168" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../odoo/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="679" selection-start-line="679" selection-end-line="679" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../odoo/fields.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="588" selection-start-line="588" selection-end-line="588" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/models/exam_pass_rule.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="9" column="20" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/models/exam_results.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_core/models/education_class_division.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="151" column="14" lean-forward="true" selection-start-line="151" selection-start-column="14" selection-end-line="151" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/reports/new_result.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="164" lean-forward="true" selection-start-line="137" selection-start-column="4" selection-end-line="164" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="24" column="57" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="57" />
+          <folding>
+            <element signature="e#26#65#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/wizards/print_result_wizerd.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="38" column="67" selection-start-line="38" selection-start-column="67" selection-end-line="38" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="334" column="36" selection-start-line="334" selection-start-column="36" selection-end-line="334" selection-end-column="36" />
+          <folding>
+            <element signature="e#25#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/education_exam/models/education_exam_result.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="17" column="31" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="31" />
+        <state relative-caret-position="278">
+          <caret line="878" column="27" lean-forward="true" selection-start-line="878" selection-start-column="27" selection-end-line="878" selection-end-column="27" />
           <folding>
-            <element signature="e#5243#5306#0" />
+            <element signature="e#1#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="648" column="64" selection-start-line="648" selection-start-column="64" selection-end-line="648" selection-end-column="64" />
+        <state relative-caret-position="19">
+          <caret line="690" lean-forward="true" selection-start-line="690" selection-end-line="690" />
           <folding>
-            <element signature="n#div#0;n#template#0;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#div#3;n#div#0;n#template#0;n#data#0;n#odoo#0;n#!!top" />
             <element signature="n#template#1;n#data#0;n#odoo#0;n#!!top" />
             <element signature="n#template#3;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#t#0;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#t#1;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#t#3;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#t#4;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#t#6;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#td#0;n#t#7;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#t#8;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#t#9;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#t#0;n#td#0;n#t#9;n#template#3;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#t#10;n#template#3;n#data#0;n#odoo#0;n#!!top" />
             <element signature="n#template#4;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#t#0;n#template#4;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#t#0;n#template#5;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#t#1;n#template#5;n#data#0;n#odoo#0;n#!!top" />
             <element signature="n#template#5;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#template#6;n#data#0;n#odoo#0;n#!!top" />
             <element signature="n#template#7;n#data#0;n#odoo#0;n#!!top" />
             <element signature="n#style#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#div#3;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#div#4;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
-            <element signature="n#div#5;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_marksheet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/education_exam/reports/report.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="65" column="21" lean-forward="true" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/education_exam/wizards/print_result_wizard.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
-          <folding>
-            <marker date="1556891123946" expanded="true" signature="1393:1731" ph="..." />
           </folding>
         </state>
       </provider>

@@ -22,9 +22,12 @@ class educationExamResultWizard(models.TransientModel):
     show_subjective=fields.Boolean("Show Subjective")
     show_merit_class=fields.Boolean("Show Merit Class Position",default="True")
     show_merit_group=fields.Boolean("Show Merit Group Position")
+    show_merit_section=fields.Boolean("Show Merit Section Position")
     show_objective=fields.Boolean("show objective")
     show_prac=fields.Boolean("Show Practical")
     show_total=fields.Boolean("Show Total")
+    show_average=fields.Boolean("Show average",default="True")
+    show_average_only=fields.Boolean("Show average Only")
     @api.multi
     def del_generated_results(self):
         for exam in self.exams:
@@ -51,10 +54,7 @@ class educationExamResultWizard(models.TransientModel):
 
     @api.multi
     def get_merit_list(self):
-        for rec in self:
-            level=rec.level
-            for exam in rec.exams:
-                self.env['education.exam.results.new'].calculate_merit_list(exam,level)
+        self.env['education.exam.results.new'].calculate_merit_list(self.exams,self.level)
 
 
     @api.multi
@@ -76,6 +76,8 @@ class educationExamResultWizard(models.TransientModel):
                 rec.specific_student=False
                 rec.section=False
                 rec.student = False
+
+
     @api.multi
     @api.onchange('specific_student')
     def onchange_specific_student(self):
@@ -84,119 +86,46 @@ class educationExamResultWizard(models.TransientModel):
                 rec.student=False
     @api.multi
     def generate_results(self):
-        for rec in self:
+        for exam in self.exams:
+            result_exam_lines=self.env['education.exam.result.exam.line'].search([('exam_count','=','1'),('exam_ids','=', exam.id)])
+            if len(result_exam_lines)==0:
+                data={
+                    'exam_ids':[(6,0,[exam.id])],
+                    'academic_year' : exam.academic_year.id,
+                    'total_working_days': exam.total_working_days,
+                    'name':exam.name,
+                    # 'exam_result_line':result_exam_lines.id,
+                    'exam_count':1,
+                }
+                result_exam_lines=result_exam_lines.create(data)
+            # todo this line is hashed for average line test fast
+            for line in result_exam_lines:
+                result_exam_lines.calculate_exam_results(line)
+        if len(self.exams)>1:
+            t_working_days=0
+            exam_list=[]
             for exam in self.exams:
-                results_new_list=[]
-                result_subject_line_list=[]
-                result_paper_line_list=[]
-                new_results=self.env['education.exam.results.new'].search([('exam_id', '=', exam.id)])
-                results = self.env['education.exam.results'].search([('exam_id', '=', exam.id)])
-                for rec in new_results:
-                    if rec.result_id not in results:
-                        rec.unlink
-                for result in results:
-                    subject_list = {}
-                    new_result=new_results.search([('result_id','=',result.id)])
-                    if len(new_result)==0:
-                        result_data = {
-                            "name": exam.name,
-                            "exam_id": exam.id,
-                            "student_id": result.student_id.id,
-                            "result_id": result.id,
-                            "academic_year": exam.academic_year.id,
-                            "student_name": result.student_name,
-                            "class_id": result.division_id.id,
-                            "section_id": result.division_id.section_id.id,
-                            "generate_date": datetime.now()
-                        }
+                result_exam_lines = self.env['education.exam.result.exam.line'].search(
+                    [('exam_count', '=', '1'), ('exam_ids', '=', exam.id)])
+                t_working_days=t_working_days+result_exam_lines.total_working_days
+                exam_list.append(exam.id)
+            exam_no=len(self.exams)
+            search_str=[('exam_count','=',exam_no)]
+            result_exam_lines = self.env['education.exam.result.exam.line'].search([('exam_count','=',exam_no),('exam_ids','in',[exa for exa in exam_list])])
 
-                        new_result = self.env['education.exam.results.new'].create(result_data)
-                        results_new_list.append(new_result)
-                    else:   # edit new result data
-                        for result_to_edit in new_result:
-                            result_to_edit.name= exam.name,
-                            result_to_edit.exam_id=exam.id,
-                            result_to_edit.student_id= result.student_id.id,
-                            result_to_edit.academic_year= exam.academic_year.id,
-                            result_to_edit.student_name= result.student_name
-                            result_to_edit.class_id=result.division_id.id,
-                            result_to_edit.section_id= result.division_id.section_id.id
-                            result_to_edit.generate_date= datetime.now()
-                            results_new_list.append(result_to_edit)
-                    #calculate paper and subject datas
-                    for paper in result.subject_line_ids:
-                        present_subject_rules = self.env['exam.subject.pass.rules'].search(
-                            [('exam_id', '=', exam.id), ('subject_id', '=', paper.subject_id.subject_id.id)])
-                        if len(present_subject_rules) == 0:
-                            values = {
-                                'subject_id': paper.subject_id.subject_id.id,
-                                'exam_id': exam.id,
-                                'class_id': paper.subject_id.class_id.id
-                            }
-                            present_subject_rules = present_subject_rules.create(values)
-                        present_paper_rules = self.env['exam.paper.pass.rules'].search(
-                            [('subject_rule_id', '=', present_subject_rules.id),
-                             ('paper_id', '=', paper.subject_id.id)])
-                        if len(present_paper_rules) == 0:
-                            paper_values = {
-                                'subject_rule_id': present_subject_rules.id,
-                                'paper_id': paper.subject_id.id,
-                                'tut_mark': paper.subject_id.tut_mark,
-                                'subj_mark': paper.subject_id.subj_mark,
-                                'obj_mark': paper.subject_id.obj_mark,
-                                'prac_mark': paper.subject_id.prac_mark
-                            }
-                            present_paper_rules = present_paper_rules.create(paper_values)
-                        subjectId = paper.subject_id.subject_id
-                        if subjectId not in subject_list:
-                            newSubject=self.env['results.subject.line.new'].search([("subject_id","=",subjectId.id),
-                                                                                    ('result_id','=',new_result.id),
-                                                                                    ('pass_rule_id','=',present_subject_rules.id)])
-                            if len(newSubject)==0:
-                                subject_data = {
-                                    "subject_id": subjectId.id,
-                                    "result_id": new_result.id,
-                                    "pass_rule_id": present_subject_rules.id
-                                }
-                                newSubject = self.env["results.subject.line.new"].create(subject_data)
-                            result_subject_line_list.append(newSubject)
-                            subject_list[subjectId] = newSubject
-                        else:
-                            newSubject = subject_list[subjectId]
-                        new_paper = self.env["results.paper.line"].search([('subject_line','=',newSubject.id),
-                                                                           ('paper_id','=',paper.subject_id.id),
-                                                                           ('pass_rule_id','=',present_paper_rules.id)])
-                        if len(new_paper)==0:
-                            paper_data = {
-                                "subject_line": newSubject.id,
-                                "paper_id": paper.subject_id.id,
-                                "pass_rule_id": present_paper_rules.id,
-                                "tut_obt": paper.tut_obt,
-                                "subj_obt": paper.subj_obt,
-                                "obj_obt": paper.obj_obt,
-                                "prac_obt": paper.prac_obt,
-                                "tut_pr": paper.tut_pr,  # pr for present/Absent data
-                                "subj_pr": paper.subj_pr,
-                                "obj_pr": paper.obj_pr,
-                                "prac_pr": paper.prac_pr,
-                            }
-                            new_paper = self.env["results.paper.line"].create(paper_data)
-                        else:
-                            new_paper.tut_obt= paper.tut_obt
-                            new_paper.subj_obt= paper.subj_obt
-                            new_paper.obj_obt= paper.obj_obt
-                            new_paper.prac_obt= paper.prac_obt
-                            new_paper.tut_pr= paper.tut_pr
-                            new_paper.subj_pr= paper.subj_pr
-                            new_paper.obj_pr=paper.obj_pr
-                            new_paper.prac_pr=paper.prac_pr
+            if len (result_exam_lines)==0:
+                data = {
+                    'exam_ids': [(6, 0, exam_list)],
+                    'academic_year': self.academic_year.id,
+                    'total_working_days': t_working_days,
+                    'name': 'Average & Final',
+                    'exam_count': exam_no,
+                }
+                result_exam_lines= result_exam_lines.create(data)
+            else:
+                result_exam_lines.total_working_days=t_working_days
+            result_exam_lines.process_average_results(result_exam_lines)
 
-                        result_paper_line_list.append(new_paper)
-            self.calculate_subject_rules(subject_list,exam)
-            # self.calculate_result_paper_lines(result_paper_line_list)
-            #self.calculate_result_subject_lines(result_subject_line_list)
-            self.get_result_type_count(exam)
-            self.calculate_subjects_results(exam)
     @api.multi
     def calculate_subject_rules(self,subject_list,exam):
         for subjects in subject_list:

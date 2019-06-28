@@ -12,10 +12,40 @@ class exam_marksheet(models.AbstractModel):
         exams = []
         for exam in objects.exams:
            exams.extend(exam)
-
         return exams
 
-    def get_results(self,object,students,exams):
+
+    def get_exam_result_lines(self, objects):
+        result_lines = []
+        for exam in objects.exams:
+            results=self.env['education.exam.result.exam.line'].search([('exam_count','=',1),('exam_ids','=',exam.id)])
+            result_lines.append(results)
+        if len(objects.exams)>1 and objects.show_average==True:
+            results = self.env['education.exam.result.exam.line'].search(
+                [('exam_count', '=', len(objects.exams)), ('exam_ids', 'in',[exm.id for exm in objects.exams])])
+            result_lines.append(results)
+
+        return result_lines
+    def get_student_result_line(self,exam_result_line,student):
+        student_result_line=self.env['education.exam.results.new'].search([('exam_result_line','=',exam_result_line.id)
+                                                                              ,('student_id','=',student.id)])
+        return student_result_line
+
+    # def get_results(self,object,students,exams):
+    #     examLine=[]
+    #     studentLine=[]
+    #     resultLine
+    #     for examResultLine in get_exam_result_lines(object):
+    #         for student in get_students(object):
+    #             for studentResultLine in get_student_result_line(examResultLine,student):
+    #                 pass
+
+
+
+
+
+
+    def get_results(self,object,students):
 
         results={}
         for student in students:
@@ -28,8 +58,8 @@ class exam_marksheet(models.AbstractModel):
             comp_results = {}
             op_results = {}
             sel_results = {}
-            for exam in exams:
-                result_line=self.env['education.exam.results.new'].search([('student_history','=',student.id),('exam_id','=',exam.id)])
+            for exam in self.get_exam_result_lines( object):
+                result_line=self.env['education.exam.results.new'].search([('student_history','=',student.id),('exam_result_line','=',exam.id)])
                 results[student][exam]={}
                 results[student][exam]['subjects']={}
                 results[student][exam]['result']=result_line
@@ -220,9 +250,9 @@ class exam_marksheet(models.AbstractModel):
         ratio=subject.subject_id
         return ratio
 
-    def get_total_working_days(self,exams):
+    def get_total_working_days(self,object):
         working_days=0
-        for exam in exams:
+        for exam in object.exams:
             working_days=working_days+exam.total_working_days
         return working_days
 
@@ -232,11 +262,44 @@ class exam_marksheet(models.AbstractModel):
         else:
             converted_report=False
         return converted_report
-
+    def show_merit_class(self,obj):
+        return obj.show_merit_class
+    def show_merit_group(self,obj):
+        return obj.show_merit_group
+    def show_merit_section(self,obj):
+        return obj.show_merit_section
 
     def get_date(self, date):
         date1 = datetime.strptime(date, "%Y-%m-%d")
         return str(date1.month) + ' / ' + str(date1.year)
+    def num2serial(self,numb):
+        if numb < 20:  # determining suffix for < 20
+            if numb == 1:
+                suffix = 'st'
+            elif numb == 2:
+                suffix = 'nd'
+            elif numb == 3:
+                suffix = 'rd'
+            else:
+                suffix = 'th'
+        else:  # determining suffix for > 20
+            tens = str(numb)
+            tens = tens[-2]
+            unit = str(numb)
+            unit = unit[-1]
+            if tens == "1":
+                suffix = "th"
+            else:
+                if unit == "1":
+                    suffix = 'st'
+                elif unit == "2":
+                    suffix = 'nd'
+                elif unit == "3":
+                    suffix = 'rd'
+                else:
+                    suffix = 'th'
+        return str(numb) + suffix
+
 
     @api.model
     def get_report_values(self, docids, data=None):
@@ -263,7 +326,13 @@ class exam_marksheet(models.AbstractModel):
             'get_lg': self.get_lg,
             'get_exam_obtained_total': self.get_exam_obtained_total,
             'check_optional': self.check_optional,
+            'num2serial': self.num2serial,
+            'get_exam_result_lines': self.get_exam_result_lines,
+            'get_student_result_line': self.get_student_result_line,
             'get_results': self.get_results,
             'half_round_up': self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up,
             'get_students_in_section': self.get_students_in_section,
+            'show_merit_class': self.show_merit_class,
+            'show_merit_group': self.show_merit_group,
+            'show_merit_section': self.show_merit_section,
         }

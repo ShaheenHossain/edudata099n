@@ -36,6 +36,7 @@
                                 <group string="Merit List Settings">
                                     <field name="show_merit_class"/>
                                     <field name="show_merit_group"/>
+                                    <field name="show_merit_section"/>
                                 </group>
 
                                 <group col="4">

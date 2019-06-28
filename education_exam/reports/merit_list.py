@@ -9,109 +9,60 @@ import pandas as pd
 class examEvaluation(models.AbstractModel):
     _name = 'report.education_exam.report_merit_list'
 
-    def get_merit_list(self,object):
-
-        df=self.env['report.education_exam.report_exam_academic_transcript_s'].get_merit_list(object)
-
-
-        for index, row in df.iterrows():
-            # convert student id to student_class_history
-            df.loc[index,'student'] = self.env['education.class.history'].search([('student_id.id', '=', int(row['student']))])
-
-        return df
-    def get_converted_report(self,obj):
-        if obj.report_type=='2' :
-            converted_report=True
-        else:
-            converted_report=False
-        return converted_report
-
-
-
-
-    def get_result_line(self,exam,section):
-        result_Line=self.env['education.exam.results.new'].search([('exam_id','=',exam.id),('section_id','=',section.section_id.id)],order="merit_section asc",)
-        return result_Line
     def get_sections(self,object):
         sections=[]
 
         if object.section:
-            sections.append(object.section)
+            return object.section
         elif object.level:
             section=self.env['education.class.division'].search([('class_id','=',object.level.id),('academic_year_id','=',object.academic_year.id)])
-            for sec in section:
-                sections.append(sec)
-        return sections
-    def get_exams(self, objects):
-        exams = []
-        for exam in objects.exams:
-           exams.extend(exam)
+            return section
 
-        return exams
+    def get_students(self,section):
 
-    def get_student_count(self,section):
-        """Return the number of students in the class"""
-        students = self.env['education.class.history'].search([('class_id', '=', section.id)])
-        student_count = len(students)
-        return student_count
+        students=self.env['education.class.history'].search([('class_id.id', '=', section.id)])
 
-    def get_students(self,objects):
-
-        student=[]
-        student_list=self.env['education.class.history'].search([('class_id.id', '=', objects.id)])
-        for stu in student_list:
-            student.extend(stu.student_id)
-        return student
-    def get_subjects(self, section,obj):
-        subjs=self.env['education.syllabus'].search([('class_id','=',section.class_id.id),('academic_year','=',obj.academic_year.id)])
-
-        return subjs
-
-    def get_marks(self,subject,student,exam):
-        marks=[]
-        mark_line=self.env['results.subject.line'].search([('student_id','=',student.id),('exam_id','=',exam.id),('subject_id','=',subject.id)])
-        if len(mark_line)==0:
-            if subject.tut_mark >0:
-                marks.append('0')
-            if subject.subj_mark >0:
-                marks.append('0')
-            if subject.obj_mark >0:
-                marks.append('0')
-            if subject.prac_mark >0:
-                marks.append('0')
+        return students
+    def get_converted_report(self,object):
+        if object.report_type==1:
+            return 0
         else:
-            if mark_line.subject_id.tut_mark>0:
-                marks.append(mark_line.tut_mark)
-            elif  mark_line.subject_id.subj_mark>0:
-                marks.append(mark_line.subj_mark)
-            elif mark_line.subject_id.obj_mark > 0:
-                marks.append(mark_line.obj_mark)
-            elif  mark_line.subject_id.prac_mark>0:
-                marks.append(mark_line.prac_mark)
-        return marks
+            return 1
     def get_merit_class_display(self,object):
-        if object.show_merit_class==True:
+        if object.show_merit_class:
             return 1
+        else: return 0
     def get_merit_group_display(self,object):
-        if object.show_merit_group==True:
+        if object.show_merit_group:
             return 1
+        else: return 0
 
 
+    def get_exam_result_lines(self, objects):
+        result_lines = []
+        for exam in objects.exams:
+            results=self.env['education.exam.result.exam.line'].search([('exam_count','=',1),('exam_ids','=',exam.id)])
+            result_lines.append(results)
+        if len(objects.exams)>1 and objects.show_average==True:
+            results = self.env['education.exam.result.exam.line'].search(
+                [('exam_count', '=', len(objects.exams)), ('exam_ids', 'in',[exm.id for exm in objects.exams])])
+            result_lines.append(results)
 
+        return result_lines
 
+    def get_results(self,objects):
+        section=self.get_sections(objects)
+        exam_result_lines=self.get_exam_result_lines(objects)
+        results={}
+        students = self.get_students(section)
+        for student in students:
+            results[student]={}
+            for line in exam_result_lines:
+                result_line=self.env['education.exam.results.new'].search([('student_history','=',student.id),
+                                                                           ('exam_result_line','=',line.id)])
+                results[student][line]=result_line
 
-
-    def get_gradings(self,obj):
-        grading=self.env['education.result.grading'].search([('id','>','0')],order='min_per desc',)
-        grades=[]
-        for grade in grading:
-            grades.extend(grade)
-        return grades
-
-
-    def get_date(self, date):
-        date1 = datetime.strptime(date, "%Y-%m-%d")
-        return str(date1.month) + ' / ' + str(date1.year)
+        return results
 
     @api.model
     def get_report_values(self, docids, data=None):
@@ -121,18 +72,12 @@ class examEvaluation(models.AbstractModel):
             'doc_model': 'education.exam.results',
             'docs': docs,
             'time': time,
+            'get_exam_result_lines': self.get_exam_result_lines,
+            'get_results': self.get_results,
             'get_students': self.get_students,
-            'get_exams': self.get_exams,
-            'get_subjects': self.get_subjects,
-            'get_gradings':self.get_gradings,
-            'get_date': self.get_date,
             'get_sections': self.get_sections,
-            'get_marks': self.get_marks,
-            'get_merit_list': self.get_merit_list,
-            'get_results': self.env['report.education_exam.report_dsblsc_marksheet'].get_results,
-            'get_student_count': self.get_student_count,
-            'get_result_line': self.get_result_line,
             'get_converted_report': self.get_converted_report,
             'get_merit_group_display': self.get_merit_group_display,
             'get_merit_class_display': self.get_merit_class_display,
+            'half_round_up': self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up,
         }

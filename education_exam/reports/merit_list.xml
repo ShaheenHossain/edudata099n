@@ -3,19 +3,20 @@
     <data>
         <template id="report_merit_list">
             <t t-call="web.html_container">
+                <t t-set="results" t-value="get_results(docs)" />
+                <t t-set="exam_result_lines" t-value="get_exam_result_lines(docs)" />
+                <t t-set="exam_count" t-value="len(exam_result_lines)"/>
                 <t t-foreach="get_sections(docs)" t-as="section">
-                    <t t-set="student_count" t-value="get_student_count(section)"/>
-                     <t t-call="education_exam.external_layout_evaluation">
-                        <t t-set="exam_list" t-value="get_exams(docs)" />
-                         <t t-set="result" t-value="get_results(docs)" />
-                         <t t-set="exam_count" t-value="len(exam_list)"/>
+                    <t t-call="education_exam.external_layout_evaluation">
                          <style>
                             table, th, td {
                                      border: 1px solid black;
-                                    padding-bottom:3px;
-                                    padding-left:3px;
-                                    padding-top:3px;
-                                    padding-right:3px;
+                                    padding-bottom:2px;
+                                    padding-left:2px;
+                                    padding-top:2px;
+                                    padding-right:2px;
+                                    text-align:center;
+                                    vertical-align:middle;
                                     }
                              .dont_split{
                                page-break-inside: avoid !important;
@@ -49,9 +50,9 @@
                                     <div class="col-xs-12" style="text-align:center;">
                                         <t t-set="level" t-value="m"/>
                                         <h4>
-                                            <t t-foreach="exam_list" t-as="exam">
+                                            <t t-foreach="exam_result_lines" t-as="exam">
                                                 <t t-if="exam_first">
-                                                    <t t-set="level" t-value="exam.class_id"/>
+                                                    <t t-set="level" t-value="section.class_id"/>
                                                     <t t-esc="exam.name"/>
                                                 </t>
                                                 <t t-else="">
@@ -97,87 +98,77 @@
                                     <t t-set="converted_report" t-value="get_converted_report(docs)"/>
                                     <t t-set="show_merit_class" t-value="get_merit_class_display(docs)"/>
                                     <t t-set="show_merit_group" t-value="get_merit_group_display(docs)"/>
+                                    <t t-set="spanrow" t-value="2"/>
+                                    <t t-if="exam_count>1">
+                                        <t t-set="spanrow" t-value="3"/>
+
+                                    </t>
                                     <THEAD>
-
-
-                                        <tr class="dont_split"><td rowspan="2">Roll</td><td rowspan="2">ID</td>
-                                            <td rowspan="2" style="text-align : center;">Name</td>
-                                            <td rowspan="2" style="text-align : center;">Category</td>
-                                            <t t-if="exam_count>1" >
-                                                <t t-foreach="exam_list" t-as="exam">
-                                                    <td colspan="3"><t t-esc="exam.exam_type.name"/></td>
+                                        <tr class="dont_split">
+                                            <td t-att-rowspan="spanrow">Roll</td>
+                                            <td t-att-rowspan="spanrow">ID</td>
+                                            <td t-att-rowspan="spanrow" style="text-align : center;">Name</td>
+                                            <td t-att-rowspan="spanrow" style="text-align : center;">Category</td>
+                                            <t t-if="exam_count>1">
+                                                <t t-foreach="exam_result_lines" t-as="exam">
+                                                    <td t-att-colspan="3+show_merit_group+show_merit_class"><t t-esc="exam.name"/></td>
                                                 </t>
-                                                <td colspan="3">
-                                                    Total</td><p>&lt;/tr&gt;</p><p>&lt;tr&gt;</p>
-                                                <t t-foreach="exam_list" t-as="exam">
-                                                    <td rowspan="2" style="text-align : center;">GPA </td>
-                                                    <!--<td rowspan="2" style="text-align : center;">GPA <p font-size="8">(with 4th subjects)</p>-->
-                                                <td >Score</td><td >Position In Section</td><td class="rotate">Position In Class</td>
-                                                </t>
-                                                <td >Score</td><td >Position In Section</td><td >Position In Class</td>
+                                                <span>&lt;/tr &gt;</span>
                                             </t>
-
-                                        <t t-else="">
-                                            <td rowspan="2" style="text-align : center;">GPA <br/>With 4th Subject</td>
-                                            <td rowspan="2" style="text-align : center;">GPA</td>
-                                            <td  rowspan="2" style="text-align : center;">Total Marks</td>
-                                            <t t-if="converted_report">
-                                                <td  rowspan="2" style="text-align : center;">Converted Marks</td>
+                                            <t t-foreach="exam_result_lines" t-as="exam">
+                                                <td rowspan="2" style="text-align : center;">GP </td>
+                                                <td rowspan="2">Score</td>
+                                                <td t-att-colspan="1+show_merit_group+show_merit_class">Position</td>
                                             </t>
-                                            <td rowspan="2" style="text-align : center;">Position In Section</td>
-
+                                        </tr>
+                                    <tr>
+                                        <t t-foreach="exam_result_lines" t-as="exam">
+                                            <td style="text-align : center;">section </td>
                                             <t t-if="show_merit_group==1">
-                                                <td rowspan="2" style="text-align : center;">Position In Group</td>
+                                                <td style="text-align : center;">Group </td>
                                             </t>
                                             <t t-if="show_merit_class==1">
-                                                <td rowspan="2" style="text-align : center;">Position In Class</td>
+                                                <td style="text-align : center;">Class </td>
                                             </t>
-
-                                            <p>&lt;/tr&gt;</p>
-                                            &lt;tr&gt;
                                         </t>
-                                        </tr>
+                                    </tr>
                                     </THEAD>
-                                        <t t-foreach="exam_list" t-as="exam">
-                                            <t t-set="result_lines" t-value="get_result_line(exam,section)"/>
-                                            <t t-foreach="result_lines" t-as="result_line">
-                                                <tr class="dont_split">
-                                                    <td><t t-esc='"{:02d}".format(result_line.roll_no)'/></td>
-                                                    <td><t t-esc='"{:05d}".format(int(result_line.student_id.student_id))'/></td>
-                                                    <!--<td><t t-esc="result_line.student_id.student_id"/></td>-->
-
-                                                    <td><t t-esc="result_line.student_name"/></td>
-
+                                    <t t-foreach="get_students(section)" t-as="student">
+                                        <tr>
+                                            <td>
+                                                <t t-esc='"{:02d}".format(student.roll_no)'/>
+                                            </td>
+                                            <td>
+                                                <t t-esc='"{:05d}".format(int(student.student_id.student_id))'/>
+                                            </td>
+                                            <td style="text-align: left;">
+                                                <t t-esc="student.student_id.name"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="student.student_id.student_category"/>
+                                            </td>
+                                            <t t-foreach="exam_result_lines" t-as="exam">
+                                                <td style="text-align : center;">
+                                                    <t t-esc="results[student][exam].net_gp"/>
+                                                </td>
+                                                <td style="text-align : center;">
+                                                    <t t-esc="results[student][exam].net_obtained"/>
+                                                </td>
+                                                <td style="text-align : center;">
+                                                    <t t-esc="results[student][exam].merit_section"/>
+                                                </td>
+                                                <t t-if="show_merit_group==1">
                                                     <td style="text-align : center;">
-                                                        <t t-esc="result_line.student_id.student_category"/></td>
-                                                    <t t-set="fail_count" t-value="result_line.general_fail_count"/>
-                                                    <td style="text-align : center;">
-                                                        <t t-esc="round(result_line.net_gpa,2)"/>
-                                                        <t t-if="fail_count>0">
-                                                            <t t-esc="'('+str(fail_count)+'F)' "/>
-                                                        </t>
+                                                        <t t-esc="results[student][exam].merit_group"/>
                                                     </td>
+                                                </t>
+                                                <t t-if="show_merit_class==1">
                                                     <td style="text-align : center;">
-                                                        <t t-esc="round(result_line.general_gpa,2)"/>
-                                                        <t t-set="fail_count" t-value="result_line.general_fail_count"/>
-                                                        <t t-if="fail_count>0">
-                                                            <t t-esc="'('+str(fail_count)+'F)' "/>
-                                                        </t>
+                                                        <t t-esc="results[student][exam].merit_class"/>
                                                     </td>
-                                                    <t t-if="converted_report">
-                                                        <td style="text-align : center;"><t t-esc="result_line.net_obtained_converted"/></td>
-                                                    </t>
-                                                    <td style="text-align : center;"><t t-esc="result_line.net_obtained"/></td>
-                                                    <td style="text-align : center;"><t t-esc="result_line.merit_section"/></td>
-                                                    <t t-if="show_merit_group==1">
-                                                        <td style="text-align : center;"><t t-esc="result_line.merit_group"/></td>
-                                                    </t>
-                                                    <t t-if="show_merit_class==1">
-                                                        <td style="text-align : center;"><t t-esc="result_line.merit_class"/></td>
-                                                    </t>
-
-                                                </tr>
+                                                </t>
                                             </t>
+                                        </tr>
                                     </t>
                                 </table>
                             </div>

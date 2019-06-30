@@ -8,26 +8,65 @@ from odoo import fields, models,api
 class examEvaluation(models.AbstractModel):
     _name = 'report.education_exam.report_exam_evaluation'
 
-    def get_all_subjects(self,section,result_exam_lines):
-        result_lines=self.env['education.exam.results.new'].search([
-            ('exam_result_line','in',[line.id for line in result_exam_lines]),
-            ('class_id','=',section.id)])
-        all_subjects=result_lines.mapped('subject_line.subject_id')
-        return all_subjects
-    def get_student_result_line(self,student,result_exam_lines):
+    def get_results(self,section,exams):
+
         results={}
-        for line in result_exam_lines:
-            result_line=self.env['education.exam.results.new'].search([
-                ('exam_result_line','=',line.id),
-                ('student_id','=',student.id)])
-            results[line]={}
-            results[line]['res']=result_line
-            for subject in result_line.subject_line:
-                results[line][subject.subject_id]={}
-                results[line][subject.subject_id]['res']=subject
-                for paper in subject.paper_ids:
-                    results[line][subject.subject_id][paper]=paper
+        students = self.get_students(section)
+        for student in students:
+            results[student]={}
+            results[student]['compulsory']={}
+            results[student]['optional']={}
+            results[student]['selective']={}
+            results[student]['subjects']={}
+            comp_results = {}
+            op_results = {}
+            sel_results = {}
+            for exam in exams:
+                result_line=self.env['education.exam.results.new'].search([('student_history','=',student.id),('exam_id','=',exam.id)])
+                results[student][exam]={}
+                results[student][exam]['subjects']={}
+                results[student][exam]['result']=result_line
+
+
+                for subject in student.compulsory_subjects:
+                    if subject.subject_id not in results[student][exam]['subjects']:
+                        subject_line=self.env['results.subject.line.new'].search([('result_id','=',result_line.id),('subject_id','=',subject.subject_id.id)])
+                        if subject.subject_id not in results[student]['compulsory']:
+                            results[student]['compulsory'][subject.subject_id]={}
+                        if subject.subject_id not in results[student]['subjects']:
+                            results[student]['subjects'][subject.subject_id]={}
+                            results[student]['subjects'][subject.subject_id][exam]={}
+                        results[student]['compulsory'][subject.subject_id][exam]=subject_line
+                        results[student][exam]['subjects'][subject.subject_id]=subject_line
+                        results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
+
+                for subject in student.optional_subjects:
+                    if subject.subject_id not in results[student][exam]['subjects']:
+                        subject_line=self.env['results.subject.line.new'].search([('result_id','=',result_line.id),('subject_id','=',subject.subject_id.id)])
+                        if subject.subject_id not in results[student]['optional']:
+                            results[student]['optional'][subject.subject_id]={}
+                        if subject.subject_id not in results[student]['subjects']:
+                            results[student]['subjects'][subject.subject_id]={}
+                            results[student]['subjects'][subject.subject_id][exam]={}
+                        results[student]['optional'][subject.subject_id][exam]=subject_line
+                        results[student][exam]['subjects'][subject.subject_id]=subject_line
+                        results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
+
+                for subject in student.selective_subjects:
+                    if subject.subject_id not in results[student][exam]['subjects']:
+                        subject_line=self.env['results.subject.line.new'].search([('result_id','=',result_line.id),('subject_id','=',subject.subject_id.id)])
+                        if subject.subject_id not in results[student]['selective']:
+                            results[student]['selective'][subject.subject_id]={}
+                        if subject.subject_id not in results[student]['subjects']:
+                            results[student]['subjects'][subject.subject_id]={}
+                            results[student]['subjects'][subject.subject_id][exam]={}
+                        results[student]['selective'][subject.subject_id][exam]=subject_line
+                        results[student][exam]['subjects'][subject.subject_id]=subject_line
+                        results[student]['subjects'][subject.subject_id][exam]['res']=subject_line
+
         return results
+
+
 
     def get_sections(self,object):
         sections=[]
@@ -61,7 +100,6 @@ class examEvaluation(models.AbstractModel):
                 subject_list.append(subj)
 
         return subject_list
-
     def check_optional(self,subject,student,exam):
         is_optional=0
         student_history = self.env['education.class.history'].search(
@@ -131,17 +169,7 @@ class examEvaluation(models.AbstractModel):
         else:
             converted_report=False
         return converted_report
-    def get_exam_result_lines(self, objects):
-        result_lines = []
-        for exam in objects.exams:
-            results=self.env['education.exam.result.exam.line'].search([('exam_count','=',1),('exam_ids','=',exam.id)])
-            result_lines.append(results)
-        if len(objects.exams)>1 and objects.show_average==True:
-            results = self.env['education.exam.result.exam.line'].search(
-                [('exam_count', '=', len(objects.exams)), ('exam_ids', 'in',[exm.id for exm in objects.exams])])
-            result_lines.append(results)
 
-        return result_lines
 
     def get_date(self, date):
         date1 = datetime.strptime(date, "%Y-%m-%d")
@@ -171,10 +199,6 @@ class examEvaluation(models.AbstractModel):
             'get_lg': self.get_lg,
             'get_exam_obtained_total': self.get_exam_obtained_total,
             'check_optional': self.check_optional,
+            'get_results': self.get_results,
             'half_round_up': self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up,
-            'get_exam_result_lines': self.get_exam_result_lines,
-            'get_all_subjects': self.get_all_subjects,
-            'get_student_result_line': self.get_student_result_line,
-
-
         }

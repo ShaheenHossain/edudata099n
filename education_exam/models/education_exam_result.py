@@ -337,7 +337,7 @@ class EducationExamResultsExamination(models.Model):
                 #calculate paper and subject datas
                 for paper in result.subject_line_ids:
                     present_subject_rules = self.env['exam.subject.pass.rules'].search(
-                        [('exam_id', '=', exam.id), ('subject_id', '=', paper.subject_id.subject_id.id)])
+                        [('result_exam_line', '=', result_exam_line.id), ('subject_id', '=', paper.subject_id.subject_id.id)])
                     if len(present_subject_rules) == 0:
                         values = {
                             'subject_id': paper.subject_id.subject_id.id,
@@ -863,71 +863,72 @@ class EducationExamResultsNew(models.Model):
 
 
     @api.multi
-    def calculate_merit_list(self,exam,level):
-        results=[]
-        roll_no=[]
-        general_total=[]
-        net_total=[]
-        net_gpa=[]
-        optional_fail=[]
-        general_fail=[]
-        extra_fail=[]
-        section=[]
-        exam_no=[]
-        group=[]
-        records=self.env['education.exam.results.new'].search([('exam_id','=',exam.id),('class_id.class_id','=',level.id)])
-        for rec in records:
-            results.append(rec)
-            roll_no.append(rec.student_history.roll_no)
-            general_total.append(rec.general_obtained)
-            net_total.append(rec.net_obtained)
-            net_gpa.append(rec.net_gpa)
-            optional_fail.append(rec.optional_fail_count)
-            general_fail.append(rec.general_fail_count)
-            extra_fail.append(rec.extra_fail_count)
-            section.append(rec.student_history.section)
-            group.append(rec.group)
-            exam_no.append(exam)
-        data={
-            'result':results,
-            'gen_total':general_total,
-            'net_total': net_total,
-            'net_gpa': net_gpa,
-            'gen_fail': general_fail,
-            'op_fail': optional_fail,
-            'ext_fail': extra_fail,
-            'section': section,
-            'group':group,
-            'roll': roll_no,
-            'exam': exam_no,
-            'merit_class':0,
-            'merit_section':0,
-            'merit_group':0,
+    def calculate_merit_list(self,result_exam_lines,level):
+        for line in result_exam_lines:
+            results=[]
+            roll_no=[]
+            general_total=[]
+            net_total=[]
+            net_gpa=[]
+            optional_fail=[]
+            general_fail=[]
+            extra_fail=[]
+            section=[]
+            exam_no=[]
+            group=[]
+            records=self.env['education.exam.results.new'].search([('exam_result_line','=',line.id),('class_id.class_id','=',level.id)])
+            for rec in records:
+                results.append(rec)
+                roll_no.append(rec.student_history.roll_no)
+                general_total.append(rec.general_obtained)
+                net_total.append(rec.net_obtained)
+                net_gpa.append(rec.net_gpa)
+                optional_fail.append(rec.optional_fail_count)
+                general_fail.append(rec.general_fail_count)
+                extra_fail.append(rec.extra_fail_count)
+                section.append(rec.student_history.section)
+                group.append(rec.group)
+                # exam_no.append(exam)
+            data={
+                'result':results,
+                'gen_total':general_total,
+                'net_total': net_total,
+                'net_gpa': net_gpa,
+                'gen_fail': general_fail,
+                'op_fail': optional_fail,
+                'ext_fail': extra_fail,
+                'section': section,
+                'group':group,
+                'roll': roll_no,
+                # 'exam': exam_no,
+                'merit_class':0,
+                'merit_section':0,
+                'merit_group':0,
 
-        }
-        df = pd.DataFrame(data)
-        df1=df.sort_values(['gen_fail','net_gpa','net_total', 'op_fail','ext_fail','roll'], ascending=[True, False,False,True,True,True])
-        df= df1.reset_index(drop=True)
-        for index, row in df.iterrows():
-            row['result'].merit_class=index+1
-        grouped = df.groupby('section')
-        for name, group in grouped:
-            df_section = df[(df['section'] == name)]
-            df_section_sorted=df_section.sort_index()
-            df_section_indexed=df_section_sorted.reset_index(drop=True)
-            for index,row in df_section_indexed.iterrows():
-                row['result'].merit_section=index+1
-            # df_section_sorted.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df_section_'+str(name.id) +'.csv')
-        grouped = df.groupby('group')
-        for name, group in grouped:
-            df_section = df[(df['group'] == name)]
-            df_section_sorted = df_section.sort_index()
-            df_section_indexed = df_section_sorted.reset_index(drop=True)
-            for index, row in df_section_indexed.iterrows():
-                row['result'].merit_group = index + 1
+            }
+            df = pd.DataFrame(data)
+            df1=df.sort_values(['gen_fail','net_gpa','net_total', 'op_fail','ext_fail','roll'], ascending=[True, False,False,True,True,True])
+            df= df1.reset_index(drop=True)
+            for index, row in df.iterrows():
+                row['result'].merit_class=index+1
+            grouped = df.groupby('section')
+            for name, group in grouped:
+                df_section = df[(df['section'] == name)]
+                df_section_sorted=df_section.sort_index()
+                df_section_indexed=df_section_sorted.reset_index(drop=True)
+                for index,row in df_section_indexed.iterrows():
+                    row['result'].merit_section=index+1
+                # df_section_sorted.to_csv(r'C:\Users\Khan Store\Downloads\pandas\df_section_'+str(name.id) +'.csv')
+            grouped = df.groupby('group')
+            for name, group in grouped:
+                df_section = df[(df['group'] == name)]
+                df_section_sorted = df_section.sort_index()
+                df_section_indexed = df_section_sorted.reset_index(drop=True)
+                for index, row in df_section_indexed.iterrows():
+                    row['result'].merit_group = index + 1
 
-        for index, row in df.iterrows():
-            print(df.loc[index,'merit_class'])
+            for index, row in df.iterrows():
+                print(df.loc[index,'merit_class'])
 
     @api.onchange('general_gp','general_count','optional_gp','optional_count')
     def get_general_gpa(self):

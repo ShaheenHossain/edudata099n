@@ -197,16 +197,20 @@
 
         <template id="evaluation_data_layout">
             <div class="page">
+
                 <div class="oe_structure">
+                    <t t-set="converted_report" t-value="get_converted_report(docs)"/>
+                    <t t-set="show_mark_heading" t-value="1"/>
                     <div class="row" style="text-align:center">
                         <h3>
-                            <t t-foreach="exam_result_lines" t-as="exam_line">
 
-                                <t t-if="exam_line_last" >
-                                    <span t-field="exam_line.name"/> <span > Examination</span>
+                            <t t-foreach="exam_list" t-as="exam">
+
+                                <t t-if="exam_last" >
+                                    <span t-field="exam.exam_type"/> <span > Examination</span>
                                 </t>
                                 <t t-else="">
-                                    <span t-field="exam_line.name"/> <span>,   </span>
+                                    <span t-field="exam.exam_type"/> <span>,   </span>
                                 </t>
                             </t>
                         </h3>
@@ -227,60 +231,98 @@
                     </div>
                     <div class="row">
                         <table width="100%" >
-                            <THEAD>
-                                <tr>
-                                    <th rowspan="3">ID</th>
-                                    <th rowspan="3">Roll</th>
-                                    <th rowspan="3">Name</th>
-                                    <th rowspan="3">Exam</th>
-                                    <th rowspan="3">Paper</th>
-                                    <th t-att-colspan="len(all_subjects)*5">Subjects</th>
 
-                                </tr>
-                                <tr>
-                                    <t t-foreach="all_subjects" t-as="subject">
-                                        <td colspan="5">
-                                            <t t-esc="subject.name"/>
-                                        </td>
-                                    </t>
-                                </tr>
-                                <tr>
-                                    <t t-foreach="all_subjects" t-as="subject">
-                                        <td >Mth</td>
-                                        <td >Sub</td>
-                                        <td >Obj</td>
-                                        <td >Pra</td>
-                                        <td >Total</td>
-                                    </t>
-                                </tr>
-                            </THEAD>
+                            <tr>
+                                <th>ID</th>
+                                <th>Roll</th>
+                                <th>Name</th>
+                                <th colspan="100%">Subjects</th>
+
+                            </tr>
+                            <t t-foreach="get_students(section)" t-as="student">
+                                <t t-set="show_paper_column" t-value="show_paper(docs)"/>
+                                <t t-set="show_tut_column" t-value="show_tut(docs)"/>
+                                <t t-set="show_obj_column" t-value="show_obj(docs)"/>
+                                <t t-set="show_prac_column" t-value="show_prac(docs)"/>
                             <tbody style="page-break-inside:avoide !important;">
-                                <t t-foreach="students" t-as="student">
-                                    <tr>
-                                        <t t-foreach="result_exam_lines" t-as="exam_line">
-                                            <t t-set="results" t-value="get_student_result_line(student,exam_line)"/>
-                                            <t t-if="exam_line_first">
-                                                <td rowspan="5"><t t-esc="results[exam_line]['res'].student_id.id"/> </td>
-                                                <td t-att-rowspan="5"><t t-esc="results[exam_line]['res'].student_history.roll_no"/> </td>
-                                                <td t-att-rowspan="5"><t t-esc="results[exam_line]['res'].student_id.name"/> </td>
-                                                <td t-att-rowspan="2"><t t-esc="exam_line.name"/> </td>
-                                            </t>
-                                            <t t-set="index" t-value="0"/>
-
-                                            <t t-foreach="all_subjects" t-as="subject">
-                                                <t t-foreach="results[exam_line][subject]['res'].paper_ids" t-as="paper">
-                                                   <t t-if="subject_first">
-                                                       <td>1st</td>
-                                                   </t>
-                                                </t>
-                                                <span>&lt;/tr &gt;&lt;tr&gt;</span>
-                                                <t t-set="index" t-value="index+1"/>
-
-                                            </t>
+                                <tr>
+                                    <td style="vertical-align:middle;pading-right:3px;pading-left:3px;">
+                                        <t t-esc="student.student_id.student_id"/>
+                                    </td>
+                                    <td style="vertical-align:middle;" >
+                                        <t t-esc='"{:02d}".format(student.student_id.roll_no)'/>
+                                    </td>
+                                    <td style="vertical-align:middle;">
+                                        <t t-esc="student.student_id.name"/>
+                                    </td>
+                                       <t t-foreach="results[student]['compulsory']" t-as="subject">
+                                           <td style="page-break-inside:avoide !important;">
+                                            <t t-call="education_exam.evaluation_subject_template"/>
+                                               <t t-set="show_paper_column" t-value="0"/>
+                                           </td>
+                                       </t>
+                                    <t t-foreach="results[student]['selective']" t-as="subject">
+                                            <td>
+                                                <t t-set="show_paper_column" t-value="0"/>
+                                                <t t-call="education_exam.evaluation_subject_template"/>
+                                            </td>
                                         </t>
-                                    </tr>
-                                </t>
+
+                                        <t t-foreach="results[student]['optional']" t-as="subject">
+                                            <td >
+                                                <t t-set="show_paper_column" t-value="0"/>
+                                                <t t-call="education_exam.evaluation_subject_template"/>
+                                            </td>
+                                        </t>
+                                    <td style="vertical-align:middle;">
+                                        <t t-set="show_mark_heading" t-value="0"/>
+                                        <table border="0" width="100%">
+                                            <tr>
+                                                <td>GPA</td>
+                                            </tr>
+                                            <tr border="0">
+                                                <t t-foreach="exam_list" t-as="exam">
+
+                                                    <td border="0">
+                                                        <t t-esc="round(results[student][exam]['result'].net_gpa,2)"/>
+                                                        <t t-if="results[student][exam]['result'].general_fail_count==0">
+
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-esc="'('+str(results[student][exam]['result'].general_fail_count)+'F)'"/>
+                                                        </t>
+                                                    </td>
+                                                </t>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align:middle;" >
+                                        <table width="100%" hight="100%" border="0">
+                                            <tr><td>Tot</td>
+                                                <t t-if="converted_report>0">
+                                                    <td>Conv</td>
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <t t-foreach="exam_list" t-as="exam">
+
+                                                    <td >
+                                                        <t t-esc="round(results[student][exam]['result'].net_obtained)"/>
+                                                    </td>
+                                                    <t t-if="converted_report>0">
+                                                        <td >
+                                                            <t t-esc="round(results[student][exam]['result'].net_obtained_converted)"/>
+                                                        </td>
+                                                    </t>
+                                                </t>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
                             </tbody>
+                            </t>
                         </table>
                     </div>
                 </div>
@@ -294,32 +336,32 @@
                 }
             </style>
             <t t-call="web.html_container">
-                <t t-set="converted_report" t-value="get_converted_report(docs)"/>
                 <t t-foreach="get_sections(docs)" t-as="section">
-                    <t t-set="result_exam_lines" t-value="get_exam_result_lines(docs)" />
-                    <t t-set="all_subjects" t-value="get_all_subjects(section,result_exam_lines)"/>
-                    <t t-set="students" t-value="get_students(section)"/>
-                    <t t-set="exam_count" t-value="len(result_exam_lines)"/>
-                    <t t-call="education_exam.external_layout_evaluation">
+                    <!--<t t-set="subjects" t-value="get_subjects(section,docs)"/>-->
+                     <t t-call="education_exam.external_layout_evaluation">
+                        <t t-set="exam_list" t-value="get_exams(docs)" />
+                         <t t-set="results" t-value="get_results(section,exam_list)"/>
+                         <t t-set="exam_count" t-value="len(exam_list)"/>
+
                         <style>
                             table,tbody ,tr, th {
-                            border: 1px solid black;
-                            padding-left:0px;
-                            padding-right:0px;
-                            padding-top:0px;
-                            padding-bottom:0px;
-                            text-align: center;
+                                     border: 1px solid black;
+                                    padding-left:0px;
+                                    padding-right:0px;
+                                    padding-top:0px;
+                                    padding-bottom:0px;
+                                    text-align: center;
 
-                            }
+                                    }
                             td{
-                            border: 0.5px solid black;
-                            vertical-align: top;
-                            padding-left:0px;
-                            padding-right:0px;
-                            padding-top:0px;
-                            padding-bottom:0px;
-                            text-align: center;
-                            }
+                                border: 0.5px solid black;
+                                    vertical-align: top;
+                                    padding-left:0px;
+                                    padding-right:0px;
+                                    padding-top:0px;
+                                    padding-bottom:0px;
+                                    text-align: center;
+                                }
 
                             .right_top{
                             float:right;
@@ -337,8 +379,8 @@
                             padding-left:500px;
                             }
                         </style>
-                        <t t-call="education_exam.evaluation_data_layout"/>
-                    </t>
+                         <t t-call="education_exam.evaluation_data_layout"/>
+                     </t>
                 </t>
             </t>
         </template>

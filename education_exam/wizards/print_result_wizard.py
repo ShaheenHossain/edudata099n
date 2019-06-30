@@ -32,6 +32,14 @@ class educationExamResultWizard(models.TransientModel):
     def del_generated_results(self):
         for exam in self.exams:
             records=self.env['education.exam.results.new'].search([('exam_id','=',exam.id)]).unlink()
+            records=self.env['exam.subject.pass.rules'].search([('exam_id','=',exam.id)]).unlink()
+            records=self.env['exam.paper.pass.rules'].search([('subject_rule_id.exam_id','=',exam.id)]).unlink()
+            result_lines =self.env['education.exam.result.exam.line'].search(
+                                [('exam_count', '=', '1'), ('exam_ids', '=', exam.id)])
+            result_lines.unlink()
+            exam_lines =self.env['education.exam.result.exam.line'].search([ ('exam_ids', 'in', [exa.id for exa in exam])])
+            exam_lines.unlink()
+            print ('ok')
     @api.model
     def render_html(self, docids, data=None):
         return {
@@ -54,7 +62,16 @@ class educationExamResultWizard(models.TransientModel):
 
     @api.multi
     def get_merit_list(self):
-        self.env['education.exam.results.new'].calculate_merit_list(self.exams,self.level)
+        exam_lines=[]
+        for exam in self.exams:
+            result_exam_lines=self.env['education.exam.result.exam.line'].search([('exam_count','=','1'),('exam_ids','=', exam.id)])
+            exam_lines.append(result_exam_lines)
+        if len(self.exams)>1:
+            exam_no=len(self.exams)
+            result_exam_lines = self.env['education.exam.result.exam.line'].search([('exam_count','=',exam_no),('exam_ids','in',[exa.id for exa in self.exams])])
+            exam_lines.append(result_exam_lines)
+
+        self.env['education.exam.results.new'].calculate_merit_list(exam_lines,self.level)
 
 
     @api.multi

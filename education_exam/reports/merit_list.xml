@@ -149,7 +149,7 @@
                                             </td>
                                             <t t-foreach="exam_result_lines" t-as="exam">
                                                 <td style="text-align : center;">
-                                                    <t t-esc="results[student][exam].net_gp"/>
+                                                    <t t-esc="results[student][exam].net_gpa"/>
                                                 </td>
                                                 <td style="text-align : center;">
                                                     <t t-esc="results[student][exam].net_obtained"/>

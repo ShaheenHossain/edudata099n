@@ -277,6 +277,7 @@
                                                 <t t-set="index" t-value="index+1"/>
 
                                             </t>
+                                            <span>&lt;/tr &gt;&lt;tr&gt;</span>
                                         </t>
                                     </tr>
                                 </t>

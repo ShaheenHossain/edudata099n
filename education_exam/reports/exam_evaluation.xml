@@ -251,18 +251,75 @@
                                         <td >Obj</td>
                                         <td >Pra</td>
                                         <td >Total</td>
+                                        <t t-if="subject_last">
+                                            <td>Total</td>
+                                            <td>converted</td>
+                                            <td>GP</td>
+                                            <td>GPA</td>
+                                        </t>
                                     </t>
                                 </tr>
                             </THEAD>
                             <tbody style="page-break-inside:avoide !important;">
+                                <t t-set="df_results" t-value="get_results(result_exam_lines,section)" />
+                                <t t-set="max_paper_count" t-value="get_max_paper_count(result_exam_lines)"/>
+                                <t t-set="row_for_student" t-value="max_paper_count*len(result_exam_lines)*2"/>
                                 <t t-foreach="students" t-as="student">
-                                    <tr>
+                                    <t t-set="df_student" t-value="df_results[(df_results['student']==student)]"/>
+                                    <!--                                    <t t-set="row_for_student" t-value="df_student.shape[0]"/>-->
+                                    <span>&lt;tr&gt;</span>
+                                        <td t-att-rowspan="row_for_student">
+                                            <t t-esc="student.student_id.student_id"/>
+                                        </td>
+                                        <td t-att-rowspan="row_for_student">
+                                            <t t-esc="student.roll_no"/>
+                                        </td>
+                                        <td t-att-rowspan="row_for_student">
+                                            <t t-esc="student.student_id.name"/>
+                                        </td>
+                                        <t t-foreach="result_exam_lines" t-as="exam_line">
+                                            <td t-att-rowspan="max_paper_count*2">
+                                                <t t-esc="exam_line.name"/>
+                                            </td>
+                                            <t t-set="df_student_exam" t-value="df_student[(df_student['exam']==exam_line)]"/>
+                                            <t t-foreach="range(1,max_paper_count+1)" t-as="paper">
+                                                <td t-att-rowspan="2">
+                                                   <t t-esc="num2serial(paper)"/>
+                                                </td>
+                                                <t t-foreach="all_subjects" t-as="subject">
+                                                    <td >Mth</td>
+                                                    <td >Sub</td>
+                                                    <td >Obj</td>
+                                                    <td >Pra</td>
+                                                    <td >Total</td>
+                                                    <t t-if="subject_last">
+                                                        <td>1st</td>
+                                                        <td>1st</td>
+                                                        <td>1st</td>
+                                                        <td>1st</td>
+                                                        <span>&lt;/tr &gt;&lt;tr&gt;</span>
+                                                    </t>
+                                                </t>
+                                                <t t-foreach="all_subjects" t-as="subject">
+                                                    <td >Mth</td>
+                                                    <td >Sub</td>
+                                                    <td >Obj</td>
+                                                    <td >Pra</td>
+                                                    <td >Total</td>
+                                                    <t t-if="subject_last">
+                                                        <span>&lt;/tr &gt;&lt;tr&gt;</span>
+                                                    </t>
+                                                </t>
+                                            </t>
+
+                                        </t>
+                                    <!--<tr>
                                         <t t-foreach="result_exam_lines" t-as="exam_line">
                                             <t t-set="results" t-value="get_student_result_line(student,exam_line)"/>
                                             <t t-if="exam_line_first">
                                                 <td rowspan="5"><t t-esc="results[exam_line]['res'].student_id.id"/> </td>
-                                                <td t-att-rowspan="5"><t t-esc="results[exam_line]['res'].student_history.roll_no"/> </td>
-                                                <td t-att-rowspan="5"><t t-esc="results[exam_line]['res'].student_id.name"/> </td>
+                                                <td t-att-rowspan="4"><t t-esc="results[exam_line]['res'].student_history.roll_no"/> </td>
+                                                <td t-att-rowspan="4"><t t-esc="results[exam_line]['res'].student_id.name"/> </td>
                                                 <td t-att-rowspan="2"><t t-esc="exam_line.name"/> </td>
                                             </t>
                                             <t t-set="index" t-value="0"/>
@@ -270,16 +327,37 @@
                                             <t t-foreach="all_subjects" t-as="subject">
                                                 <t t-foreach="results[exam_line][subject]['res'].paper_ids" t-as="paper">
                                                    <t t-if="subject_first">
-                                                       <td>1st</td>
+                                                       <t t-if="paper_index==0">
+                                                            <td>1st </td>
+                                                       </t>
+                                                       <t t-if="paper_index==1">
+                                                            <td>2nd </td>
+                                                       </t>
+                                                       <t t-if="paper_index==2">
+                                                            <td>3rd </td>
+                                                       </t>
                                                    </t>
-                                                </t>
-                                                <span>&lt;/tr &gt;&lt;tr&gt;</span>
-                                                <t t-set="index" t-value="index+1"/>
+                                                    <td>
+                                                        <t t-esc="paper.tut_obt"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="paper.subj_obt"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="paper.obj_obt"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="paper.prac_obt"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="paper.paper_obt"/>
+                                                    </td>
 
+                                                </t>
                                             </t>
                                             <span>&lt;/tr &gt;&lt;tr&gt;</span>
                                         </t>
-                                    </tr>
+                                    </tr>-->
                                 </t>
                             </tbody>
                         </table>

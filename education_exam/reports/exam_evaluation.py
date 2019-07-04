@@ -2,6 +2,7 @@
 
 from datetime import datetime
 import time
+import pandas as pd
 from odoo import fields, models,api
 
 
@@ -14,6 +15,41 @@ class examEvaluation(models.AbstractModel):
             ('class_id','=',section.id)])
         all_subjects=result_lines.mapped('subject_line.subject_id')
         return all_subjects
+    def get_max_paper_count(self,result_exam_lines):
+        subject_rules=self.env['exam.subject.pass.rules'].search([('result_exam_line','in',[line.id for line in result_exam_lines])])
+        max_paper=0
+        for line in subject_rules:
+            if len(line.paper_ids)>max_paper:
+                max_paper=len(line.paper_ids)
+        return max_paper
+
+    def get_results(self,result_exam_lines,section):
+        result_paper_line=self.env['results.paper.line'].search([('subject_line.result_id.exam_result_line','in',[line.id for line in result_exam_lines])]
+                                                                )
+        #                                    [results.paper.line].[result.subject.line.new]
+        student=[]
+        exam=[]
+        subject=[]
+        paper=[]
+        result_line=[]
+
+        for line in result_paper_line:
+            student.append(line.subject_line.result_id.student_history)
+            exam.append(line.subject_line.result_id.exam_result_line)
+            subject.append(line.subject_line.subject_id)
+            paper.append(line.paper_id)
+            result_line.append(line.subject_line.result_id)
+        data={'student':student,
+              'exam':exam,
+              'subject':subject,
+              'paper':paper,
+              'result_line':result_line}
+        df=pd.DataFrame(data)
+        return df
+        # df1=df.groupby('student')
+        # for index, row in df1:
+        #     df_student=df[(df['student'] == index)]
+        #     print(df_student)
     def get_student_result_line(self,student,result_exam_lines):
         results={}
         for line in result_exam_lines:
@@ -172,9 +208,12 @@ class examEvaluation(models.AbstractModel):
             'get_exam_obtained_total': self.get_exam_obtained_total,
             'check_optional': self.check_optional,
             'half_round_up': self.env['report.education_exam.report_dsblsc_marksheet'].half_round_up,
+            'get_results': self.get_results,
             'get_exam_result_lines': self.get_exam_result_lines,
             'get_all_subjects': self.get_all_subjects,
             'get_student_result_line': self.get_student_result_line,
+            'get_max_paper_count': self.get_max_paper_count,
+            'num2serial': self.env['report.education_exam.report_exam_marksheet'].num2serial,
 
 
         }

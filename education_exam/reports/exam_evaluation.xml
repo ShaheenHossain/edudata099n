@@ -39,6 +39,75 @@
             </div>
         <!--</div>-->
     </template>
+        <template id="optional_paper_numbers">
+            <td style='background-color : #C0C0C0;'>
+                <t t-esc="half_round_up(paper_line.paperline.tut_obt)"/>
+            </td>
+            <td style='background-color : #C0C0C0;'>
+                <t t-esc="half_round_up(paper_line.paperline.subj_obt)"/>
+            </td>
+            <td style='background-color : #C0C0C0;'>
+                <t t-esc="half_round_up(paper_line.paperline.obj_obt)"/>
+            </td>
+            <td style='background-color : #C0C0C0;'>
+                <t t-esc="half_round_up(paper_line.paperline.prac_obt)"/>
+            </td>
+            <td style='background-color : #C0C0C0;'>
+                <t t-esc="half_round_up(paper_line.paperline.paper_obt)"/>
+            </td>
+        </template>
+        <template id="average_optional_paper_numbers">
+            <td style='background-color : #C0C0C0;'>
+                <t t-esc="paper_line.paperline.tut_obt"/>
+            </td>
+            <td style='background-color : #C0C0C0;'>
+                <t t-esc="paper_line.paperline.subj_obt"/>
+            </td>
+            <td style='background-color : #C0C0C0;'>
+                <t t-esc="paper_line.paperline.obj_obt"/>
+            </td>
+            <td style='background-color : #C0C0C0;'>
+                <t t-esc="paper_line.paperline.prac_obt"/>
+            </td>
+            <td style='background-color : #C0C0C0;'>
+                <t t-esc="paper_line.paperline.paper_obt"/>
+            </td>
+        </template>
+        <template id="general_paper_numbers">
+            <td >
+                <t t-esc="half_round_up(paper_line.paperline.tut_obt)"/>
+            </td>
+            <td >
+                <t t-esc="half_round_up(paper_line.paperline.subj_obt)"/>
+            </td>
+            <td >
+                <t t-esc="half_round_up(paper_line.paperline.obj_obt)"/>
+            </td>
+            <td >
+                <t t-esc="half_round_up(paper_line.paperline.prac_obt)"/>
+            </td>
+            <td >
+                <t t-esc="half_round_up(paper_line.paperline.paper_obt)"/>
+            </td>
+        </template>
+
+        <template id="average_general_paper_numbers">
+            <td >
+                <t t-esc="paper_line.paperline.tut_obt"/>
+            </td>
+            <td >
+                <t t-esc="paper_line.paperline.subj_obt"/>
+            </td>
+            <td >
+                <t t-esc="paper_line.paperline.obj_obt"/>
+            </td>
+            <td >
+                <t t-esc="paper_line.paperline.prac_obt"/>
+            </td>
+            <td >
+                <t t-esc="paper_line.paperline.paper_obt"/>
+            </td>
+        </template>
 
         <template id ="evaluation_subject_template">
            <table border-collapse="collapse" width="100%" hight="100%" style="page-break-inside:avoide !important; font-size:19px; border:0">
@@ -287,11 +356,38 @@
                                                    <t t-esc="num2serial(paper)"/>
                                                 </td>
                                                 <t t-foreach="all_subjects" t-as="subject">
-                                                    <td >Mth</td>
-                                                    <td >Sub</td>
-                                                    <td >Obj</td>
-                                                    <td >Pra</td>
-                                                    <td >Total</td>
+
+
+                                                    <t t-set="df_student_exam_subject" t-value="df_student_exam[(df_student_exam['subject']==subject)]"/>
+                                                    <t t-if="paper==1">
+                                                        <t t-set="paper_line" t-value="df_student_exam_subject.iloc[0]"/>
+                                                    </t>
+                                                    <t t-if="paper==2">
+                                                        <t t-if="df_student_exam_subject.shape[0]>1">
+                                                            <t t-set="paper_line" t-value="df_student_exam_subject.iloc[1]"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="paper==3">
+                                                        <t t-if="df_student_exam_subject.shape[0]>2">
+                                                            <t t-set="paper_line" t-value="df_student_exam_subject.iloc[2]"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="paper_line.paperline.paper_id in student.optional_subjects">
+                                                        <t t-if='len(exam_line.exam_ids)>1'>
+                                                            <t t-call="education_exam.average_optional_paper_numbers"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-call="education_exam.optional_paper_numbers"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-if='len(exam_line.exam_ids)>1'>
+                                                            <t t-call="education_exam.average_general_paper_numbers"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-call="education_exam.general_paper_numbers"/>
+                                                        </t>
+                                                    </t>
                                                     <t t-if="subject_last">
                                                         <td>1st</td>
                                                         <td>1st</td>
@@ -301,11 +397,21 @@
                                                     </t>
                                                 </t>
                                                 <t t-foreach="all_subjects" t-as="subject">
-                                                    <td >Mth</td>
-                                                    <td >Sub</td>
-                                                    <td >Obj</td>
-                                                    <td >Pra</td>
-                                                    <td >Total</td>
+                                                    <td >
+                                                        <!--Mth-->
+                                                    </td>
+                                                    <td >
+                                                        <!--Mth-->
+                                                    </td>
+                                                    <td >
+                                                        <!--Mth-->
+                                                    </td>
+                                                    <td >
+                                                        <!--Mth-->
+                                                    </td>
+                                                    <td >
+                                                        <!--Mth-->
+                                                    </td>
                                                     <t t-if="subject_last">
                                                         <span>&lt;/tr &gt;&lt;tr&gt;</span>
                                                     </t>

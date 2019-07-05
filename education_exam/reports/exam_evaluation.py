@@ -32,18 +32,24 @@ class examEvaluation(models.AbstractModel):
         subject=[]
         paper=[]
         result_line=[]
+        subject_line=[]
+        paper_line=[]
 
         for line in result_paper_line:
             student.append(line.subject_line.result_id.student_history)
             exam.append(line.subject_line.result_id.exam_result_line)
             subject.append(line.subject_line.subject_id)
+            subject_line.append(line.subject_line)
             paper.append(line.paper_id)
+            paper_line.append(line)
             result_line.append(line.subject_line.result_id)
         data={'student':student,
               'exam':exam,
               'subject':subject,
+              'subjectline':subject_line,
               'paper':paper,
-              'result_line':result_line}
+              'paperline':paper_line,
+              'resultline':result_line}
         df=pd.DataFrame(data)
         return df
         # df1=df.groupby('student')

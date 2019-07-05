@@ -86,11 +86,13 @@ class examEvaluation(models.AbstractModel):
 
         return exams
 
-    def get_students(self,section):
-
-        students=self.env['education.class.history'].search([('class_id.id', '=', section.id)])
-
-        return students
+    def get_students(self,object,section):
+        if len(object.student)>0:
+            students=self.env['education.class.history'].search([('id', '=', object.student.id)])
+            return students
+        else:
+            students=self.env['education.class.history'].search([('class_id.id', '=', section.id)])
+            return students
     def get_subjects(self, section,obj):
         subjs=self.env['education.syllabus'].search([('class_id','=',section.class_id.id),('academic_year','=',obj.academic_year.id)])
         subject_list=[]

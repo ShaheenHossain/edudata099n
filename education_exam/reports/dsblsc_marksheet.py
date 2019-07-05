@@ -144,7 +144,10 @@ class report_dsblsc_marksheet(models.AbstractModel):
 
     def half_round_up(self,n, decimals=0):
         multiplier = 10 ** decimals
-        return math.floor(n * multiplier + 0.5) / multiplier
+        number= math.floor(n * multiplier + 0.5) / multiplier
+        if decimals==0:
+            return round(number)
+        else: return number
     def num2serial(self,numb):
         if numb < 20:  # determining suffix for < 20
             if numb == 1:

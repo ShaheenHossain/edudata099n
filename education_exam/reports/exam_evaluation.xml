@@ -41,19 +41,19 @@
     </template>
         <template id="optional_paper_numbers">
             <td style='background-color : #C0C0C0;'>
-                <t t-esc="half_round_up(paper_line.paperline.tut_obt)"/>
+                <t t-esc="half_round_up(paper_line.paperline.tut_obt,0)"/>
             </td>
             <td style='background-color : #C0C0C0;'>
-                <t t-esc="half_round_up(paper_line.paperline.subj_obt)"/>
+                <t t-esc="half_round_up(paper_line.paperline.subj_obt,0)"/>
             </td>
             <td style='background-color : #C0C0C0;'>
-                <t t-esc="half_round_up(paper_line.paperline.obj_obt)"/>
+                <t t-esc="half_round_up(paper_line.paperline.obj_obt,0)"/>
             </td>
             <td style='background-color : #C0C0C0;'>
-                <t t-esc="half_round_up(paper_line.paperline.prac_obt)"/>
+                <t t-esc="half_round_up(paper_line.paperline.prac_obt,0)"/>
             </td>
             <td style='background-color : #C0C0C0;'>
-                <t t-esc="half_round_up(paper_line.paperline.paper_obt)"/>
+                <t t-esc="half_round_up(paper_line.paperline.paper_obt,0)"/>
             </td>
         </template>
         <template id="average_optional_paper_numbers">
@@ -303,7 +303,7 @@
                                     <th rowspan="3">Name</th>
                                     <th rowspan="3">Exam</th>
                                     <th rowspan="3">Paper</th>
-                                    <th t-att-colspan="len(all_subjects)*5">Subjects</th>
+                                    <th t-att-colspan="len(all_subjects)*(5+1)">Subjects</th>
 
                                 </tr>
                                 <tr>
@@ -311,6 +311,7 @@
                                         <td colspan="5">
                                             <t t-esc="subject.name"/>
                                         </td>
+                                        <td>.</td>
                                     </t>
                                 </tr>
                                 <tr>
@@ -320,6 +321,7 @@
                                         <td >Obj</td>
                                         <td >Pra</td>
                                         <td >Total</td>
+                                        <td></td>
                                         <t t-if="subject_last">
                                             <td>Total</td>
                                             <td>converted</td>
@@ -395,6 +397,7 @@
                                                         <td>1st</td>
                                                         <span>&lt;/tr &gt;&lt;tr&gt;</span>
                                                     </t>
+                                                <td></td>
                                                 </t>
                                                 <t t-foreach="all_subjects" t-as="subject">
                                                     <td >
@@ -412,6 +415,7 @@
                                                     <td >
                                                         <!--Mth-->
                                                     </td>
+                                                    <td></td>
                                                     <t t-if="subject_last">
                                                         <span>&lt;/tr &gt;&lt;tr&gt;</span>
                                                     </t>
@@ -483,7 +487,7 @@
                 <t t-foreach="get_sections(docs)" t-as="section">
                     <t t-set="result_exam_lines" t-value="get_exam_result_lines(docs)" />
                     <t t-set="all_subjects" t-value="get_all_subjects(section,result_exam_lines)"/>
-                    <t t-set="students" t-value="get_students(section)"/>
+                    <t t-set="students" t-value="get_students(docs,section)"/>
                     <t t-set="exam_count" t-value="len(result_exam_lines)"/>
                     <t t-call="education_exam.external_layout_evaluation">
                         <style>

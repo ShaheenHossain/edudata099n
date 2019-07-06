@@ -24,12 +24,14 @@ class examEvaluation(models.AbstractModel):
         return max_paper
 
     def get_results(self,result_exam_lines,section):
-        result_paper_line=self.env['results.paper.line'].search([('subject_line.result_id.exam_result_line','in',[line.id for line in result_exam_lines])]
-                                                                )
+        result_paper_line=self.env['results.paper.line'].search([('subject_line.result_id.exam_result_line','in',[line.id for line in result_exam_lines])])
         #                                    [results.paper.line].[result.subject.line.new]
         student=[]
+        student_id=[]
         exam=[]
+        exam_id=[]
         subject=[]
+        subject_id=[]
         paper=[]
         result_line=[]
         subject_line=[]
@@ -37,15 +39,21 @@ class examEvaluation(models.AbstractModel):
 
         for line in result_paper_line:
             student.append(line.subject_line.result_id.student_history)
+            student_id.append(line.subject_line.result_id.student_history.id)
             exam.append(line.subject_line.result_id.exam_result_line)
+            exam_id.append(line.subject_line.result_id.exam_result_line.id)
+            subject_id.append(line.subject_line.subject_id.id)
             subject.append(line.subject_line.subject_id)
             subject_line.append(line.subject_line)
             paper.append(line.paper_id)
             paper_line.append(line)
             result_line.append(line.subject_line.result_id)
         data={'student':student,
+              'studentId': student_id,
               'exam':exam,
+              'examId':exam_id,
               'subject':subject,
+              'subjectId':subject_id,
               'subjectline':subject_line,
               'paper':paper,
               'paperline':paper_line,

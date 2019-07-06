@@ -10,8 +10,8 @@
             <field name="page_height">0</field>
             <field name="page_width">0</field>
             <field name="orientation">Landscape</field>
-            <field name="margin_top">45</field>
-            <field name="margin_bottom">10</field>
+            <field name="margin_top">50</field>
+            <field name="margin_bottom">50</field>
             <field name="margin_left">7</field>
             <field name="margin_right">7</field>
             <field name="header_line" eval="False" />
@@ -94,7 +94,7 @@
             model="education.exam.result.wizard"
             string="Exam Evaluation"
             report_type="qweb-pdf"
-            paperformat="legal_landscape"
+            paperformat="legal_landscape_evaluation"
             name="education_exam.report_exam_evaluation"
             file="education_exam.report_exam_evaluation"
         />

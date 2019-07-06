@@ -18,7 +18,7 @@
         </record>
 
 
-        <template id="external_layout_evaluations">
+        <template id="external_layout_evaluation">
         <div class="header" >
             <div class="row">
                 <div style="width: 100%;text-align:center;">
@@ -398,7 +398,7 @@
                     <t t-set="all_subjects" t-value="get_all_subjects(section,result_exam_lines)"/>
                     <t t-set="students" t-value="get_students(docs,section)"/>
                     <t t-set="exam_count" t-value="len(result_exam_lines)"/>
-                    <t t-call="education_exam.external_layout_evaluations">
+                    <t t-call="education_exam.external_layout_evaluation">
                         <style>
                             table,tbody ,tr, th {
                             border: 1px solid black;

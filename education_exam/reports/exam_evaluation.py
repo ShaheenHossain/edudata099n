@@ -15,10 +15,54 @@ class examEvaluation(models.AbstractModel):
             ('class_id','=',section.id)])
         all_subjects=result_lines.mapped('subject_line.subject_id')
         return all_subjects
+    def get_mark_type_for_subjects(self,subject_id,exam_lines):
+        ## if any merk =0 , should not show in evaluation
+        show_fields=[]
+        subject_rules=self.env['exam.subject.pass.rules'].search([('subject_id','=',subject_id.id),('result_exam_line','=',[exam.id for exam in exam_lines])])
+        tut_field=subject_rules.mapped('tut_mark')
+        for val in tut_field:
+            if val >0:
+                if 'tut' not in show_fields:
+                    show_fields.append('tut')
+        subj_field=subject_rules.mapped('subj_mark')
+        for val in subj_field:
+            if val > 0:
+                if 'subj' not in show_fields:
+                    show_fields.append('subj')
+        obj_field=subject_rules.mapped('obj_mark')
+        for val in obj_field:
+            if val > 0:
+                if 'obj' not in show_fields:
+                    show_fields.append('obj')
+        prac_field=subject_rules.mapped('prac_mark')
+        for val in prac_field:
+            if val > 0:
+                if 'prac' not in show_fields:
+                    show_fields.append('prac')
+        return show_fields
+
+    def get_subject_mark_types(self,all_subjects, result_exam_lines):
+        mark_types={}
+        mark_types['colum']=0
+        for subject in all_subjects:
+            mark_types[subject]={}
+            line = self.get_mark_type_for_subjects(subject,result_exam_lines)
+            mark_types[subject]['colum'] = 0
+            mark_types[subject]['tut'] = 0
+            mark_types[subject]['subj'] = 0
+            mark_types[subject]['obj'] = 0
+            mark_types[subject]['prac'] = 0
+            for val in line:
+                mark_types[subject][val]=1
+                mark_types['colum']=mark_types['colum']+1
+                mark_types[subject]['colum'] =mark_types[subject]['colum']+ 1
+        return mark_types
+
     def get_max_paper_count(self,result_exam_lines):
         subject_rules=self.env['exam.subject.pass.rules'].search([('result_exam_line','in',[line.id for line in result_exam_lines])])
         max_paper=0
-        for line in subject_rules:
+        self.rules = subject_rules
+        for line in self.rules:
             if len(line.paper_ids)>max_paper:
                 max_paper=len(line.paper_ids)
         return max_paper
@@ -230,6 +274,8 @@ class examEvaluation(models.AbstractModel):
             'get_student_result_line': self.get_student_result_line,
             'get_max_paper_count': self.get_max_paper_count,
             'num2serial': self.env['report.education_exam.report_exam_marksheet'].num2serial,
+            'get_mark_type_for_subjects': self.get_mark_type_for_subjects,
+            'get_subject_mark_types': self.get_subject_mark_types,
 
 
         }

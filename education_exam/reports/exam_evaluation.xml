@@ -57,52 +57,52 @@
 
         <template id="optional_paper_numbers">
             <t t-if="subject_mark_types[subject]['tut']">
-                <td style='background-color : #E8E8E8;' t-att-rowspan="2">
+                <td style='background-color : #C0C0C0;' t-att-rowspan="2">
                     <t t-esc="half_round_up(paper_line.paperline.tut_obt,0)"/>
                 </td>
             </t>
             <t t-if="subject_mark_types[subject]['subj']">
-                <td style='background-color : #E8E8E8;' t-att-rowspan="2">
+                <td style='background-color : #C0C0C0;' t-att-rowspan="2">
                     <t t-esc="half_round_up(paper_line.paperline.subj_obt,0)"/>
                 </td>
             </t>
             <t t-if="subject_mark_types[subject]['obj']">
-                <td style='background-color : #E8E8E8;' t-att-rowspan="2">
+                <td style='background-color : #C0C0C0;' t-att-rowspan="2">
                     <t t-esc="half_round_up(paper_line.paperline.obj_obt,0)"/>
                 </td>
             </t>
             <t t-if="subject_mark_types[subject]['prac']">
-                <td style='background-color : #E8E8E8;' t-att-rowspan="2">
+                <td style='background-color : #C0C0C0;' t-att-rowspan="2">
                     <t t-esc="half_round_up(paper_line.paperline.prac_obt,0)"/>
                 </td>
             </t>
-            <!--<td style='background-color : #E8E8E8;'>
+            <!--<td style='background-color : #C0C0C0;'>
                 <t t-esc="half_round_up(paper_line.paperline.paper_obt,0)"/>
             </td>-->
         </template>
 
         <template id="average_optional_paper_numbers">
             <t t-if="subject_mark_types[subject]['tut']">
-                <td style='background-color : #E8E8E8;'  t-att-rowspan="2">
+                <td style='background-color : #C0C0C0;'  t-att-rowspan="2">
                     <t t-esc="paper_line.paperline.tut_obt" />
                 </td>
             </t>
             <t t-if="subject_mark_types[subject]['subj']">
-                <td style='background-color : #E8E8E8;'  t-att-rowspan="2">
+                <td style='background-color : #C0C0C0;'  t-att-rowspan="2">
                     <t t-esc="paper_line.paperline.subj_obt"/>
                 </td>
             </t>
             <t t-if="subject_mark_types[subject]['obj']">
-                <td style='background-color : #E8E8E8;' t-att-rowspan="2">
+                <td style='background-color : #C0C0C0;' t-att-rowspan="2">
                     <t t-esc="paper_line.paperline.obj_obt"/>
                 </td>
             </t>
             <t t-if="subject_mark_types[subject]['prac']">
-                <td style='background-color : #E8E8E8;' t-att-rowspan="2">
+                <td style='background-color : #C0C0C0;' t-att-rowspan="2">
                     <t t-esc="paper_line.paperline.prac_obt"/>
                 </td>
             </t>
-            <!--<td style='background-color : #E8E8E8;'>
+            <!--<td style='background-color : #C0C0C0;'>
                 <t t-esc="paper_line.paperline.paper_obt"/>
             </td>-->
         </template>

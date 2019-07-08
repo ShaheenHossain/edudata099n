@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bcac989f-0042-483e-bff0-ad2eeca973d2" name="Default Changelist" comment="corrected for Academic transcript">
-      <change beforePath="$PROJECT_DIR$/education_exam/reports/exam_evaluation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/education_exam/reports/exam_evaluation.xml" afterDir="false" />
-    </list>
+    <list default="true" id="bcac989f-0042-483e-bff0-ad2eeca973d2" name="Default Changelist" comment="corrected for Academic transcript" />
     <ignored path="E:\eagle11.0.01\edudata099\.idea\shelf/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -56,9 +54,10 @@
         <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_evaluation.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="115">
-              <caret line="256" column="35" lean-forward="true" selection-start-line="256" selection-start-column="35" selection-end-line="256" selection-end-column="35" />
+              <caret line="424" column="21" selection-start-line="424" selection-start-column="21" selection-end-line="424" selection-end-column="21" />
               <folding>
                 <element signature="n#div#1;n#template#0;n#data#0;n#odoo#0;n#!!top" />
+                <element signature="n#thead#0;n#table#0;n#div#2;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
                 <element signature="n#tbody#0;n#table#0;n#div#2;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
                 <element signature="e#13932#13936#0" expanded="true" />
                 <element signature="e#13938#13942#0" expanded="true" />
@@ -353,7 +352,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
+    <frame x="-8" y="-8" width="1296" height="776" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18819776" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -843,9 +843,10 @@
     <entry file="file://$PROJECT_DIR$/education_exam/reports/exam_evaluation.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
-          <caret line="256" column="35" lean-forward="true" selection-start-line="256" selection-start-column="35" selection-end-line="256" selection-end-column="35" />
+          <caret line="424" column="21" selection-start-line="424" selection-start-column="21" selection-end-line="424" selection-end-column="21" />
           <folding>
             <element signature="n#div#1;n#template#0;n#data#0;n#odoo#0;n#!!top" />
+            <element signature="n#thead#0;n#table#0;n#div#2;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
             <element signature="n#tbody#0;n#table#0;n#div#2;n#div#0;n#div#0;n#template#8;n#data#0;n#odoo#0;n#!!top" />
             <element signature="e#13932#13936#0" expanded="true" />
             <element signature="e#13938#13942#0" expanded="true" />

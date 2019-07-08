@@ -230,7 +230,7 @@
                         </h4>
                     </div>
                     <div class="container">
-                        <table  style="width : 100%;text-align:center">
+                        <table  style="width : 100%;text-align:center" class="table table-condensed">
                             <tr>
                                <td>
                                    <span t-field="section.class_id.name"/>
@@ -254,7 +254,7 @@
                     </div>
                     <div class="row">
                         <table width="100%" >
-                            <THEAD>
+                            <thead>
                                 <tr>
                                     <th rowspan="3">ID</th>
                                     <th rowspan="3">Roll</th>
@@ -295,8 +295,8 @@
                                         </t>
                                     </t>
                                 </tr>
-                            </THEAD>
-                            <tbody style="page-break-inside:avoide !important;">
+                            </thead>
+                            <tbody style="page-break-inside:avoide !important; page-break-after:avoide !important;">
                                 <t t-set="df_results" t-value="get_results(result_exam_lines,section)" />
                                 <t t-set="max_paper_count" t-value="get_max_paper_count(result_exam_lines)"/>
                                 <t t-set="row_for_student" t-value="max_paper_count*len(result_exam_lines)*2"/>
@@ -419,6 +419,13 @@
                                     </tr>-->
                                 </t>
                             </tbody>
+                             <tfoot>
+                                <tr>
+                                    <td colspan="100%">
+<!-- Tble footer here                                       -->
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -441,7 +448,18 @@
                     <t t-set="exam_count" t-value="len(result_exam_lines)"/>
                     <t t-call="education_exam.external_layout_evaluation">
                         <style>
-                            table,tbody ,tr, th {
+                            thead  { display: table-header-group }
+                            tfoot { display: table-row-group }
+                            tr {border: 1px solid black;
+                            padding-left:0px;
+                            padding-right:0px;
+                            padding-top:0px;
+                            padding-bottom:0px;
+                            text-align: center;
+                            vertical-align: middle;
+                            page-break-inside: avoid;
+                            }
+                            table,tbody , th {
                             border: 1px solid black;
                             padding-left:0px;
                             padding-right:0px;

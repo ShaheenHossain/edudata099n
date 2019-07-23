@@ -46,11 +46,17 @@
                                 </group>
                             </group>
                         </page>
+                        <page string="Evaluation Settings">
+                            <group >
+                                <field name="record_per_page"/>
+                            </group>
+                            <button name="%(action_exam_evaluation)d" string="Evaluation" type="action" />
+                        </page>
                         <page string="Print" attrs="{'invisible': [('report_type', '!=', '1'),('report_type', '!=', '2')]}">
                             <group col="4" >
                                 <button name="render_html" string="Marksheet" type="object" />
                                 <button name="%(action_marksheet_converted)d" string="Marksheet (Converted)" type="action" />
-                                <button name="%(action_exam_evaluation)d" string="Evaluation" type="action" />
+
                                 <button name="%(action_merit_list)d" string="MeritList" type="action" />
                                 <button name="%(action_responsive_marksheet)d" string="Test responsive" type="action" />
                             </group>

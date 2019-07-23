@@ -28,6 +28,7 @@ class educationExamResultWizard(models.TransientModel):
     show_total=fields.Boolean("Show Total")
     show_average=fields.Boolean("Show average",default="True")
     show_average_only=fields.Boolean("Show average Only")
+    record_per_page=fields.Integer(string="Student Per Page", default="6")
     @api.multi
     def del_generated_results(self):
         for exam in self.exams:

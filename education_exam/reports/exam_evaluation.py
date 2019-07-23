@@ -18,7 +18,7 @@ class examEvaluation(models.AbstractModel):
     def get_mark_type_for_subjects(self,subject_id,exam_lines):
         ## if any merk =0 , should not show in evaluation
         show_fields=[]
-        subject_rules=self.env['exam.subject.pass.rules'].search([('subject_id','=',subject_id.id),('result_exam_line','=',[exam.id for exam in exam_lines])])
+        subject_rules=self.env['exam.subject.pass.rules'].search([('subject_id','=',subject_id.id),('result_exam_line','in',[exam.id for exam in exam_lines])])
         tut_field=subject_rules.mapped('tut_mark')
         for val in tut_field:
             if val >0:
@@ -219,7 +219,8 @@ class examEvaluation(models.AbstractModel):
     def get_convert_resue(self,subject):
         ratio=subject.subject_id
         return ratio
-
+    def get_record_per_page(self,obj):
+        return obj.record_per_page
 
     def get_converted_report(self,obj):
         if obj.report_type=='2' :
@@ -276,6 +277,7 @@ class examEvaluation(models.AbstractModel):
             'num2serial': self.env['report.education_exam.report_exam_marksheet'].num2serial,
             'get_mark_type_for_subjects': self.get_mark_type_for_subjects,
             'get_subject_mark_types': self.get_subject_mark_types,
+            'get_record_per_page': self.get_record_per_page,
 
 
         }
